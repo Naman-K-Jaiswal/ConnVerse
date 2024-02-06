@@ -3,16 +3,24 @@ package main
 import (
 	"backend/database"
 	"backend/routes"
+	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"log"
 	"os"
 )
 
 func main() {
+	err := godotenv.Load()
+	if err != nil {
+		return
+	}
+
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		port = "8080"
+		fmt.Println("PORT environment variable not set")
+		return
 	}
 
 	database.InitDB()
@@ -25,7 +33,7 @@ func main() {
 	routes.AuthRoutes(router)
 	//routes.FeedRoutes(router)
 
-	err := router.Run(":" + port)
+	err = router.Run(":" + port)
 	if err != nil {
 		log.Fatal(err)
 	}
