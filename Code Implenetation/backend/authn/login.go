@@ -24,7 +24,7 @@ func Login() gin.HandlerFunc {
 		} else if code == 1 {
 			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid email"})
 		} else {
-			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password"})
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid password or email"})
 		}
 	}
 }

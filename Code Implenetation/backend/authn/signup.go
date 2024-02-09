@@ -2,6 +2,7 @@ package authn
 
 import (
 	"backend/database"
+	"backend/mail"
 	"bytes"
 	"context"
 	"fmt"
@@ -10,14 +11,10 @@ import (
 	"log"
 	"net/http"
 	"net/smtp"
-	"os"
 )
 
 func SendOTP() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		from := os.Getenv("EMAIL_ID")
-		password := os.Getenv("EMAIL_PASS")
-
 		var to ToEmail
 		err := c.ShouldBindJSON(&to)
 		if err != nil {
@@ -25,14 +22,12 @@ func SendOTP() gin.HandlerFunc {
 			return
 		}
 
+		flag := make(chan bool)
+
 		go func() {
 			DeleteEntries(to.Email, 6)
+			flag <- true
 		}()
-
-		smtp_server := "smtp.gmail.com"
-		smtp_port := "587"
-
-		auth := smtp.PlainAuth("", from, password, smtp_server)
 
 		var body bytes.Buffer
 		body.Write([]byte(fmt.Sprintf("Subject: ConnVerse One Time Password \r\n\r\n")))
@@ -41,7 +36,7 @@ func SendOTP() gin.HandlerFunc {
 		mail_template := fmt.Sprintf("Hello, \nThis is your OTP for ConnVerse : %s (do not share with anyone)", auth_code)
 		body.Write([]byte(mail_template))
 
-		err = smtp.SendMail(smtp_server+":"+smtp_port, auth, from, []string{to.Email}, body.Bytes())
+		err = smtp.SendMail(mail.Smtp_server+":"+mail.Smtp_port, mail.Auth, mail.From, []string{to.Email}, body.Bytes())
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send OTP"})
 			return
@@ -55,6 +50,7 @@ func SendOTP() gin.HandlerFunc {
 			Password: auth_code,
 		}
 
+		_ = <-flag
 		_, err = collection.InsertOne(context.Background(), login_details)
 		if err != nil {
 			log.Fatal(err)
