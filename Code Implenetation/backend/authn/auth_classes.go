@@ -15,8 +15,7 @@ type ToEmail struct {
 }
 
 type SignupDetails struct {
-	ID          primitive.ObjectID `bson:"_id"`
-	Email       string             `json:"email"`
-	OldPassword string             `json:"old_password"`
-	NewPassword string             `json:"new_password"`
+	Email       string `json:"email"`
+	OldPassword string `json:"old_password"`
+	NewPassword string `json:"new_password"`
 }

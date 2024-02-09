@@ -68,8 +68,11 @@ func MatchPass(given_pass string, given_email string) int {
 
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
+
 	cursor, err := collection.Find(ctx, bson.M{"email": given_email})
-	if err != nil {
+	if errors.Is(err, mongo.ErrNoDocuments) {
+		return 1
+	} else if err != nil {
 		return 1
 	}
 
