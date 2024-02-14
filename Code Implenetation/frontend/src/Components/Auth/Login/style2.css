@@ -1,0 +1,84 @@
+.center-box {
+  background-color:white; /* Semi-transparent white */
+  padding: 20px; /* Adjust padding as needed */
+  border-radius: 15px; /* Add borderRadius for a rounded look */
+  display: flex; /* Use flexbox for centering */
+  flex-direction: column; /* Stack content vertically */
+  align-items: center; /* Center content horizontally */
+  justify-content: center; /* Center content vertically */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3); /* Optional subtle shadow */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 60vh;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start; /* Align to the top left */
+  align-items: flex-start; /* Align items to the top */
+  width: 100%;
+  position: absolute;
+  top: 0; /* Adjusting to start from the top */
+  left:7.5vmax; /* Start from the left */
+  padding: 0px; /* Add some padding for spacing */
+}
+
+
+.Conn {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 3vmax;
+  color: black;
+}
+
+.Verse {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 3vmax;
+  color: #E2921B;
+}
+
+img {
+  width: 20vw; /* Adjust width as needed */
+  height: 40vh; /* Maintain aspect ratio */
+  margin-top: 4vh; /* Adjust margin as needed */
+  margin-bottom: 20px;
+  position: absolute;
+  left: 6vmax; /* Position on the left side */
+  top: 50%; /* Adjust vertically as needed */
+  transform: translateY(-50%);
+}
+
+.logo {
+  position: absolute;
+  top: 4vmax; /* Adjust top position as needed */
+  left: 50px; /* Adjust left position as needed */
+  width: 7vmax;
+  height: auto;
+}
+
+.about-us {
+  font-family: 'Inter', sans-serif;
+  font-weight:300;
+  font-size: 0.6rem; /* Adjust the font size as needed */
+  text-align: left; /* Center the text */
+  position: absolute; /* Position the text absolutely */
+  bottom: 0.5vmax; /* Adjust the distance from the bottom */
+  left: 4%; /* Position in the center horizontally */
+  z-index: 1; /* Ensure the text is above the image */
+  margin-right: 30px;
+}
+
+.about-us-head {
+  font-family: 'Inter', sans-serif;
+  font-weight:bold;
+  font-size: 0.7rem; /* Adjust the font size as needed */
+  text-align: left; /* Center the text */
+  position: absolute; /* Position the text absolutely */
+  bottom: 2.6vmax; /* Adjust the distance from the bottom */
+  left: 4%; /* Position in the center horizontally */
+  z-index: 1; /* Ensure the text is above the image */
+}

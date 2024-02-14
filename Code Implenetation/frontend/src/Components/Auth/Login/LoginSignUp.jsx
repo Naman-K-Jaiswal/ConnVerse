@@ -1,7 +1,7 @@
 import React from "react";
 import Component from "./background";
 
-function signUp() {
+function login() {
   return (
     <div>
       <Component/>
@@ -9,4 +9,4 @@ function signUp() {
   );
 }
 
-export default signUp;
+export default login;
