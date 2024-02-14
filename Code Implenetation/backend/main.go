@@ -2,6 +2,7 @@ package main
 
 import (
 	"backend/database"
+	"backend/mail"
 	"backend/routes"
 	"fmt"
 	"github.com/gin-gonic/gin"
@@ -24,6 +25,7 @@ func main() {
 	}
 
 	database.InitDB()
+	mail.InitMailSMTP()
 
 	router := gin.New()
 	router.Use(gin.Logger())
