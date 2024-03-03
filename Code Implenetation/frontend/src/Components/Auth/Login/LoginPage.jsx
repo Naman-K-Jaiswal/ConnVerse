@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import Component from "./background";
 
 const LoginPage = () => {
   return (
-    <div>LoginPage is Rendered</div>
-  )
+    <div>
+      <Component/>
+    </div>
+  );
 }
 
-export default LoginPage
+export default LoginPage;
