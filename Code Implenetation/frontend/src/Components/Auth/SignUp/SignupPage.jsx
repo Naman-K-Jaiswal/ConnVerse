@@ -1,9 +1,12 @@
-import React from 'react'
+import React from "react";
+import Component from "./background";
 
-const SignupPage = () => {
+function signUp() {
   return (
-    <div>SignupPage is Rendered</div>
-  )
+    <div>
+      <Component/>
+    </div>
+  );
 }
 
-export default SignupPage
+export default signUp;
