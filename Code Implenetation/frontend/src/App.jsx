@@ -6,7 +6,6 @@ import Alumn from './Components/Auth/Alumn/AlumnRegisterPage'
 import Home from './Components/Home/Home'
 import User from './Components/User/UserProfile'
 import Blog from './Components/Blog/CreateBlog/CreateBlogPage'
-
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const App = () => {
