@@ -30,8 +30,8 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Logger())
 
-	//routes.ProfilesRoutes(router)
-	//routes.BlogRoutes(router)
+	routes.ProfilesRoutes(router)
+	routes.BlogRoutes(router)
 	routes.AuthRoutes(router)
 	//routes.FeedRoutes(router)
 
