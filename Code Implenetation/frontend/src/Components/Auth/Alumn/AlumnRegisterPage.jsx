@@ -1,8 +1,13 @@
 import React from 'react'
+import Component from './background'
+import MetaData from '../../../MetaData'
 
 const AlumnRegisterPage = () => {
   return (
-    <div>AlumnRegisterPage is Rendered</div>
+    <div>
+      <MetaData title='Alumn Registration'/>
+      <Component/>
+    </div>
   )
 }
 
