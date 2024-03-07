@@ -3,11 +3,14 @@ package authn
 import (
 	"backend/database"
 	"backend/mail"
+	"backend/profile"
 	"bytes"
 	"context"
+	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/mongo"
 	"log"
 	"net/http"
 	"net/smtp"
@@ -20,6 +23,14 @@ func SendOTP() gin.HandlerFunc {
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid email"})
 			return
+		}
+
+		_, err = CheckUserExist(to.Email)
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			c.JSON(http.StatusNotFound, gin.H{"error": "Please enter valid IITK email"})
+			return
+		} else if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err})
 		}
 
 		flag := make(chan bool)
@@ -82,6 +93,16 @@ func SignUp() gin.HandlerFunc {
 			return
 		}
 
+		res, err := CheckUserExist(signup_details.Email)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+		err = profile.InitializeUser(res)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
 		c.JSON(http.StatusOK, gin.H{"message": "Sign Up Successful!"})
 	}
 }

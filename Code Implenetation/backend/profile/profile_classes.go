@@ -1,27 +1,26 @@
 package profile
-import (
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"time"
-)
 
 type User struct {
-	ID           primitive.ObjectID `json:"id" bson:"_id"`
-	Name         string     `json:"Name"`
-	Degree       string     `json:"degree"`
-	About        string     `json:"about"`
-	Skills       []string   `json:"skills"`
-	BlogPosts    []string      `json:"blogposts"`
+	UserID       string       `json:"userID"`
+	Name         string       `json:"name"`
+	Nickname     string       `json:"nickname"`
+	ProfilePhoto []byte       `json:"profilePhoto"`
+	BannerPhoto  []byte       `json:"bannerPhoto"`
+	Degree       string       `json:"degree"`
+	About        string       `json:"about"`
+	Skills       []string     `json:"skills"`
+	BlogPosts    []string     `json:"blogposts"`
 	Credentials  []Credential `json:"credentials"`
-	Achievements []string   `json:"achievements"`
-	Projects     []Project  `json:"projects"`
-	Courses      []Course   `json:"courses"`
-	CreatedAt    time.Time  `json:"created_at"`
+	Achievements []string     `json:"achievements"`
+	Projects     []Project    `json:"projects"`
+	Courses      []Course     `json:"courses"`
 }
 
 type Credential struct {
 	Post         string `json:"post"`
 	Organisation string `json:"organisation"`
-	Year         string `json:"year"`
+	From         string `json:"from"`
+	To           string `json:"to"`
 }
 
 type Project struct {
@@ -29,12 +28,37 @@ type Project struct {
 	InstructorName string   `json:"instructorName"`
 	Skills         []string `json:"skills"`
 	Description    string   `json:"description"`
-	StartDate      string   `json:"startDate"` 
+	From           string   `json:"from"`
+	To             string   `json:"to"`
 }
 
 type Course struct {
 	CourseName     string `json:"courseName"`
 	InstructorName string `json:"instructorName"`
 	Description    string `json:"description"`
-	StartDate      string `json:"startDate"` 
+	Year           string `json:"year"`
+	Semester       string `json:"semester"`
+}
+
+type UserUpdate struct {
+	UserID       string       `json:"userID"`
+	Nickname     string       `json:"nickname"`
+	ProfilePhoto []byte       `json:"profilePhoto"`
+	BannerPhoto  []byte       `json:"bannerPhoto"`
+	About        string       `json:"about"`
+	Skills       []string     `json:"skills"`
+	BlogPosts    []string     `json:"blogposts"`
+	Credentials  []Credential `json:"credentials"`
+	Achievements []string     `json:"achievements"`
+	Projects     []Project    `json:"projects"`
+	Courses      []Course     `json:"courses"`
+}
+
+type SearchQuery struct {
+	UserID       string   `json:"userID"`
+	Name         string   `json:"name"`
+	Skills       []string `json:"skills"`
+	Degree       string   `json:"degree"`
+	Organization string   `json:"organisation"`
+	Courses      []string `json:"courses"`
 }

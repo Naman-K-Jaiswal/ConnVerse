@@ -65,7 +65,6 @@ func DeleteEntries(email string, ln int) {
 func MatchPass(given_pass string, given_email string) int {
 	var temp LoginDetails
 	collection := database.DB.Collection("login_details")
-
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
@@ -104,4 +103,32 @@ func CreatePassword(signup_details SignupDetails) error {
 
 	_, err := collection.InsertOne(context.Background(), login_detail)
 	return err
+}
+
+func CheckUserExist(email string) (bson.M, error) {
+	collection := database.DB.Collection("StoredUsers")
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var u string
+	var index int
+	for i, ch := range email {
+		if ch == '@' {
+			break
+		} else {
+			u = u + string(ch)
+		}
+		index = i
+	}
+
+	var result bson.M
+
+	if email[index+1:] != "iitk.ac.in" {
+		return result, mongo.ErrNoDocuments
+	}
+
+	filter := bson.M{"u": u}
+
+	err := collection.FindOne(ctx, filter).Decode(&result)
+	return result, err
 }
