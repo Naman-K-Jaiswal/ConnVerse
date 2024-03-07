@@ -30,7 +30,6 @@ function Component() {
         }}
       >
       </div>
-      <img src={logoimg} alt="Connverse" className="logo1" style={{left:'90vmax'}}/>
     </div>
   );
 }
