@@ -1,59 +1,68 @@
-body{
-    background-color: #FEF9F1;
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative; /* Add this to allow proper positioning of fixed elements */
 }
 
-/* ///////////////////////////MAIN BODY/////////////////////////  */
-#mainBody{
+#mainBody {
     display: flex;
     flex-direction: column;
-    margin-left: 5vw;
-    height: 90vh;
-    width: 90vw;
-    gap: 10px;
-}
-
-
-/*  *****************************SEARCH BAR*************************** */
-#searchBoxDiv{
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
     align-items: center;
+    padding: 20px;
+    margin-top: 70px; /* Adjust for navbar height */
+}
+
+#searchBoxDiv {
+    position: fixed; /* Make search bar fixed */
+    top: 90px; /* Adjust for navbar height */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999; /* Ensure it's above other content */
+    width: 80%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #fff; /* Set background color to white */
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+}
+
+#search {
     width: 100%;
-    height: 5%;
-    border-radius: 10px;
+    height: 40px;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    outline: none;
 }
 
-#search{
-    width: 90%;
-    height: 35px;
-    font-size: 1.5em;
-    background-color: white;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-#searchButton{
-    margin-left: 1%;
+#searchButton {
     width: 100px;
-    height: 35px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+    height: 40px;
+    margin-left: 10px;
+    border: none;
+    border-radius: 20px;
     background-color: #e2921b;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
 }
 
-#search Button:hover{
-    background-color: rgba(226, 154, 46, 0.5); /* 50% opacity */
+#searchButton:hover {
+    background-color: #c17e11;
 }
 
-/*  *****************************BLOG LISTS*************************** */
 #blogLists{
+    margin-top: 14vh;
     display: flex;
     flex-direction: column;
     align-items: center;
-    overflow-y: scroll;
-    margin-top: 2vh;
-    width: 100%;
+    overflow-y: auto;
+    width: 80%;
     height: 95%;
     gap: 10px;
 }
@@ -98,7 +107,7 @@ body{
 }
 
 .blogProfileImageDiv img{
-    height: 100%;
+    height: 150px;
     width: auto;
     border-radius: 50%;
 }
@@ -162,19 +171,18 @@ body{
     border-radius: 10px;
 }
 
-
-/* /////////////////////////////NAVBAR///////////////////////////////// */
 .navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 95%;
     display: flex;
-    width: 95vw;
     justify-content: center;
     align-items: center;
     background-color: #e2921b;
     border-radius: 20px;
     padding: 10px 20px;
-    margin-left: 0.6vw;
-    margin-top: 1vmax;
-    margin-bottom: 1vmax;
+    z-index: 999; /* Ensure it's above other content */
 }
 
 .nav-item {
@@ -192,17 +200,4 @@ body{
 .nav-item:hover {
     transform: scale(1.2);
     background-color: #e29a2e;
-    /* color: ; */
-}
-.profile {
-    margin-left: 600px;
-    display: flex;
-    align-items: center;
-}
-#profilePhotoNavbar{
-    height: 50px;
-    width: 50px;
-    background-color: #e29a2e;
-    border-radius: 50%;
-
 }

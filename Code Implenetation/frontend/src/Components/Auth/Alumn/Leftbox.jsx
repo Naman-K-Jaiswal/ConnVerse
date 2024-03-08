@@ -69,7 +69,7 @@ const Leftbox = () => {
                     />
             </form>
             <img className='iitklogo1' src={IITKlogo} alt="IITK Logo" />
-            <p className='copyright1'>&copy; 2024 MahaDevs. All rights reserved.</p>
+            {/* <p className='copyright1'>&copy; 2024 MahaDevs. All rights reserved.</p> */}
         </div>
     );
 };

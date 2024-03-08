@@ -5,7 +5,8 @@ import SignUp from './Components/Auth/SignUp/SignupPage'
 import Alumn from './Components/Auth/Alumn/AlumnRegisterPage'
 import Home from './Components/Home/Home'
 import User from './Components/User/UserProfile'
-import Blog from './Components/Blog/CreateBlog/CreateBlogPage'
+import CreateBlog from './Components/Blog/CreateBlog/CreateBlogPage'
+import IndividualBlog from './Components/Blog/IndividualBlog/BlogTemplate';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
 const App = () => {
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/alumn" element={<AlumnComp/>} />
         <Route path="/createblog" element={<CreateBlogComp/>} />
         <Route path="/userprofile" element={<UserProfileComp/>} />
+        <Route path="/individualblog" element={<IndividualBlogComp/>} />
       </Routes>
     </Router>
   );
@@ -59,7 +61,16 @@ const CreateBlogComp = () => {
   return (
     <>
     <Navbar/>
-    <Blog/>
+    <CreateBlog/>
+  </>
+  )
+};
+
+const IndividualBlogComp = () => {
+  return (
+    <>
+    <Navbar/>
+    <IndividualBlog/>
   </>
   )
 };

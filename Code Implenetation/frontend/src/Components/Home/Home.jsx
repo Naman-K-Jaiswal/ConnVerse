@@ -2,6 +2,40 @@ import React from 'react';
 import './style.css';
 
 const Home = () => {
+  const blogData = [
+    {
+      id: 1,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: './pp.jpg', 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 2,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: './pp.jpg', 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 3,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: './pp.jpg', 
+      profileImageSrc: require('./pp.jpg')
+    },
+  ];
+  
+
   return (
     <div>
       {/* Main Body */}
@@ -11,92 +45,33 @@ const Home = () => {
           <button id="searchButton">Search</button>
         </div>
         <div id="blogLists">
-          {/* Blog 1 */}
-          <div className="blogX">
-            <div className="blogLeftHalfDiv">
-              <div className="blogHeading">
-                <div className="blogProfileImageDiv">
-                  <img src="profile_photo.JPG" alt="Profile Photo" />
-                </div>
-                <div className="titleDetails">
-                  <div className="blogTitle">Mastering the art of Leadership</div>
-                  <div className="blogUsername">User123</div>
-                  <div className="blogLastDate">10 days ago</div>
-                  <div className="blogTags">
-                    <div className="blogTagX">#Leadership</div>
-                    <div className="blogTagX">#Management</div>
-                    <div className="blogTagX">#Business</div>
+          {blogData.map((blog) => (
+            <div key={blog.id} className="blogX">
+              <div className="blogLeftHalfDiv">
+                <div className="blogHeading">
+                  <div className="blogProfileImageDiv">
+                    <img src={blog.profileImageSrc} alt="Profile Photo" />
+                  </div>
+                  <div className="titleDetails">
+                    <div className="blogTitle">{blog.title}</div>
+                    <div className="blogUsername">{blog.username}</div>
+                    <div className="blogLastDate">{blog.lastDate}</div>
+                    <div className="blogTags">
+                      {blog.tags.map((tag, index) => (
+                        <div key={index} className="blogTagX">{tag}</div>
+                      ))}
+                    </div>
                   </div>
                 </div>
-              </div>
-              <div className="blogContent">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui.
-                </p>
-              </div>
-            </div>
-            <div className="blogRightHalfDiv">
-              <img src="backgroundImage.png" alt="Blog1 Image" />
-            </div>
-          </div>
-          
-          {/* Blog 2 */}
-          <div className="blogX">
-            <div className="blogLeftHalfDiv">
-              <div className="blogHeading">
-                <div className="blogProfileImageDiv">
-                  <img src="profile_photo.JPG" alt="Profile Photo" />
-                </div>
-                <div className="titleDetails">
-                  <div className="blogTitle">Mastering the art of Leadership</div>
-                  <div className="blogUsername">User123</div>
-                  <div className="blogLastDate">10 days ago</div>
-                  <div className="blogTags">
-                    <div className="blogTagX">#Leadership</div>
-                    <div className="blogTagX">#Management</div>
-                    <div className="blogTagX">#Business</div>
-                  </div>
+                <div className="blogContent">
+                  <p>{blog.content}</p>
                 </div>
               </div>
-              <div className="blogContent">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui.
-                </p>
+              <div className="blogRightHalfDiv">
+                <img src={blog.imageSrc} alt={`Blog${blog.id} Image`} />
               </div>
             </div>
-            <div className="blogRightHalfDiv">
-              <img src="backgroundImage.png" alt="Blog2 Image" />
-            </div>
-          </div>
-          
-          {/* Blog 3 */}
-          <div className="blogX">
-            <div className="blogLeftHalfDiv">
-              <div className="blogHeading">
-                <div className="blogProfileImageDiv">
-                  <img src="profile_photo.JPG" alt="Profile Photo" />
-                </div>
-                <div className="titleDetails">
-                  <div className="blogTitle">Mastering the art of Leadership</div>
-                  <div className="blogUsername">User123</div>
-                  <div className="blogLastDate">10 days ago</div>
-                  <div className="blogTags">
-                    <div className="blogTagX">#Leadership</div>
-                    <div className="blogTagX">#Management</div>
-                    <div className="blogTagX">#Business</div>
-                  </div>
-                </div>
-              </div>
-              <div className="blogContent">
-                <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui. Nulla nec purus feugiat, molestie ipsum et, consequat nibh. Etiam non elit dui.
-                </p>
-              </div>
-            </div>
-            <div className="blogRightHalfDiv">
-              <img src="backgroundImage.png" alt="Blog3 Image" />
-            </div>
-          </div>
+          ))}
         </div>
       </div>
     </div>
