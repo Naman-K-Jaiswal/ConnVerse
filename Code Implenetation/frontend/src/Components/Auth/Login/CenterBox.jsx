@@ -6,12 +6,40 @@ import { Link } from 'react-router-dom';
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import MetaData from '../../../MetaData.jsx';
+import CryptoJS from 'crypto-js';
+import { CookieSharp } from '@mui/icons-material';
 
 const CenterBox = () => {
 
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
+  const handleLogin = async (e) => {
+    e.preventDefault();
+
+    console.log(loginPassword)
+    const hashedPassword = CryptoJS.SHA256(loginPassword).toString(CryptoJS.enc.Hex);
+
+    try {
+      const response = await fetch('http://localhost:8080/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: loginEmail, password: hashedPassword }),
+      })
+
+      if (response.ok) {
+        alert('Logged in successfully');
+      } else {
+        response.json();
+        console.log(response["error"]);
+        alert('Invalid Credentials', response["error"]);
+      }
+    } catch (error) {
+      alert('Invalid Credentials', error);
+    }
+  }
   return (
     <>
       <MetaData title='Login' />
@@ -28,7 +56,7 @@ const CenterBox = () => {
               <p className='Conn' style={{fontSize:'30px'}}>Conn</p>
               <p className='Verse' style={{fontSize:'30px'}}>Verse</p>
             </div>
-            <form className='loginForm'>
+            <form className='loginForm' onSubmit={handleLogin}>
               <div className='loginEmail'>
                   <EmailIcon/>
                   <input 

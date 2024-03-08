@@ -13,4 +13,5 @@ func BlogRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.GET("/blog/:id", middleware.RequireAuth, blog.RetrieveBlogPost())
 	incomingRoutes.POST("/blog/comment/:id", middleware.RequireAuth, blog.CreateComment())
 	incomingRoutes.POST("/blog/react/:id", middleware.RequireAuth, blog.LikeUnlikeBlogPost())
+	incomingRoutes.POST("/blog/search", middleware.RequireAuth, blog.SearchBlogPosts())
 }

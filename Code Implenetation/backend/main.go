@@ -5,6 +5,7 @@ import (
 	"backend/mail"
 	"backend/routes"
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"log"
@@ -29,6 +30,7 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Logger())
+	router.Use(cors.Default())
 
 	routes.ProfilesRoutes(router)
 	routes.BlogRoutes(router)
