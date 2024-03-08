@@ -26,23 +26,39 @@ func LikeUnlikeBlogPost() gin.HandlerFunc {
 		switch react_request.Action {
 		case 1:
 			// Update the likes count and add user to likedBy array
-			if err := AddUserToLikedBy(postID, userID); err != nil {
+			err, i := AddUserToLikedBy(postID, userID)
+			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to like the post"})
 				return
 			}
 
 			// Respond with a success message or updated post details
-			c.JSON(http.StatusOK, gin.H{"message": "Post liked successfully"})
+			if i == 1 {
+				c.JSON(http.StatusOK, gin.H{"message": "Post liked successfully"})
+			} else if i == -1 {
+				c.JSON(http.StatusOK, gin.H{"message": "Post unliked successfully"})
+			} else {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to like the post"})
+			}
+			break
 
 		case 2:
 			// Update the likes count and remove user from likedBy array
-			if err := AddUserToDislikedBy(postID, userID); err != nil {
+			err, i := AddUserToDislikedBy(postID, userID)
+			if err != nil {
 				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to unlike the post"})
 				return
 			}
 
-			// Respond with a success message or updated post details
-			c.JSON(http.StatusOK, gin.H{"message": "Post unliked successfully"})
+			if i == 1 {
+				c.JSON(http.StatusOK, gin.H{"message": "Post disliked successfully"})
+			} else if i == -1 {
+				c.JSON(http.StatusOK, gin.H{"message": "Post undisliked successfully"})
+			} else {
+				c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to dislike the post"})
+			}
+
+			break
 
 		default:
 			// Respond with an error for unsupported HTTP methods
@@ -53,15 +69,15 @@ func LikeUnlikeBlogPost() gin.HandlerFunc {
 
 // Function to add user to likedBy array
 // Function to add user to likedBy array
-func AddUserToLikedBy(postID string, userID int) error {
+func AddUserToLikedBy(postID string, userID string) (error, int) {
 	objID, err := primitive.ObjectIDFromHex(postID)
 	if err != nil {
-		return err
+		return err, 0
 	}
 
 	existingPost, err := RetrieveBlogPostByID(objID)
 	if err != nil {
-		return err
+		return err, 0
 	}
 
 	already, err := HasUserLikedPost(existingPost, userID)
@@ -70,8 +86,9 @@ func AddUserToLikedBy(postID string, userID int) error {
 		existingPost.LikedBy = append(existingPost.LikedBy, userID)
 		// Update the blog post in MongoDB
 		if err := UpdateBlogLike(existingPost); err != nil {
-			return err
+			return err, 0
 		}
+		return nil, 1
 	} else if already {
 		existingPost.Likes--
 		existingPost.LikedBy = removeUserFromArray(existingPost.LikedBy, userID)
@@ -82,21 +99,23 @@ func AddUserToLikedBy(postID string, userID int) error {
 
 		// Update the blog post in MongoDB
 		if err := UpdateBlogLike(existingPost); err != nil {
-			return err
+			return err, 0
 		}
+
+		return nil, -1
 	}
-	return nil
+	return nil, 0
 }
 
-func AddUserToDislikedBy(postID string, userID int) error {
+func AddUserToDislikedBy(postID string, userID string) (error, int) {
 	objID, err := primitive.ObjectIDFromHex(postID)
 	if err != nil {
-		return err
+		return err, 0
 	}
 
 	existingPost, err := RetrieveBlogPostByID(objID)
 	if err != nil {
-		return err
+		return err, 0
 	}
 
 	already, err := HasUserDislikedPost(existingPost, userID)
@@ -104,17 +123,25 @@ func AddUserToDislikedBy(postID string, userID int) error {
 		existingPost.Dislikes++
 		existingPost.DislikedBy = append(existingPost.DislikedBy, userID)
 		// Update the blog post in MongoDB
-		if err := UpdateBlogLike(existingPost); err != nil {
-			return err
+		if err := UpdateBlogDisLike(existingPost); err != nil {
+			return err, 0
 		}
+
+		return nil, 1
 	} else if already {
 		existingPost.Dislikes--
 		existingPost.DislikedBy = removeUserFromArray(existingPost.DislikedBy, userID)
 		if len(existingPost.DislikedBy) == 0 {
 			existingPost.DislikedBy = nil
 		}
+
+		// Update the blog post in MongoDB
+		if err := UpdateBlogDisLike(existingPost); err != nil {
+			return err, 0
+		}
+		return nil, -1
 	}
-	return nil
+	return nil, 0
 }
 
 // UpdateBlogLike updates the blog post in MongoDB
@@ -124,14 +151,26 @@ func UpdateBlogLike(post BlogPost) error {
 	defer cancel()
 
 	filter := bson.M{"_id": post.ID}
-	update := bson.M{"$set": bson.M{"likes": post.Likes, "likedBy": post.LikedBy, "dislikedBy": post.DislikedBy}}
+	update := bson.M{"$set": bson.M{"likes": post.Likes, "likedby": post.LikedBy, "dislikedby": post.DislikedBy}}
+
+	_, err := collection.UpdateOne(ctx, filter, update)
+	return err
+}
+
+func UpdateBlogDisLike(post BlogPost) error {
+	collection := database.DB.Collection("BlogPosts")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	filter := bson.M{"_id": post.ID}
+	update := bson.M{"$set": bson.M{"dislikes": post.Dislikes, "likedby": post.LikedBy, "dislikedby": post.DislikedBy}}
 
 	_, err := collection.UpdateOne(ctx, filter, update)
 	return err
 }
 
 // HasUserLikedPost checks if the user has already liked the blog post
-func HasUserLikedPost(post BlogPost, userID int) (bool, error) {
+func HasUserLikedPost(post BlogPost, userID string) (bool, error) {
 	// Check if the user's ID is in the likedBy array
 	for _, likedUserID := range post.LikedBy {
 		if likedUserID == userID {
@@ -140,7 +179,7 @@ func HasUserLikedPost(post BlogPost, userID int) (bool, error) {
 	}
 	return false, nil
 }
-func HasUserDislikedPost(post BlogPost, userID int) (bool, error) {
+func HasUserDislikedPost(post BlogPost, userID string) (bool, error) {
 	// Check if the user's ID is in the likedBy array
 	for _, dislikedUserID := range post.DislikedBy {
 		if dislikedUserID == userID {
@@ -149,9 +188,9 @@ func HasUserDislikedPost(post BlogPost, userID int) (bool, error) {
 	}
 	return false, nil
 }
-func removeUserFromArray(array []int, userID int) []int {
+func removeUserFromArray(array []string, userID string) []string {
 	// Iterate over the array and create a new array without the specified user
-	var newArray []int
+	var newArray []string
 	for _, user := range array {
 		if user != userID {
 			newArray = append(newArray, user)

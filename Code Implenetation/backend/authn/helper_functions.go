@@ -113,12 +113,12 @@ func CheckUserExist(email string) (bson.M, error) {
 	var u string
 	var index int
 	for i, ch := range email {
+		index = i
 		if ch == '@' {
 			break
 		} else {
 			u = u + string(ch)
 		}
-		index = i
 	}
 
 	var result bson.M

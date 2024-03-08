@@ -26,7 +26,8 @@ func EditBlogPost() gin.HandlerFunc {
 
 		// Bind the edit request from JSON payload
 		var edit_request EditPostRequest
-		if err := c.ShouldBindJSON(&edit_request); err != nil {
+		err = c.ShouldBindJSON(&edit_request)
+		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}

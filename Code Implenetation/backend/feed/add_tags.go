@@ -21,10 +21,12 @@ func AddTags() gin.HandlerFunc {
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 		defer cancel()
 
-		_, err = collection.UpdateOne(ctx, bson.M{"userID": tag_req.UserID}, bson.M{"$addToSet": bson.M{"tags": tag_req.Tags}})
-		if err != nil {
-			c.JSON(400, gin.H{"error": "Error updating tags"})
-			return
+		for _, tag := range tag_req.Tags {
+			_, err = collection.UpdateOne(ctx, bson.M{"userid": tag_req.UserID}, bson.M{"$addToSet": bson.M{"tags": tag}})
+			if err != nil {
+				c.JSON(400, gin.H{"error": "Error updating tags"})
+				return
+			}
 		}
 
 		c.JSON(200, gin.H{"message": "Tags updated"})

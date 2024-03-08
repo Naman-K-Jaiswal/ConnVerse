@@ -2,6 +2,7 @@ package profile
 
 import (
 	"backend/database"
+	"backend/feed"
 	"context"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
@@ -57,11 +58,33 @@ func InitializeUser(res bson.M) error {
 		UserID:       res["i"].(string),
 		Name:         res["n"].(string),
 		Degree:       res["p"].(string) + " " + res["d"].(string),
+		Email:        res["u"].(string) + "@iitk.ac.in",
 		ProfilePhoto: imageBytes,
 		BannerPhoto:  bannerBytes,
+		Skills:       make([]string, 0),
+		Courses:      make([]Course, 0),
+		Projects:     make([]Project, 0),
+		Credentials:  make([]Credential, 0),
+		BlogPosts:    make([]string, 0),
+		Achievements: make([]string, 0),
 	}
 
 	_, err = collection.InsertOne(ctx, new_user)
+	if err != nil {
+		return err
+	}
+
+	user_feed := feed.Feed{
+		UserID:  new_user.UserID,
+		BlogIDs: make([]string, 0),
+		Tags:    make([]string, 0),
+	}
+
+	collection = database.DB.Collection("Feeds")
+	ctx, cancel = context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	_, err = collection.InsertOne(ctx, user_feed)
 	if err != nil {
 		return err
 	}
@@ -89,7 +112,7 @@ func UpdateUserInDB(updated_user UserUpdate) error {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	_, err := collection.UpdateOne(ctx, bson.M{"userID": updated_user.UserID}, bson.M{"$set": updated_user})
+	_, err := collection.UpdateOne(ctx, bson.M{"userid": updated_user.UserID}, bson.M{"$set": updated_user})
 	if err != nil {
 		return err
 	}
@@ -252,7 +275,7 @@ func GetUsersByCourses(courses []string) []User {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	filter := bson.M{"courses.courseName": bson.M{"$in": courses}}
+	filter := bson.M{"courses.coursename": bson.M{"$in": courses}}
 
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {
@@ -278,7 +301,7 @@ func GetUserByID(userID string) (*User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	filter := bson.M{"userID": bson.M{"$regex": primitive.Regex{Pattern: userID, Options: "i"}}}
+	filter := bson.M{"userid": bson.M{"$regex": primitive.Regex{Pattern: userID, Options: "i"}}}
 	var user User
 	err := collection.FindOne(ctx, filter).Decode(&user)
 	if err != nil {
@@ -374,7 +397,7 @@ func GetUsersByNameAndCourses(name string, courses []string) []User {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	filter := bson.M{"name": bson.M{"$regex": primitive.Regex{Pattern: name, Options: "i"}}, "courses.courseName": bson.M{"$in": courses}}
+	filter := bson.M{"name": bson.M{"$regex": primitive.Regex{Pattern: name, Options: "i"}}, "courses.coursename": bson.M{"$in": courses}}
 
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {
@@ -478,7 +501,7 @@ func GetUsersByNicknameAndCourses(nickname string, courses []string) []User {
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
 
-	filter := bson.M{"nickname": bson.M{"$regex": primitive.Regex{Pattern: nickname, Options: "i"}}, "courses.courseName": bson.M{"$in": courses}}
+	filter := bson.M{"nickname": bson.M{"$regex": primitive.Regex{Pattern: nickname, Options: "i"}}, "courses.coursename": bson.M{"$in": courses}}
 
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {
@@ -564,7 +587,7 @@ func GetUsersByNameAndDegreeAndSkillsAndCourses(name string, degree string, skil
 	filter["name"] = bson.M{"$regex": primitive.Regex{Pattern: name, Options: "i"}}
 	filter["degree"] = bson.M{"$regex": primitive.Regex{Pattern: degree, Options: "i"}}
 	filter["skills"] = bson.M{"$in": skills}
-	filter["courses.courseName"] = bson.M{"$in": courses}
+	filter["courses.coursename"] = bson.M{"$in": courses}
 
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {
@@ -653,7 +676,7 @@ func GetUsersByNicknameAndDegreeAndSkillsAndCourses(nickname string, degree stri
 	filter["nickname"] = bson.M{"$regex": primitive.Regex{Pattern: nickname, Options: "i"}}
 	filter["degree"] = bson.M{"$regex": primitive.Regex{Pattern: degree, Options: "i"}}
 	filter["skills"] = bson.M{"$in": skills}
-	filter["courses.courseName"] = bson.M{"$in": courses}
+	filter["courses.coursename"] = bson.M{"$in": courses}
 
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {
@@ -684,7 +707,7 @@ func GetUsersByNameAndDegreeAndSkillsAndOrganizationAndCourses(name string, degr
 	filter["degree"] = bson.M{"$regex": primitive.Regex{Pattern: degree, Options: "i"}}
 	filter["skills"] = bson.M{"$in": skills}
 	filter["credentials.organisation"] = bson.M{"$regex": primitive.Regex{Pattern: organization, Options: "i"}}
-	filter["courses.courseName"] = bson.M{"$in": courses}
+	filter["courses.coursename"] = bson.M{"$in": courses}
 
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {
@@ -715,7 +738,7 @@ func GetUsersByNicknameAndDegreeAndSkillsAndOrganizationAndCourses(nickname stri
 	filter["degree"] = bson.M{"$regex": primitive.Regex{Pattern: degree, Options: "i"}}
 	filter["skills"] = bson.M{"$in": skills}
 	filter["credentials.organisation"] = bson.M{"$regex": primitive.Regex{Pattern: organization, Options: "i"}}
-	filter["courses.courseName"] = bson.M{"$in": courses}
+	filter["courses.coursename"] = bson.M{"$in": courses}
 
 	cursor, err := collection.Find(ctx, filter)
 	if err != nil {

@@ -1,7 +1,10 @@
 package blog
 
 import (
+	"backend/database"
+	"context"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 	"time"
@@ -29,13 +32,23 @@ func CreateBlogPost() gin.HandlerFunc {
 			Dislikes:   0,
 			Comments:   []Comment{},
 			Tags:       new_post_req.Tags,
-			LikedBy:    []int{},
-			DislikedBy: []int{},
+			LikedBy:    []string{},
+			DislikedBy: []string{},
 		}
 
 		id, err := AddPostToDB(new_post)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create blog post"})
+			return
+		}
+
+		collection := database.DB.Collection("Users")
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+
+		_, err = collection.UpdateOne(ctx, bson.M{"userid": new_post.AuthorID}, bson.M{"$push": bson.M{"blogposts": new_post.ID.Hex()}})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user's blog posts"})
 			return
 		}
 

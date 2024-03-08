@@ -26,7 +26,7 @@ func ReloadFeed() gin.HandlerFunc {
 		}
 
 		var feed Feed
-		err = feedCollection.FindOne(ctx, bson.M{"userID": id}).Decode(&feed)
+		err = feedCollection.FindOne(ctx, bson.M{"userid": id}).Decode(&feed)
 		if err != nil {
 			c.JSON(400, gin.H{"error": "Error retrieving feed"})
 			return
@@ -56,7 +56,7 @@ func ReloadFeed() gin.HandlerFunc {
 			return calcScore(tgs, mp, blogs[i]) > calcScore(tgs, mp, blogs[j])
 		})
 
-		_, err = feedCollection.UpdateOne(ctx, bson.M{"userID": id}, bson.M{"$set": bson.M{"blogIDs": blogs}})
+		_, err = feedCollection.UpdateOne(ctx, bson.M{"userid": id}, bson.M{"$set": bson.M{"blogids": blogs}})
 		if err != nil {
 			c.JSON(400, gin.H{"error": "Error updating database"})
 			return

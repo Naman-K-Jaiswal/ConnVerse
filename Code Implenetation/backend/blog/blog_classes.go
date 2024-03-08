@@ -10,7 +10,7 @@ type BlogPostRequest struct {
 	Content  string   `form:"content" json:"content"`
 	Image    []byte   `form:"image" json:"image"`
 	Tags     []string `form:"tags" json:"tags"`
-	AuthorID int      `form:"authorId" json:"authorId"`
+	AuthorID string   `form:"authorid" json:"authorid"`
 }
 
 type EditPostRequest struct {
@@ -18,12 +18,13 @@ type EditPostRequest struct {
 	Content         string   `form:"content" json:"content"`
 	Image           []byte   `form:"image" json:"image"`
 	Tags            []string `form:"tags" json:"tags"`
-	DeleteCommentID []int    `form:"deleteCommentId" json:"deleteCommentId"`
+	DeleteCommentID []int    `form:"deletecommentid" json:"deletecommentid"`
+	AuthorID        string   `form:"authorid" json:"authorid"`
 }
 
 type ReactRequest struct {
-	Action int `json:"action"`
-	UserID int `json:"userId"`
+	Action int    `json:"action"`
+	UserID string `json:"userid"`
 }
 
 type BlogPost struct {
@@ -31,19 +32,19 @@ type BlogPost struct {
 	Title      string             `json:"title"`
 	Content    string             `json:"content"`
 	Image      []byte             `json:"image"`
-	AuthorID   int                `json:"authorId"`
+	AuthorID   string             `json:"authorid"`
 	Likes      int                `json:"likes"`
 	Dislikes   int                `json:"dislikes"`
 	Comments   []Comment          `json:"comments"`
 	Tags       []string           `json:"tags"`
 	Timestamp  time.Time          `json:"timestamp"`
-	LikedBy    []int              `json:"likedBy"`
-	DislikedBy []int              `json:"dislikedBy"`
+	LikedBy    []string           `json:"likedby"`
+	DislikedBy []string           `json:"dislikedby"`
 }
 
 type Comment struct {
-	Content     string    `json:"commentText"`
-	CommenterID int       `json:"commenterId"`
+	Content     string    `json:"commenttext"`
+	CommenterID string    `json:"commenterid"`
 	Timestamp   time.Time `json:"timestamp"`
 }
 

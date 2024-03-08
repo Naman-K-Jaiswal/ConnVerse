@@ -8,7 +8,7 @@ import (
 
 func ProfilesRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.POST("/profile/create", middleware.RequireAuth, profile.CreateUserProfile())
-	incomingRoutes.POST("/profile/update", middleware.RequireAuth, profile.UpdateUserProfile())
+	incomingRoutes.POST("/profile/update", middleware.RequireAuth, middleware.CRUDAuth, profile.UpdateUserProfile())
 	incomingRoutes.POST("/profile/search", middleware.RequireAuth, profile.SearchUserProfile())
 	incomingRoutes.GET("/profile/:id", middleware.RequireAuth, profile.RetrieveUserProfile())
 }

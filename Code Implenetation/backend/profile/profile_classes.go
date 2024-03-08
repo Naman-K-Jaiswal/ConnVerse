@@ -1,11 +1,12 @@
 package profile
 
 type User struct {
-	UserID       string       `json:"userID"`
+	UserID       string       `json:"userid"`
 	Name         string       `json:"name"`
 	Nickname     string       `json:"nickname"`
-	ProfilePhoto []byte       `json:"profilePhoto"`
-	BannerPhoto  []byte       `json:"bannerPhoto"`
+	Email        string       `json:"email"`
+	ProfilePhoto []byte       `json:"profilephoto"`
+	BannerPhoto  []byte       `json:"bannerphoto"`
 	Degree       string       `json:"degree"`
 	About        string       `json:"about"`
 	Skills       []string     `json:"skills"`
@@ -25,7 +26,7 @@ type Credential struct {
 
 type Project struct {
 	Name           string   `json:"name"`
-	InstructorName string   `json:"instructorName"`
+	InstructorName string   `json:"instructorname"`
 	Skills         []string `json:"skills"`
 	Description    string   `json:"description"`
 	From           string   `json:"from"`
@@ -33,18 +34,18 @@ type Project struct {
 }
 
 type Course struct {
-	CourseName     string `json:"courseName"`
-	InstructorName string `json:"instructorName"`
+	CourseName     string `json:"coursename"`
+	InstructorName string `json:"instructorname"`
 	Description    string `json:"description"`
 	Year           string `json:"year"`
 	Semester       string `json:"semester"`
 }
 
 type UserUpdate struct {
-	UserID       string       `json:"userID"`
+	UserID       string       `json:"userid"`
 	Nickname     string       `json:"nickname"`
-	ProfilePhoto []byte       `json:"profilePhoto"`
-	BannerPhoto  []byte       `json:"bannerPhoto"`
+	ProfilePhoto []byte       `json:"profilephoto"`
+	BannerPhoto  []byte       `json:"bannerphoto"`
 	About        string       `json:"about"`
 	Skills       []string     `json:"skills"`
 	BlogPosts    []string     `json:"blogposts"`
@@ -55,7 +56,7 @@ type UserUpdate struct {
 }
 
 type SearchQuery struct {
-	UserID       string   `json:"userID"`
+	UserID       string   `json:"userid"`
 	Name         string   `json:"name"`
 	Skills       []string `json:"skills"`
 	Degree       string   `json:"degree"`

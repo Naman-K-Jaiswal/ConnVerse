@@ -16,7 +16,7 @@ func RetrieveUserProfile() gin.HandlerFunc {
 		userID := c.Param("id")
 
 		// Create a filter based on the ObjectID
-		filter := bson.M{"userID": userID}
+		filter := bson.M{"userid": userID}
 
 		// Retrieve the user profile from MongoDB
 		var userProfile User

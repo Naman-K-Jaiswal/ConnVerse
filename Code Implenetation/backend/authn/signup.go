@@ -9,11 +9,14 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"log"
 	"net/http"
 	"net/smtp"
+	"os"
+	"time"
 )
 
 func SendOTP() gin.HandlerFunc {
@@ -103,6 +106,21 @@ func SignUp() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+
+		token := jwt.NewWithClaims(jwt.SigningMethodHS256, jwt.MapClaims{
+			"sub": signup_details.Email,
+			"exp": time.Now().Add(time.Hour * 24).Unix(),
+		})
+
+		tokenString, err := token.SignedString([]byte(os.Getenv("SECRET")))
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Error generating token"})
+			return
+		}
+
+		c.SetSameSite(http.SameSiteLaxMode)
+		c.SetCookie("Authorization", tokenString, 3600*24, "/", "localhost", false, true)
+
 		c.JSON(http.StatusOK, gin.H{"message": "Sign Up Successful!"})
 	}
 }
