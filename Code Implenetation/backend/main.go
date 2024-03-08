@@ -33,7 +33,7 @@ func main() {
 	routes.ProfilesRoutes(router)
 	routes.BlogRoutes(router)
 	routes.AuthRoutes(router)
-	//routes.FeedRoutes(router)
+	routes.FeedRoutes(router)
 
 	err = router.Run(":" + port)
 	if err != nil {

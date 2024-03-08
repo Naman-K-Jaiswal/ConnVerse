@@ -3,73 +3,55 @@ package blog
 import (
 	"backend/database"
 	"context"
-	"log"
+	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 	"time"
-	"github.com/gin-gonic/gin"
-	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/bson"
 )
-type CreateBlogPostRequest struct {
-	Title   string   `json:"title"`
-	Content string   `json:"content"`
-	Image   string   `json:"image"`
-	UserID  string   `json:"userId"`
-	Tags    []string `json:"tags"`
-}
+
 // Insert the new post into MongoDB
-func Update(newPost BlogPost) error {
-	collection := database.DB.Collection("BlogPosts")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
-	_, err := collection.InsertOne(ctx, newPost)
-	if err != nil {
-		log.Fatal(err)
-		return err
-	}
-	return nil
-}
 
 // handles the creation of a new post
 func CreateBlogPost() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var newPostReq CreateBlogPostRequest
-		if err := c.ShouldBindJSON(&newPostReq); err != nil {
+		var new_post_req BlogPostRequest
+		if err := c.ShouldBindJSON(&new_post_req); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
-		//log.Println("Received payload:", newPost)
-		newPost := BlogPost{
-			ID:        primitive.NewObjectID(),
-			Title:     newPostReq.Title,
-			Content:   newPostReq.Content,
-			Image:     newPostReq.Image,
-			UserID:    newPostReq.UserID,
-			Timestamp: time.Now(),
-			Likes:     0,
-			Dislikes:  0,
-			Comments:  []Comment{},
-			Tags:      newPostReq.Tags,
-			LikedBy:   []string{},
+
+		new_post := BlogPost{
+			ID:         primitive.NewObjectID(),
+			Title:      new_post_req.Title,
+			Content:    new_post_req.Content,
+			Image:      new_post_req.Image,
+			AuthorID:   new_post_req.AuthorID,
+			Timestamp:  time.Now(),
+			Likes:      0,
+			Dislikes:   0,
+			Comments:   []Comment{},
+			Tags:       new_post_req.Tags,
+			LikedBy:    []string{},
 			DislikedBy: []string{},
 		}
-		// Add the new blogpost to the DB and return it in JSON format	
 
-		err := Update(newPost)
+		id, err := AddPostToDB(new_post)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to create blog post"})
 			return
 		}
-		
-		c.JSON(http.StatusCreated, newPost)
-	}
-}
-// DeleteBlogPostByID deletes a blog post by its ID
-func DeleteBlogPostByID(postID primitive.ObjectID) error {
-	collection := database.DB.Collection("BlogPosts")
-	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
-	defer cancel()
 
-	_, err := collection.DeleteOne(ctx, bson.M{"_id": postID})
-	return err
+		collection := database.DB.Collection("Users")
+		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		defer cancel()
+
+		_, err = collection.UpdateOne(ctx, bson.M{"userid": new_post.AuthorID}, bson.M{"$push": bson.M{"blogposts": new_post.ID.Hex()}})
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user's blog posts"})
+			return
+		}
+
+		c.JSON(http.StatusCreated, gin.H{"message": "Blog post created successfully", "id": id})
+	}
 }
