@@ -48,4 +48,6 @@ type Comment struct {
 	Timestamp   time.Time `json:"timestamp"`
 }
 
-// Returns the number of comments on this blog post
+type SearchRequest struct {
+	Title string `json:"title"`
+}

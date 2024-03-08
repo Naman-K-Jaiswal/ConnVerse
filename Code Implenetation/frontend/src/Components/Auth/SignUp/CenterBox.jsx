@@ -8,6 +8,7 @@ import ValidationIcon from '@mui/icons-material/TaskAlt';
 import EmailIcon from '@mui/icons-material/Email';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
+import CryptoJS from 'crypto-js';
 
 const CenterBox = () => {
   const [showFirstForm, setShowFirstForm] = useState(true);
@@ -15,9 +16,58 @@ const CenterBox = () => {
   const [validationCode, setValidationCode] = useState('');
   const [signUpPassword, setSignUpPassword] = useState('');
   const [signUpConfirmPassword, setSignUpConfirmPassword] = useState('');
-  const handleSubmitFirstForm = (e) => {
+
+  const handleSubmitFirstForm = async (e) => {
     e.preventDefault();
-    setShowFirstForm(false);
+
+    try {
+      const response = await fetch('http://localhost:8080/send-otp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: signUpEmail }),
+      });
+
+      if (response.status === 200){
+        setShowFirstForm(false);
+      } else {
+        alert('Please enter valid Email')
+      }
+    } catch (error) {
+      alert('Please enter valid Email');
+    }
+  }
+
+  const handleSignUp = async (e) => {
+    e.preventDefault();
+    if (signUpPassword !== signUpConfirmPassword) {
+      alert('Passwords do not match');
+      return;
+    }
+
+    console.log(signUpPassword)
+    const hashedPassword = CryptoJS.SHA256(signUpPassword).toString(CryptoJS.enc.Hex);
+
+    try {
+      const response = await fetch('http://localhost:8080/signup', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: signUpEmail, old_password: validationCode, new_password: hashedPassword }),
+      });
+
+      if (response.ok) {
+        alert('sign up successful');
+      } else {
+        console.error('Failed to validate OTP');
+        return;
+      }
+    } catch (error) {
+      console.error('Error validating OTP:', error);
+      return;
+    }
   }
   return (
     <>
@@ -60,7 +110,7 @@ const CenterBox = () => {
               )
             }
             {!showFirstForm && (
-              <form className='signUpForm' onSubmit={handleSubmitFirstForm}>
+              <form className='signUpForm' onSubmit={handleSignUp}>
                 {/* <pre>Register</pre>
                 <div className='line'></div> */}
                 <div className='signUpEmail'>
