@@ -8,11 +8,13 @@ import User from './Components/User/UserProfile'
 import CreateBlog from './Components/Blog/CreateBlog/CreateBlogPage'
 import IndividualBlog from './Components/Blog/IndividualBlog/BlogTemplate';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import LandingPage from './Components/LandingPage/LandingPage';
 
 const App = () => {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<LandingPage/>} />
         <Route path="/home" element={<HomeComp/>} />
         <Route path="/login" element={<LoginComp/>} />
         <Route path="/signup" element={<SignUpComp/>} />

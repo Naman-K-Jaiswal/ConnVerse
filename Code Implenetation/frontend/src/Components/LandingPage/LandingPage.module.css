@@ -1,0 +1,25 @@
+.ImageContainer {
+    background-image: url('./background.png');
+    background-repeat: no-repeat;
+    height: 100vh;
+    background-size: cover;
+    background-position: center;
+}
+.TypewriterContainer {
+    position: absolute;
+    bottom: 0;
+    left: -25vw;
+    padding: 20px;
+    /* Adjust padding as needed */
+}
+@keyframes fadeIn {
+    from {
+        transform: translateX(100vh) translateY(0);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0) translateY(0);
+        opacity: 1;
+    }
+}
