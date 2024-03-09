@@ -9,8 +9,10 @@ import EmailIcon from '@mui/icons-material/Email';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import CryptoJS from 'crypto-js';
+import { useNavigate } from 'react-router-dom';
 
 const CenterBox = () => {
+  const navigate = useNavigate();
   const [showFirstForm, setShowFirstForm] = useState(true);
   const [signUpEmail, setSignUpEmail] = useState('');
   const [validationCode, setValidationCode] = useState('');
@@ -59,6 +61,7 @@ const CenterBox = () => {
       });
 
       if (response.ok) {
+        navigate('/home');
         alert('sign up successful');
       } else {
         console.error('Failed to validate OTP');

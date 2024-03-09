@@ -7,10 +7,10 @@ import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import MetaData from '../../../MetaData.jsx';
 import CryptoJS from 'crypto-js';
-import { CookieSharp } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
 
 const CenterBox = () => {
-
+  const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
@@ -30,6 +30,7 @@ const CenterBox = () => {
       })
 
       if (response.ok) {
+        navigate('/home');
         alert('Logged in successfully');
       } else {
         response.json();
