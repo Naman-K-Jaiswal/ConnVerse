@@ -41,7 +41,7 @@
   color: #E2921B;
 }
 
-img {
+.loginPageImage {
   width: 20vw; /* Adjust width as needed */
   height: 40vh; /* Maintain aspect ratio */
   margin-top: 4vh; /* Adjust margin as needed */

@@ -77,7 +77,7 @@ const CenterBox = () => {
           <p className='Conn'>Conn</p>
           <p className='Verse'>Verse</p>
         </div>
-        <img src={registerImg} alt="Your GIF" style={{height: '33.33vh', float: 'left', top:'18vmax' }} />
+        <img className = "signUpPageImage" src={registerImg} alt="Your GIF" style={{height: '33.33vh', float: 'left', top:'18vmax' }} />
         <div className="rectangular-box" style={{right: '3vw', width: '30vw', height: '50vh', borderRadius:'15px', backgroundColor: 'white', position: 'absolute', zIndex: '9999'}}>
             <div className="container" style={{left:'1.5vw',top:'0.5vh'}}>
               <p style={{fontSize:'20px', font:'Roboto'}}>Welcome To</p>

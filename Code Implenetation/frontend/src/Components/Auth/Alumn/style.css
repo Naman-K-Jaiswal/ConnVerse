@@ -1,4 +1,9 @@
-
+.everything{
+  /* overflow: hidden; */
+  position: fixed;
+  height: 100%;
+  width: 100%;
+}
 .container1 {
     display: flex;
     justify-content: flex-start; /* Align to the top left */
@@ -13,7 +18,7 @@
   .line1 {
     border-bottom: 0.2vmax solid black; /* Bold line below text */
     width: 25vmax; /* Adjust width of the line as needed */
-    margin-top: 9vmax; /* Adjust margin as needed */
+    margin-top: 8vmax; /* Adjust margin as needed */
     margin-left: 7.5vmax;
 }
 
@@ -54,7 +59,7 @@
     transform: translateY(-50%);
   }
   
-  .logo1 {
+  .logo11 {
     top: 4vmax; /* Adjust top position as needed */
     right: 5000px; /* Adjust left position as needed */
     width: 7vmax;
@@ -69,15 +74,15 @@
   }
 
   .iitklogo1{
-    left: 13.5vw;
-    top: 80vh;
+    margin-left :13vw;
+    margin-top: -3.5vh;
     height: 20vh;
     width: auto;
   }
 
   .copyright1{
-    margin-top: 25vh;
-    margin-left: 11vw;
+    margin-top: -0.5vh;
+    margin-left: 8vw;
     font-family: "Inter", sans-serif;
     font-size: 1vmax; /* Increase the font size */
     color: black; /* Change the text color */
@@ -91,7 +96,7 @@
     justify-content: space-evenly;
     height: 40%;
     margin-left: 2vw;
-    margin-right: -5vw;
+    margin-right: 62vw;
     transition: all 0.5s;
   }
   
@@ -171,3 +176,11 @@
     color: #f2b65d;
   }
   
+
+    @media screen and (max-width: 768px){
+      .signUpAlumnForm{
+        margin-right: 2vw;
+      }
+      /* Write media queries for the form */
+      /* Add your code here */
+    }

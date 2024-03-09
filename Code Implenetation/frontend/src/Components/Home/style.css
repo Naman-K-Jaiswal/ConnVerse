@@ -1,0 +1,167 @@
+body {
+    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    position: relative; /* Add this to allow proper positioning of fixed elements */
+}
+
+#mainBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin-top: 70px; /* Adjust for navbar height */
+}
+
+#searchBoxDiv {
+    position: fixed; /* Make search bar fixed */
+    top: 60px; /* Adjust for navbar height */
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 999; /* Ensure it's above other content */
+    width: 80%;
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    background-color: #fff; /* Set background color to white */
+    padding-top: 0;
+    border-bottom: 10px solid #f4f4f4;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Add shadow for depth */
+}
+
+#search {
+    width: 100%;
+    height: 40px;
+    font-size: 16px;
+    padding: 10px;
+    border: none;
+    outline: none;
+}
+
+#searchButton {
+    width: 100px;
+    height: 40px;
+    margin-left: 0px;
+    border-radius: 10px;
+    margin-right: 10px;
+    border: none;
+    background-color: #e2921b;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+
+#searchButton:hover {
+    background-color: #c17e11;
+}
+
+#blogLists{
+    margin-top: 14vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y: auto;
+    width: 80%;
+    height: 95%;
+    gap: 10px;
+}
+
+.blogX{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 90%;
+    height: 40%;
+    border-radius: 10px;
+    padding: 1%;
+    background-color: white;
+    gap: 10px;
+}
+
+.blogLeftHalfDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 70%;
+    height: 100%;
+    gap: 10px;
+}
+
+.blogHeading{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    height: 50%;
+    gap: 10px;
+}
+
+.blogProfileImageDiv{
+    height: 100%;
+    width: 20%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.blogProfileImageDiv img{
+    height: 150px;
+    width: auto;
+    border-radius: 50%;
+}
+
+.titleDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 80%;
+    height: 100%;
+    gap: 5px;
+}
+
+.blogTitle{
+    font-size: 2em;
+}
+
+.blogUsername{
+    font-size: 1em;
+}
+
+.blogLastDate{
+    font-size: 1em;
+}
+
+.blogTags{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    font-size: 1em;
+}
+
+.blogTagX{
+    background-color: #e2921b;
+    border-radius: 10px;
+    padding: 5px;
+    display: inline;
+}
+
+.blogContent{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 80%;
+    border-radius: 10px;
+}
+
+.blogRightHalfDiv{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    height: 100%;
+    border-radius: 10px;
+}

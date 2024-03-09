@@ -1,0 +1,52 @@
+/* Typewriter.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Mova:wght@700&display=swap');
+
+.heroHeadText {
+    font-family: 'Poppins', sans-serif;
+}
+
+.Typewriter {
+    font-family: 'Poppins', sans-serif;
+    color: #f2b65d;
+    font-weight: 800;
+    font-size: 15vh;
+    margin-left: 25vw;
+}
+
+.text-eerieBlack {
+    color: #f2b65d;
+}
+
+.font-black {
+    font-weight: 900;
+}
+
+.font-extrabold {
+    font-weight: 800;
+}
+
+.font-mova {
+    font-family: 'Mova', sans-serif;
+}
+
+.lg\:text-\[80px\] {
+    font-size: 80px;
+}
+
+.sm\:text-\[60px\] {
+    font-size: 60px;
+}
+
+.xs\:text-\[50px\] {
+    font-size: 50px;
+}
+
+.text-\[40px\] {
+    font-size: 40px;
+}
+
+.lg\:leading-\[90px\] {
+    line-height: 90px;
+}
