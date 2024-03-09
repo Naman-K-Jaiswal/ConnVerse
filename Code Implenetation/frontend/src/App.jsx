@@ -9,6 +9,7 @@ import CreateBlog from './Components/Blog/CreateBlog/CreateBlogPage'
 import IndividualBlog from './Components/Blog/IndividualBlog/BlogTemplate';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
+import BlogTemplate from './Components/Blog/IndividualBlog/BlogTemplate';
 
 const App = () => {
   return (
@@ -22,9 +23,19 @@ const App = () => {
         <Route path="/createblog" element={<CreateBlogComp/>} />
         <Route path="/userprofile" element={<UserProfileComp/>} />
         <Route path="/individualblog" element={<IndividualBlogComp/>} />
+        <Route path="/blogtemp" element={<Blogtempcomp/>} />
       </Routes>
     </Router>
   );
+};
+
+const Blogtempcomp = () => {
+  return (
+    <>
+    <Navbar/>
+    <BlogTemplate/>
+  </>
+  )
 };
 
 const HomeComp = () => {
