@@ -16,7 +16,7 @@ body {
 
 #searchBoxDiv {
     position: fixed; /* Make search bar fixed */
-    top: 90px; /* Adjust for navbar height */
+    top: 60px; /* Adjust for navbar height */
     left: 50%;
     transform: translateX(-50%);
     z-index: 999; /* Ensure it's above other content */
@@ -25,9 +25,9 @@ body {
     align-items: center;
     margin-bottom: 20px;
     background-color: #fff; /* Set background color to white */
-    padding: 10px;
-    border-radius: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Add shadow for depth */
+    padding-top: 0;
+    border-bottom: 10px solid #f4f4f4;
+    box-shadow: 0 2px 4px rgba(255, 255, 255, 0.1); /* Add shadow for depth */
 }
 
 #search {
@@ -42,9 +42,10 @@ body {
 #searchButton {
     width: 100px;
     height: 40px;
-    margin-left: 10px;
+    margin-left: 0px;
+    border-radius: 10px;
+    margin-right: 10px;
     border: none;
-    border-radius: 20px;
     background-color: #e2921b;
     color: white;
     font-size: 16px;
@@ -163,41 +164,4 @@ body {
     width: 30%;
     height: 100%;
     border-radius: 10px;
-}
-
-.blogRightHalfDiv img{
-    height: 100%;
-    width: 100%;
-    border-radius: 10px;
-}
-
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 95%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #e2921b;
-    border-radius: 20px;
-    padding: 10px 20px;
-    z-index: 999; /* Ensure it's above other content */
-}
-
-.nav-item {
-    background-color: #e2921b;
-    text-align: center;
-    width: 150px;
-    font-size: 3vh;
-    text-decoration: none;
-    color: white;
-    padding: 0;
-    padding: 5px 10px;
-    transition: all 0.5s;
-}
-
-.nav-item:hover {
-    transform: scale(1.2);
-    background-color: #e29a2e;
 }

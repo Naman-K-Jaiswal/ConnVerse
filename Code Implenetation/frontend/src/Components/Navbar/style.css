@@ -1,46 +1,79 @@
 .navbar {
-    display: flex;
-    justify-content: left;
-    align-items: center;
-    width: 95vw;
-    background-color: #e2921b;
-    border-radius: 20px;
-    padding: 10px 20px;
-    margin: 1vmax;
-  }
-  
-  .nav-item {
-    text-align: center;
-    width: 150px;
-    font-size: 3vh;
-    text-decoration: none;
-    color: white;
-    padding: 0;
-    padding: 5px 10px;
-    transition: all 0.5s;
-  }
-  
-  .nav-item:hover {
-    transform: scale(1.2);
-    background-color: #e29a2e;
-    /* color: ; */
-  }
-  
-  .profile {
-    margin-left: 600px;
-    display: flex;
-    align-items: center;
-  }
-  
-  .profile-photo {
-    width: 40px;
-    height: 40px;
-    border-radius: 50%;
-    margin-right: 10px;
-  }
-  
-  .username {
-    font-weight: bold;
-    color: white
-  }
-  
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(to right, #e2921b, #cc994c);
+  padding: 10px 20px;
+  z-index: 999;
+}
+
+.nav-items {
+  display: flex;
+  justify-content: flex-end;
+  list-style-type: none;
+  padding-left: 50vw;
+  margin: 0;
+}
+
+.nav-item {
+  padding-left: 1vw;
+  margin-right: 20px;
+}
+
+.nav-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  transition: all 0.3s ease;
+}
+
+.nav-link span {
+  font-size: 14px;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  padding-left: 2vw;
+  padding-right: 7vw;
+}
+
+.profile-photo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.username {
+  font-weight: bold;
+  color: white;
+}
+
+.nav-link:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.2);
+}
+
+#Conn1 {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 2vmax;
+  color: rgb(255, 255, 255);
+  margin-right: 20px; /* Add some spacing between "Connverse" and the navbar */
+  display: flex;
+  align-items: center;
+}
+
+.connversehead{
+  margin-top: 0px;
+  align-items: center;
+  height: 1vh;
+  display: flex;
+  align-items: center;
+}

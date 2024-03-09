@@ -4,23 +4,13 @@ import './style.css';
 const Home = () => {
   const blogData = [
     {
-      id: 1,
+      id: 3,
       title: "Mastering the art of Leadership",
       username: "User123",
       lastDate: "10 days ago",
       tags: ["#Leadership", "#Management", "#Business"],
       content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-      imageSrc: './pp.jpg', 
-      profileImageSrc: require('./pp.jpg')
-    },
-    {
-      id: 2,
-      title: "Mastering the art of Leadership",
-      username: "User123",
-      lastDate: "10 days ago",
-      tags: ["#Leadership", "#Management", "#Business"],
-      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-      imageSrc: './pp.jpg', 
+      imageSrc: require('./pp.jpg'), 
       profileImageSrc: require('./pp.jpg')
     },
     {
@@ -30,7 +20,87 @@ const Home = () => {
       lastDate: "10 days ago",
       tags: ["#Leadership", "#Management", "#Business"],
       content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
-      imageSrc: './pp.jpg', 
+      imageSrc: require('./pp.jpg'), 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 3,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: require('./pp.jpg'), 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 3,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: require('./pp.jpg'), 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 3,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: require('./pp.jpg'), 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 3,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: require('./pp.jpg'), 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 3,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: require('./pp.jpg'), 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 3,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: require('./pp.jpg'), 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 3,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: require('./pp.jpg'), 
+      profileImageSrc: require('./pp.jpg')
+    },
+    {
+      id: 3,
+      title: "Mastering the art of Leadership",
+      username: "User123",
+      lastDate: "10 days ago",
+      tags: ["#Leadership", "#Management", "#Business"],
+      content: "Lorem ipsum dolor sit amet, consectetur adipiscing elit...",
+      imageSrc: require('./pp.jpg'), 
       profileImageSrc: require('./pp.jpg')
     },
   ];
@@ -68,7 +138,7 @@ const Home = () => {
                 </div>
               </div>
               <div className="blogRightHalfDiv">
-                <img src={blog.imageSrc} alt={`Blog${blog.id} Image`} />
+                <img src={blog.imageSrc} alt={`Blog${blog.id} Image`}/>
               </div>
             </div>
           ))}

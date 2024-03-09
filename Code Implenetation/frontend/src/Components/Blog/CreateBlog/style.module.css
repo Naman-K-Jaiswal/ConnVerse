@@ -219,7 +219,6 @@ font-size: 1.2em;
 }
 
 #uploadButton {
-    /* position this buttom from right end */
     position:absolute;
     display: block;
     padding: 10px 20px;
@@ -235,42 +234,3 @@ font-size: 1.2em;
     background-color: lightgrey;
 }
 
-
-/* /////////////////////////////NAVBAR///////////////////////////////// */
-.navbar {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 95vw;
-    background-color: #e2921b;
-    border-radius: 20px;
-    padding: 10px 20px;
-    margin: 1vmax;
-}
-
-.nav-item {
-    text-align: center;
-    width: 150px;
-    font-size: 3vh;
-    text-decoration: none;
-    color: white;
-    padding: 0;
-    padding: 5px 10px;
-    transition: all 0.5s;
-}
-
-.nav-item:hover {
-    transform: scale(1.2);
-    background-color: #e29a2e;
-    /* color: ; */
-}
-.profile {
-    margin-left: 600px;
-    display: flex;
-    align-items: center;
-}
-#profilePhotoNavbar{
-    height: 50px;
-    width: 50px;
-    border-radius: 50%;
-}
