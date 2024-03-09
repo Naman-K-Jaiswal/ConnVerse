@@ -7,7 +7,7 @@ const Navbar = () => {
   return (
     <nav className={styles.navbar}>
       <Link to='/'><img src={WebLogo} alt="Logo" id={styles.NavBarImage} /></Link>
-      <p className={styles.conn}>Conn</p>
+      <p className={styles.Conn}>Conn</p>
       <p className={styles.Verse} style={{ color: '#f2b65d' }}>Verse</p>
       <div className={styles.navlinks}>
         <Link to='/login' className={styles.navlink} style={{marginLeft: '56vw'}}>
