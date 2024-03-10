@@ -51,6 +51,16 @@
     font-weight: bold;
 }
 
+#subTitleBlogDiv{
+    display: flex;
+    flex-direction: row;
+}
+
+#userDetailsBlogDiv{
+    display: flex;
+    flex-direction: column;
+}
+
 #usernameBlogDiv{
     font-size: 1.5em;
     font-weight: bold;
@@ -58,6 +68,52 @@
 
 #uploadedDayBlogDiv{
     font-size: 1em;
+}
+
+#votesNCommentsBlogDiv{
+    display: flex;
+    font-size: 1.2em;
+    flex-direction: row;
+    align-items: center;
+    margin-top: 1.5vh;
+    margin-left: 25vw;
+    gap: 1vw;
+}
+
+#upVotesBlogDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#upVoteButton{
+    color : black;
+    font-size: 1.5em;
+    background-color: whitesmoke;
+    border-radius: 10px;
+    border: none;
+    padding: 1%;
+}
+
+#downVotesBlogDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#downVoteButton{
+    color : black;
+    font-size: 1.5em;
+    background-color: whitesmoke;
+    border: none;
+    border-radius: 10px;
+    padding: 1%;
+}
+
+#commentsBlogDiv{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
 }
 
 #profileImageBlogDiv img{
@@ -68,16 +124,16 @@
 
 /* Section 2 BLog */
 #imagesBlogDiv{
-    height: 25vh;
+    height: 50vh;
+    width: auto;
     display: flex;
     overflow-y: auto;
     justify-content: center;
     gap: 1vw;
-    width: 100%;
 }
 
 #imagesBlogDiv img{
-    max-width: 33%;
+    border-radius: 10px;
     height: 100%;
 }
 
@@ -100,7 +156,7 @@
     width: 24%;
     background-color: whitesmoke;
     border-radius: 10px;
-    max-height: 1000vh;
+    max-height:89.5vh;
     border: 1px solid #ccc;
 }
 #headingCommentsDiv{
@@ -113,6 +169,7 @@
 #commentsListDiv{
     width: 100%;
     display: flex;
+    overflow-y: auto;
     gap: 1vh;
     flex-direction: column;
 }

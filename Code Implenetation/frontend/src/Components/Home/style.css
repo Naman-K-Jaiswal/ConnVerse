@@ -81,6 +81,12 @@ body {
     gap: 10px;
 }
 
+.blogX:hover{
+    transform: scale(1.01);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s linear;
+}
+
 .blogLeftHalfDiv{
     display: flex;
     flex-direction: column;
@@ -161,7 +167,14 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 30%;
+    width: 25%;
     height: 100%;
     border-radius: 10px;
+}
+
+.blogRightHalfDiv img{
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+
 }
