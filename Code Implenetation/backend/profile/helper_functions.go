@@ -14,7 +14,7 @@ import (
 	"time"
 )
 
-func InitializeUser(res bson.M) error {
+func InitializeUser(res bson.M) (error, []byte) {
 	collection := database.DB.Collection("Users")
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -22,36 +22,36 @@ func InitializeUser(res bson.M) error {
 	url := "https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/" + res["i"].(string) + "_0.jpg"
 	banner_url := "https://dummyimage.com/16:9x1080/"
 
-	response, err := http.Get(url)
+	response1, err := http.Get(url)
 	if err != nil {
-		return err
+		return err, nil
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
 			fmt.Println("Error closing response body:", err)
 		}
-	}(response.Body)
+	}(response1.Body)
 
-	imageBytes, err := ioutil.ReadAll(response.Body)
+	imageBytes, err := ioutil.ReadAll(response1.Body)
 	if err != nil {
-		return err
+		return err, nil
 	}
 
-	response, err = http.Get(banner_url)
+	response2, err := http.Get(banner_url)
 	if err != nil {
-		return err
+		return err, nil
 	}
 	defer func(Body io.ReadCloser) {
 		err := Body.Close()
 		if err != nil {
 			fmt.Println("Error closing response body:", err)
 		}
-	}(response.Body)
+	}(response2.Body)
 
-	bannerBytes, err := ioutil.ReadAll(response.Body)
+	bannerBytes, err := ioutil.ReadAll(response2.Body)
 	if err != nil {
-		return err
+		return err, nil
 	}
 
 	new_user := User{
@@ -71,7 +71,7 @@ func InitializeUser(res bson.M) error {
 
 	_, err = collection.InsertOne(ctx, new_user)
 	if err != nil {
-		return err
+		return err, nil
 	}
 
 	user_feed := feed.Feed{
@@ -86,10 +86,10 @@ func InitializeUser(res bson.M) error {
 
 	_, err = collection.InsertOne(ctx, user_feed)
 	if err != nil {
-		return err
+		return err, nil
 	}
 
-	return nil
+	return nil, imageBytes
 }
 
 func AddUserToDB(new_user User) (string, error) {

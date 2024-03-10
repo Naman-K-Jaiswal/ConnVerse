@@ -90,18 +90,18 @@ func SignUp() gin.HandlerFunc {
 			return
 		}
 
-		err = CreatePassword(signup_details)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
-			return
-		}
-
 		res, err := CheckUserExist(signup_details.Email)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
-		err = profile.InitializeUser(res)
+		err, response := profile.InitializeUser(res)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
+			return
+		}
+
+		err = CreatePassword(signup_details)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
@@ -121,6 +121,6 @@ func SignUp() gin.HandlerFunc {
 		c.SetSameSite(http.SameSiteLaxMode)
 		c.SetCookie("Authorization", tokenString, 3600*24, "/", "localhost", false, true)
 
-		c.JSON(http.StatusOK, gin.H{"message": "Sign Up Successful!"})
+		c.JSON(http.StatusOK, gin.H{"message": "Sign Up Successful!", "img": response, "name": res["n"].(string)})
 	}
 }

@@ -7,39 +7,55 @@ import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import MetaData from '../../../MetaData.jsx';
 import CryptoJS from 'crypto-js';
-import { CookieSharp } from '@mui/icons-material';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const CenterBox = () => {
-
+const CenterBox = ({setSignIn}) => {
+  const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
 
   const handleLogin = async (e) => {
     e.preventDefault();
-
-    console.log(loginPassword)
     const hashedPassword = CryptoJS.SHA256(loginPassword).toString(CryptoJS.enc.Hex);
 
-    try {
-      const response = await fetch('http://localhost:8080/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: loginEmail, password: hashedPassword }),
-      })
+      try {
+          const response = await fetch('http://localhost:8080/login', {
+              method: 'POST',
+              credentials: 'include',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email: loginEmail, password: hashedPassword }),
+          })
 
-      if (response.ok) {
-        alert('Logged in successfully');
-      } else {
-        response.json();
-        console.log(response["error"]);
-        alert('Invalid Credentials', response["error"]);
+          if (response.ok) {
+              try {
+                  const config = {
+                      headers: {
+                          "Content-type": "application/json",
+                      },
+                  };
+
+                  const { data } = await axios.post(
+                      "http://localhost:5000/api/user/login",
+                      { email: loginEmail, password : hashedPassword },
+                      config
+                  );
+                  localStorage.setItem("userInfo", JSON.stringify(data));
+                  setSignIn(true);
+                  navigate("/home")
+              } catch (error) {
+                  alert(error);
+              }
+          } else {
+              alert(response["error"]);
+          }
+      } catch (error) {
+          alert("an error occurred, please try again");
       }
-    } catch (error) {
-      alert('Invalid Credentials', error);
-    }
   }
+
   return (
     <>
       <MetaData title='Login' />

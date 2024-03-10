@@ -1,63 +1,118 @@
-import React from 'react';
-import Navbar from './Components/Navbar/Navbar'; 
-import Login from './Components/Auth/Login/LoginPage'
+import React, {useState, useEffect} from 'react';
+import Navbar from './Components/Navbar/Navbar';
 import SignUp from './Components/Auth/SignUp/SignupPage'
 import Alumn from './Components/Auth/Alumn/AlumnRegisterPage'
 import Home from './Components/Home/Home'
 import User from './Components/User/UserProfile'
 import CreateBlog from './Components/Blog/CreateBlog/CreateBlogPage'
-import IndividualBlog from './Components/Blog/IndividualBlog/BlogTemplate';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
 import BlogTemplate from './Components/Blog/IndividualBlog/BlogTemplate';
+import ChatProvider from "./Context/ChatProvider";
+import ChatPage from "./Pages/Chatpage";
+import LoginPage from "./Components/Auth/Login/LoginPage";
 
 const App = () => {
+  // console.log(Cookies.get('Authorization'));
+  const [signIn, setSignIn] = useState(false);
+
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  };
+
+  useEffect(() => {
+    const checkAuthentication = () => {
+      const tokenString = getCookie('Authorization'); 
+      console.log(tokenString);
+      const isAuthenticated = !!tokenString; 
+
+      setSignIn(isAuthenticated);
+    };
+
+    checkAuthentication();
+
+    const handleCookieChange = () => {
+      checkAuthentication();
+    };
+
+    window.addEventListener('storage', handleCookieChange);
+
+    return () => {
+      window.removeEventListener('storage', handleCookieChange);
+    };
+  }, []);
+
   return (
-    <Router>
       <Routes>
-        <Route path="/" element={<LandingPage/>} />
-        <Route path="/home" element={<HomeComp/>} />
-        <Route path="/login" element={<LoginComp/>} />
-        <Route path="/signup" element={<SignUpComp/>} />
-        <Route path="/alumn" element={<AlumnComp/>} />
-        <Route path="/createblog" element={<CreateBlogComp/>} />
-        <Route path="/userprofile" element={<UserProfileComp/>} />
-        <Route path="/individualblog" element={<IndividualBlogComp/>} />
-        <Route path="/blogtemp" element={<Blogtempcomp/>} />
+        {!signIn && (
+            <>
+              <Route path="/" element={<LandingPage/>} />
+              <Route path="/login" element={<LoginComp setSignIn={setSignIn}/>} />
+              <Route path="/signup" element={<SignUpComp setSignIn={setSignIn}/>} />
+              <Route path="/alumn" element={<AlumnComp/>} />
+            </>
+        )}
+        {signIn && (
+            <>
+              <Route path="/" element={<LandingPage/>} />
+              <Route path="/login" element={<LoginComp setSignIn={setSignIn}/>} />
+              <Route path="/signup" element={<SignUpComp setSignIn={setSignIn}/>} />
+              <Route path="/alumn" element={<AlumnComp/>} />
+              <Route path="/home" element={<HomeComp setSignIn={setSignIn}/>} />
+              <Route path="/createblog" element={<CreateBlogComp setSignIn={setSignIn}/>} />
+              <Route path="/userprofile" element={<UserProfileComp setSignIn={setSignIn}/>} />
+              <Route path="/blogtemp" element={<Blogtempcomp setSignIn={setSignIn}/>} />
+              <Route path="/chat" element={<ChatMainPage setSignIn={setSignIn}/>} />
+            </>
+        )}
       </Routes>
-    </Router>
   );
 };
 
-const Blogtempcomp = () => {
+const Blogtempcomp = ({setSignIn}) => {
   return (
     <>
-    <Navbar/>
+    <Navbar setSignIn={setSignIn}/>
     <BlogTemplate/>
   </>
   )
 };
 
-const HomeComp = () => {
+const ChatMainPage = ({setSignIn}) => {
   return (
     <>
-    <Navbar/>
+      <Navbar setSignIn={setSignIn}/>
+      <ChatProvider>
+        <div className='ChatApp'>
+          <ChatPage/>
+        </div>
+      </ChatProvider>
+    </>
+  )
+};
+
+const HomeComp = ({setSignIn}) => {
+  return (
+    <>
+    <Navbar setSignIn={setSignIn}/>
     <Home/>
   </>
   )
 };
 
-const LoginComp = () => {
+const LoginComp = ({setSignIn}) => {
   return (
     <>
-    <Login/>
+    <LoginPage setSignIn={setSignIn}/>
   </>
   )
 };
-const SignUpComp = () => {
+const SignUpComp = ({setSignIn}) => {
   return (
     <>
-    <SignUp/>
+    <SignUp setSignIn={setSignIn}/>
   </>
   )
 };
@@ -70,28 +125,19 @@ const AlumnComp = () => {
 };
 
 
-const CreateBlogComp = () => {
+const CreateBlogComp = ({setSignIn}) => {
   return (
     <>
-    <Navbar/>
+    <Navbar setSignIn={setSignIn}/>
     <CreateBlog/>
   </>
   )
 };
 
-const IndividualBlogComp = () => {
+const UserProfileComp = ({setSignIn}) => {
   return (
     <>
-    <Navbar/>
-    <IndividualBlog/>
-  </>
-  )
-};
-
-const UserProfileComp = () => {
-  return (
-    <>
-    <Navbar/>
+    <Navbar setSignIn={setSignIn}/>
     <User/>
   </>
   )

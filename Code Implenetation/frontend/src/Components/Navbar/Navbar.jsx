@@ -6,14 +6,32 @@ import ChatIcon from '@mui/icons-material/Chat';
 
 import './style.css';
 import profileImg from './profile_pic.JPG';
-import { Link } from 'react-router-dom';
+import {Link, useNavigate} from 'react-router-dom';
 
-const Navbar = () => {
+const Navbar = ({setSignIn}) => {
+  const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleLogout = () => {
-    // Perform logout action
-    console.log('Logging out...');
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("http://localhost:8080/logout", {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+
+      if(response.ok) {
+        localStorage.removeItem("userInfo");
+        setSignIn(false);
+        navigate("/")
+      } else {
+        alert("error in logging out, please try again!")
+      }
+    } catch (error) {
+      alert("error in logging out, please try again!")
+    }
   };
 
   return (
@@ -56,7 +74,7 @@ const Navbar = () => {
           {isOpen && (
             <div className="dropdown-content">
               <Link to="/profile">My Profile</Link>
-              <Link to="/">Log Out</Link>
+              <Link to="/" onClick={handleLogout}>Log Out</Link>
             </div>
           )}
         </div>
