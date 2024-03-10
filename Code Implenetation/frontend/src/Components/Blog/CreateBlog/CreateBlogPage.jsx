@@ -13,7 +13,7 @@ const CreateBlogPage = () => {
             title: "Interview at DevRev",
             lastTime: "7 days ago",
             tags: ["Web Development", "Interview"],
-            content: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. At ea ducimus, ex adipisci labore quisquam nam reprehenderit tempore officiis soluta perspiciatis autem. Modi recusandae nemo, beatae magni quia quo odio? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos quidem quibusdam suscipit expedita ea cum facilis voluptatibus voluptatum dolorem neque. Molestias voluptatum quia et, nostrum doloremque officia assumenda omnis inventore."
+            content: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. At ea ducimus, ex adipisci labore quisquam nam reprehenderit tempore officiis soluta perspiciatis autem. Modi recusandae nemo, beatae magni quia quo odio? Lorem ipsum dolor sit, amet consectetur adipisicing elit. Eos quidem quibusdam suscipit expedita ea cum facilis voluptatibus voluptatum dolorem neque. Molestias voluptatum quia et, nostrum doloremque officia assumenda omnis inventore. "
         },
         {
             title: "Interview at DevRev",
@@ -64,7 +64,7 @@ const CreateBlogPage = () => {
                             <div id={styles.blogsList}>
                                 {/* Blog Items */}
                                 {blogs.map((blog, index) => (
-                                    <div key={index} className={styles.blogItem}>
+                                    <div key={index} className={styles.blogItemPrevBlogX}>
                                         <div className={styles.blogItemTop}>
                                             <div className={styles.blogItemHeading}>
                                                 <div className={styles.blogItemTitle}>{blog.title}</div>

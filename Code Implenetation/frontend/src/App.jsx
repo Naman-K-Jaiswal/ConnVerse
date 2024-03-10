@@ -14,35 +14,35 @@ import LoginPage from "./Components/Auth/Login/LoginPage";
 
 const App = () => {
   // console.log(Cookies.get('Authorization'));
-  const [signIn, setSignIn] = useState(false);
+  const [signIn, setSignIn] = useState(true);
 
-  const getCookie = (name) => {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  };
+  // const getCookie = (name) => {
+  //   const value = `; ${document.cookie}`;
+  //   const parts = value.split(`; ${name}=`);
+  //   if (parts.length === 2) return parts.pop().split(';').shift();
+  // };
 
-  useEffect(() => {
-    const checkAuthentication = () => {
-      const tokenString = getCookie('Authorization'); 
-      console.log(tokenString);
-      const isAuthenticated = !!tokenString; 
+  // useEffect(() => {
+  //   const checkAuthentication = () => {
+  //     const tokenString = getCookie('Authorization'); 
+  //     console.log(tokenString);
+  //     const isAuthenticated = !!tokenString; 
 
-      setSignIn(isAuthenticated);
-    };
+  //     setSignIn(isAuthenticated);
+  //   };
 
-    checkAuthentication();
+  //   checkAuthentication();
 
-    const handleCookieChange = () => {
-      checkAuthentication();
-    };
+  //   const handleCookieChange = () => {
+  //     checkAuthentication();
+  //   };
 
-    window.addEventListener('storage', handleCookieChange);
+  //   window.addEventListener('storage', handleCookieChange);
 
-    return () => {
-      window.removeEventListener('storage', handleCookieChange);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('storage', handleCookieChange);
+  //   };
+  // }, []);
 
   return (
       <Routes>
