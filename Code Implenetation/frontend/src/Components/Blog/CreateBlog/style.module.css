@@ -74,9 +74,9 @@
     gap: 0.5vw;
 }
 
-.blogItem{
+.blogItemPrevBlogX{
     width: 97%;
-    height: 33%;
+    height: 25%;
     border-radius: 5px;
     padding-left: 1vh;
     padding-right: 1vh;
@@ -106,7 +106,7 @@
 .blogItemTags{
     display: flex;
     flex-direction: row;
-
+    gap: 0.5vw;
     font-size: 1.1em;
 }
 

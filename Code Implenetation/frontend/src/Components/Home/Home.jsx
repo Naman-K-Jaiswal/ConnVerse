@@ -107,7 +107,7 @@ const Home = () => {
   
 
   return (
-    <div>
+    <div style={{backgroundColor : '#f4f4f4'}}>
       {/* Main Body */}
       <div id="mainBody">
         <div id="searchBoxDiv">
