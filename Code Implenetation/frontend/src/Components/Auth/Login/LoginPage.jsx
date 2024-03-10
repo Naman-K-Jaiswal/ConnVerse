@@ -1,10 +1,10 @@
 import React from "react";
 import Component from "./background";
 
-const LoginPage = () => {
+const LoginPage = ({setSignIn}) => {
   return (
     <div>
-      <Component/>
+      <Component setSignIn={setSignIn}/>
     </div>
   );
 }

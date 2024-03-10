@@ -1,12 +1,12 @@
 import React from "react";
 import Component from "./background";
 
-function signUp() {
+function SignUp({setSignIn}) {
   return (
     <div>
-      <Component/>
+      <Component setSignIn={setSignIn}/>
     </div>
   );
 }
 
-export default signUp;
+export default SignUp;

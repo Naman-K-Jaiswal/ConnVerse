@@ -10,8 +10,9 @@ import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
 import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
-const CenterBox = () => {
+const CenterBox = ({setSignIn}) => {
   const navigate = useNavigate();
   const [showFirstForm, setShowFirstForm] = useState(true);
   const [signUpEmail, setSignUpEmail] = useState('');
@@ -34,44 +35,115 @@ const CenterBox = () => {
       if (response.status === 200){
         setShowFirstForm(false);
       } else {
-        alert('Please enter valid Email')
+        alert('Please enter valid IITK Email')
       }
     } catch (error) {
-      alert('Please enter valid Email');
+      alert('Please enter valid IITK Email');
     }
   }
+
+  const base64ToBlob = (base64String, format) => {
+    const byteCharacters = atob(base64String);
+    const byteArrays = [];
+
+    for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+      const slice = byteCharacters.slice(offset, offset + 512);
+
+      const byteNumbers = new Array(slice.length);
+      for (let i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, { type: format });
+  };
+
+  const postDetails = async (pics, name, hashedPassword) => {
+    try {
+      const file = base64ToBlob(pics, "image/jpeg");
+      const data = new FormData();
+      data.append("file", file);
+      data.append("upload_preset", "CS253-Chat");
+      data.append("cloud_name", "diewczxvk");
+
+      const response = await fetch(
+          "https://api.cloudinary.com/v1_1/diewczxvk/image/upload",
+          {
+            method: "post",
+            body: data,
+          }
+      );
+
+      const responseData = await response.json();
+
+      try {
+        const config = {
+          headers: {
+            "Content-type": "application/json",
+          },
+        };
+        const { data } = await axios.post(
+            "http://localhost:5000/api/user",
+            {
+              name: name,
+              email: signUpEmail,
+              password: hashedPassword,
+              pic: responseData.url.toString(),
+            },
+            config
+        );
+        localStorage.setItem("userInfo", JSON.stringify(data));
+        setSignIn(true)
+        navigate("/home");
+      } catch (error) {
+        alert("an error occurred, please try again");
+      }
+
+    } catch (err) {
+        alert("an error occurred, please try again");
+    }
+  };
+
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     if (signUpPassword !== signUpConfirmPassword) {
-      alert('Passwords do not match');
+      alert("Passwords do not match");
       return;
     }
 
-    console.log(signUpPassword)
-    const hashedPassword = CryptoJS.SHA256(signUpPassword).toString(CryptoJS.enc.Hex);
+    const hashedPassword = CryptoJS.SHA256(signUpPassword).toString(
+        CryptoJS.enc.Hex
+    );
 
     try {
-      const response = await fetch('http://localhost:8080/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ email: signUpEmail, old_password: validationCode, new_password: hashedPassword }),
-      });
+      const response = await axios.post(
+          "http://localhost:8080/signup",
+          {
+            email: signUpEmail,
+            old_password: validationCode,
+            new_password: hashedPassword,
+          },
+          {
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+      );
 
-      if (response.ok) {
-        navigate('/home');
-        alert('sign up successful');
+      if (response.status === 200) {
+        const responseData = response.data;
+        await postDetails(responseData.img, responseData.name, hashedPassword)
       } else {
-        console.error('Failed to validate OTP');
-        return;
+        alert(response["error"]);
       }
-    } catch (error) {
-      console.error('Error validating OTP:', error);
-      return;
+    } catch (err) {
+      alert("Invalid OTP")
     }
-  }
+  };
   return (
     <>
       <MetaData title='SignUp' />

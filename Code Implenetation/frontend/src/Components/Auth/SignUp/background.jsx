@@ -3,7 +3,7 @@ import image from "./OAT.jpeg";
 import CenterBox from "./CenterBox";
 import logoimg from "./Logo.png"
 
-function Component() {
+function Component({setSignIn}) {
   return (
     <div
       style={{
@@ -18,7 +18,7 @@ function Component() {
         height: "100vh"
       }}
     >
-      <CenterBox />
+      <CenterBox setSignIn={setSignIn}/>
       <img src={logoimg} alt="Logo" className="logo"/>
     </div>
   );
