@@ -35,9 +35,19 @@ func LoadFeed() gin.HandlerFunc {
 
 		var blogIDs []string
 		if len(feed.BlogIDs) < 10 {
-			blogIDs = feed.BlogIDs
+			if idx != 0 {
+				blogIDs = []string{}
+			} else {
+				blogIDs = feed.BlogIDs
+			}
 		} else {
-			blogIDs = feed.BlogIDs[idx : 10+idx]
+			if len(feed.BlogIDs) < idx*10 {
+				c.JSON(200, gin.H{"blogs": []blog.BlogPost{}})
+			} else if len(feed.BlogIDs) < 10+(idx*10) {
+				blogIDs = feed.BlogIDs[idx*10:]
+			} else {
+				blogIDs = feed.BlogIDs[idx*10 : 10+(idx*10)]
+			}
 		}
 
 		var blogs []blog.BlogPost

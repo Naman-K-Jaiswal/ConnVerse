@@ -3,7 +3,7 @@ import image from "./OAT.jpeg";
 import CenterBox from "./CenterBox";
 import logoimg from "./Logo.png"
 
-function Component({setSignIn}) {
+function Component({setSignIn, setUserId, setUserName, setUserImage}) {
   return (
     <div
       style={{
@@ -18,7 +18,7 @@ function Component({setSignIn}) {
         height: "100vh"
       }}
     >
-      <CenterBox setSignIn={setSignIn}/>
+      <CenterBox setSignIn={setSignIn} setUserId={setUserId} setUserName={setUserName} setUserImage={setUserImage}/>
       <img src={logoimg} alt="Your Image" className="logo"/>
     </div>
   );

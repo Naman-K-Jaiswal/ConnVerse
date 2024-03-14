@@ -21,6 +21,7 @@ import (
 
 func SendOTP() gin.HandlerFunc {
 	return func(c *gin.Context) {
+
 		var to ToEmail
 		err := c.ShouldBindJSON(&to)
 		if err != nil {
@@ -51,6 +52,7 @@ func SendOTP() gin.HandlerFunc {
 		body.Write([]byte(mail_template))
 
 		err = smtp.SendMail(mail.Smtp_server+":"+mail.Smtp_port, mail.Auth, mail.From, []string{to.Email}, body.Bytes())
+		fmt.Println(err)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to send OTP"})
 			return
@@ -95,6 +97,12 @@ func SignUp() gin.HandlerFunc {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
 			return
 		}
+
+		flag := CheckUserAlreadyExist(signup_details.Email)
+		if flag {
+			c.JSON(http.StatusConflict, gin.H{"error": "User already exists"})
+			return
+		}
 		err, response := profile.InitializeUser(res)
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": err.Error()})
@@ -119,8 +127,8 @@ func SignUp() gin.HandlerFunc {
 		}
 
 		c.SetSameSite(http.SameSiteLaxMode)
-		c.SetCookie("Authorization", tokenString, 3600*24, "/", "localhost", false, true)
+		c.SetCookie("Authorization", tokenString, 3600*24, "/", "localhost", false, false)
 
-		c.JSON(http.StatusOK, gin.H{"message": "Sign Up Successful!", "img": response, "name": res["n"].(string)})
+		c.JSON(http.StatusOK, gin.H{"message": "Sign Up Successful!", "img": response, "name": res["n"].(string), "id": res["i"].(string)})
 	}
 }

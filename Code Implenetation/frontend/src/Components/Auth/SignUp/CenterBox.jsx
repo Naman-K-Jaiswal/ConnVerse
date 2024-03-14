@@ -136,12 +136,17 @@ const CenterBox = ({setSignIn}) => {
 
       if (response.status === 200) {
         const responseData = response.data;
+        localStorage.setItem("user", JSON.stringify({
+            userId: responseData.id,
+            userName: responseData.name,
+            userImage: responseData.img
+        }))
         await postDetails(responseData.img, responseData.name, hashedPassword)
       } else {
         alert(response["error"]);
       }
     } catch (err) {
-      alert("Invalid OTP")
+      alert("Invalid OTP or User Already Exists");
     }
   };
   return (
