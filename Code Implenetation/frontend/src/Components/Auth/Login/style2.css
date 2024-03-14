@@ -21,7 +21,7 @@
   align-items: flex-start; /* Align items to the top */
   width: 100%;
   position: absolute;
-  top: 0; /* Adjusting to start from the top */
+  top: 3vmax; /* Adjusting to start from the top */
   left:7.5vmax; /* Start from the left */
   padding: 0px; /* Add some padding for spacing */
 }
@@ -117,6 +117,7 @@
   transition: all 0.5s;
   font: 500 1.4vmax 'Inter', sans-serif;
   padding: 0.8vmax;
+  margin: 0.7vmax;
   width: 100%;
   cursor: pointer;
   outline: none;
@@ -162,7 +163,7 @@
   font-size: 0.7rem; /* Adjust the font size as needed */
   text-align: left; /* Center the text */
   position: absolute; /* Position the text absolutely */
-  bottom: 2.6vmax; /* Adjust the distance from the bottom */
+  bottom: 3.6vmax; /* Adjust the distance from the bottom */
   left: 4%; /* Position in the center horizontally */
   z-index: 1; /* Ensure the text is above the image */
 }

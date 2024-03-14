@@ -8,42 +8,12 @@ import CreateBlog from './Components/Blog/CreateBlog/CreateBlogPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
 import BlogTemplate from './Components/Blog/IndividualBlog/BlogTemplate';
-import ChatProvider from "./Context/ChatProvider";
-import ChatPage from "./Pages/Chatpage";
-import LoginPage from "./Components/Auth/Login/LoginPage";
+import LoginPage from './Components/Auth/Login/LoginPage';
+import  ChatProvider  from './Context/ChatProvider';
+// import ChatPage from './Components/Chat/ChatPage';
 
 const App = () => {
-  // console.log(Cookies.get('Authorization'));
   const [signIn, setSignIn] = useState(true);
-
-  // const getCookie = (name) => {
-  //   const value = `; ${document.cookie}`;
-  //   const parts = value.split(`; ${name}=`);
-  //   if (parts.length === 2) return parts.pop().split(';').shift();
-  // };
-
-  // useEffect(() => {
-  //   const checkAuthentication = () => {
-  //     const tokenString = getCookie('Authorization'); 
-  //     console.log(tokenString);
-  //     const isAuthenticated = !!tokenString; 
-
-  //     setSignIn(isAuthenticated);
-  //   };
-
-  //   checkAuthentication();
-
-  //   const handleCookieChange = () => {
-  //     checkAuthentication();
-  //   };
-
-  //   window.addEventListener('storage', handleCookieChange);
-
-  //   return () => {
-  //     window.removeEventListener('storage', handleCookieChange);
-  //   };
-  // }, []);
-
   return (
       <Routes>
         {!signIn && (
@@ -71,6 +41,7 @@ const App = () => {
   );
 };
 
+
 const Blogtempcomp = ({setSignIn}) => {
   return (
     <>
@@ -86,7 +57,7 @@ const ChatMainPage = ({setSignIn}) => {
       <Navbar setSignIn={setSignIn}/>
       <ChatProvider>
         <div className='ChatApp'>
-          <ChatPage/>
+          {/* <ChatPage/> */}
         </div>
       </ChatProvider>
     </>

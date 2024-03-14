@@ -102,7 +102,9 @@ const CenterBox = ({setSignIn}) => {
               <p>Don't have an account ? <Link to='/signup'>Register</Link></p>
           </form>
         </div>
-        <img className='loginPageImage' src={registerImg} alt="Your GIF" style={{height: '33.33vh', float: 'left', top:'18vmax' }} />
+        <div>
+        <img className='loginPageImage' src={registerImg} alt="Your GIF" style={{height: '33.33vh', float: 'left', top:'14vmax' }} />
+        </div>
         <p className='about-us-head'>About Us</p>
         <p className="about-us">Welcome to ConnVerse – Your Gateway to Connection and Knowledge!<br></br>
         At ConnVerse, we believe in the power of shared experiences and the strength of community.
