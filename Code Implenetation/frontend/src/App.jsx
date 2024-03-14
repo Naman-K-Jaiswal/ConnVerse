@@ -11,7 +11,6 @@ import BlogTemplate from './Components/Blog/IndividualBlog/BlogTemplate';
 import ChatProvider from "./Context/ChatProvider";
 import ChatPage from "./Pages/Chatpage";
 import LoginPage from "./Components/Auth/Login/LoginPage";
-import ContactForm from './Components/Contact/Contact';
 import ForgotPass from "./Components/Auth/ForgotPass/ForgotPass"
 
 const App = () => {
@@ -67,11 +66,8 @@ const App = () => {
               <Route path="/login" element={<LoginComp setSignIn={setSignIn} />} />
               <Route path="/signup" element={<SignUpComp setSignIn={setSignIn} />} />
               <Route path="/alumn" element={<AlumnComp/>} />
-<<<<<<< HEAD
               <Route path='/contact' element={<ContactForm/>} />
-=======
               <Route path="/forgot" element={<ForgotPass setSignIn={setSignIn} />} />
->>>>>>> 64336a7 (added forgot password)
             </>
         )}
         {signIn && (
