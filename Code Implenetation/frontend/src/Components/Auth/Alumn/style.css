@@ -10,7 +10,7 @@
     align-items: flex-start; /* Align items to the top */
     width: 100%;
     position: absolute;
-    top: 0; /* Adjusting to start from the top */
+    top: 2vmax; /* Adjusting to start from the top */
     left:7.5vmax; /* Start from the left */
     padding: 0px; /* Add some padding for spacing */
   }
@@ -75,7 +75,7 @@
 
   .iitklogo1{
     margin-left :13vw;
-    margin-top: -3.5vh;
+    margin-top: -0.5vh;
     height: 20vh;
     width: auto;
   }
