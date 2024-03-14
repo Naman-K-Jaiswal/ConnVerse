@@ -30,6 +30,7 @@ const CenterBox = ({setSignIn}) => {
           })
 
           if (response.ok) {
+              const responseData = await response.json();
               try {
                   const config = {
                       headers: {
@@ -43,13 +44,18 @@ const CenterBox = ({setSignIn}) => {
                       config
                   );
                   localStorage.setItem("userInfo", JSON.stringify(data));
+                  localStorage.setItem("user", JSON.stringify({
+                      userId: responseData.id,
+                      userName: responseData.name,
+                      userImage: responseData.img
+                  }));
                   setSignIn(true);
                   navigate("/home")
               } catch (error) {
-                  alert(error);
+                  alert("an error occurred, please try again");
               }
           } else {
-              alert(response["error"]);
+              alert(response["error"] || "an error occurred, please try again");
           }
       } catch (error) {
           alert("an error occurred, please try again");

@@ -2,6 +2,7 @@ package authn
 
 import (
 	"backend/database"
+	"backend/profile"
 	"context"
 	"errors"
 	"go.mongodb.org/mongo-driver/bson"
@@ -131,4 +132,17 @@ func CheckUserExist(email string) (bson.M, error) {
 
 	err := collection.FindOne(ctx, filter).Decode(&result)
 	return result, err
+}
+
+func CheckUserAlreadyExist(email string) bool {
+	collection := database.DB.Collection("Users")
+	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	defer cancel()
+
+	var user profile.User
+	err := collection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
+	if err != nil && errors.Is(err, mongo.ErrNoDocuments) {
+		return false
+	}
+	return true
 }

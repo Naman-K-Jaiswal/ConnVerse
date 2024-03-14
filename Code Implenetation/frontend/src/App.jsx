@@ -4,7 +4,7 @@ import SignUp from './Components/Auth/SignUp/SignupPage'
 import Alumn from './Components/Auth/Alumn/AlumnRegisterPage'
 import Home from './Components/Home/Home'
 import User from './Components/User/UserProfile'
-import CreateBlog from './Components/Blog/CreateBlog/CreateBlogPage'
+import CreateBlogPage from './Components/Blog/CreateBlog/CreateBlogPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
 import BlogTemplate from './Components/Blog/IndividualBlog/BlogTemplate';
@@ -16,54 +16,67 @@ const App = () => {
   // console.log(Cookies.get('Authorization'));
   const [signIn, setSignIn] = useState(true);
 
-  // const getCookie = (name) => {
-  //   const value = `; ${document.cookie}`;
-  //   const parts = value.split(`; ${name}=`);
-  //   if (parts.length === 2) return parts.pop().split(';').shift();
-  // };
+  useEffect(() => {
+    const handleUnload = () => {
+        localStorage.clear();
+        const cookies = document.cookie.split(";");
 
-  // useEffect(() => {
-  //   const checkAuthentication = () => {
-  //     const tokenString = getCookie('Authorization'); 
-  //     console.log(tokenString);
-  //     const isAuthenticated = !!tokenString; 
+        cookies.forEach((cookie) => {
+          const cookieParts = cookie.split('=');
+          const cookieName = cookieParts[0].trim();
+          document.cookie = `${cookieName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+        })
+    }
+  }, []);
 
-  //     setSignIn(isAuthenticated);
-  //   };
+  const getCookie = (name) => {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  };
 
-  //   checkAuthentication();
+  useEffect(() => {
+    const checkAuthentication = () => {
+      const tokenString = getCookie('Authorization');
+      console.log(tokenString);
+      const isAuthenticated = !!tokenString;
 
-  //   const handleCookieChange = () => {
-  //     checkAuthentication();
-  //   };
+      setSignIn(isAuthenticated);
+    };
 
-  //   window.addEventListener('storage', handleCookieChange);
+    checkAuthentication();
 
-  //   return () => {
-  //     window.removeEventListener('storage', handleCookieChange);
-  //   };
-  // }, []);
+    const handleCookieChange = () => {
+      checkAuthentication();
+    };
+
+    window.addEventListener('storage', handleCookieChange);
+
+    return () => {
+      window.removeEventListener('storage', handleCookieChange);
+    };
+  }, []);
 
   return (
       <Routes>
         {!signIn && (
             <>
               <Route path="/" element={<LandingPage/>} />
-              <Route path="/login" element={<LoginComp setSignIn={setSignIn}/>} />
-              <Route path="/signup" element={<SignUpComp setSignIn={setSignIn}/>} />
+              <Route path="/login" element={<LoginComp setSignIn={setSignIn} />} />
+              <Route path="/signup" element={<SignUpComp setSignIn={setSignIn} />} />
               <Route path="/alumn" element={<AlumnComp/>} />
             </>
         )}
         {signIn && (
             <>
               <Route path="/" element={<LandingPage/>} />
-              <Route path="/login" element={<LoginComp setSignIn={setSignIn}/>} />
-              <Route path="/signup" element={<SignUpComp setSignIn={setSignIn}/>} />
+              <Route path="/login" element={<LoginComp setSignIn={setSignIn} />} />
+              <Route path="/signup" element={<SignUpComp setSignIn={setSignIn} />} />
               <Route path="/alumn" element={<AlumnComp/>} />
               <Route path="/home" element={<HomeComp setSignIn={setSignIn}/>} />
               <Route path="/createblog" element={<CreateBlogComp setSignIn={setSignIn}/>} />
               <Route path="/userprofile" element={<UserProfileComp setSignIn={setSignIn}/>} />
-              <Route path="/blogtemp" element={<Blogtempcomp setSignIn={setSignIn}/>} />
+              <Route path="/blog/:id" element={<Blogtempcomp setSignIn={setSignIn}/>} />
               <Route path="/chat" element={<ChatMainPage setSignIn={setSignIn}/>} />
             </>
         )}
@@ -75,7 +88,7 @@ const Blogtempcomp = ({setSignIn}) => {
   return (
     <>
     <Navbar setSignIn={setSignIn}/>
-    <BlogTemplate/>
+    <BlogTemplate />
   </>
   )
 };
@@ -129,7 +142,7 @@ const CreateBlogComp = ({setSignIn}) => {
   return (
     <>
     <Navbar setSignIn={setSignIn}/>
-    <CreateBlog/>
+    <CreateBlogPage/>
   </>
   )
 };

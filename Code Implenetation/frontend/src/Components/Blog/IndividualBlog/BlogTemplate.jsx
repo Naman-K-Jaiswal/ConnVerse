@@ -1,150 +1,245 @@
-import React,{useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './style.css';
-
+import { useParams} from "react-router-dom";
+import {formatDistanceToNow} from "date-fns";
 
 const BlogTemplate = () => {
+  const { id } = useParams();
+
+  const [comment, setComment] = useState("")
 
   const [upvoted, setUpvoted] = useState(false);
   const [downvoted, setDownvoted] = useState(false);
+  const [likes, setLikes] = useState(0)
+  const user = JSON.parse(localStorage.getItem("user"));
 
-  const handleUpvote = () => {
-    if (!upvoted) {
-      setUpvoted(true);
-      setDownvoted(false);
-    } else {
-      setUpvoted(false);
+  const [blogData, setBlogData] = useState({
+    _id: "",
+    title: "",
+    content: "",
+    image: "",
+    authorid: "",
+    authorname: "",
+    authorimage: "",
+    likes: 0,
+    dislikes: 0,
+    comments: [
+      {
+        commenttext: "",
+        commenter: "",
+        commenterphoto: "",
+        timestamp: new Date()
+      }
+    ],
+    tags: [],
+    timestamp: new Date(),
+    likedby: [],
+    dislikedby: []
+  })
+
+  const handleUpvote = async () => {
+    console.log(id)
+    try {
+      const res = await fetch(`http://localhost:8080/blog/react/${id}`, {
+        method: 'POST',
+        credentials:'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action:1, userid: user.userId }),
+      })
+
+      if(res.ok){
+        if (!upvoted) {
+          setUpvoted(true);
+          setLikes(likes+1)
+          setDownvoted(false);
+        } else {
+          setUpvoted(false);
+          setLikes(Math.max(likes-1,0))
+        }
+      }
+    } catch (error) {
+      console.error(error)
     }
   };
 
-  const handleDownvote = () => {
-    if (!downvoted) {
-      setDownvoted(true);
-      setUpvoted(false);
-    } else {
-      setDownvoted(false);
+  const handleDownvote = async () => {
+    try {
+      const res = await fetch(`http://localhost:8080/blog/react/${id}`, {
+        method: 'POST',
+        credentials: 'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ action: 2, userid: user.userId }),
+      })
+
+      if(res.ok){
+        if (!downvoted) {
+          setDownvoted(true);
+          setUpvoted(false);
+        } else {
+          setDownvoted(false);
+        }
+      }
+    } catch (error) {
+      console.error(error)
     }
   };
 
-  const blogData = [
-    {
-      id: 1,
-      title: "Mastering the art of Leadership",
-      username: "User12",
-      lastDate: "13 days ago",
-      upvotes: "10",
-      noOfComments: "12",
-      profileImageSrc: require('./blog_img.jpeg'),
-      blogImages: require('./blog_img.jpeg'),
-      content: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque r Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque re Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque re Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque re Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, Lorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque reLorem ipsum dolor sit amet consectetur adipisicing elit. Quas rerum harum minus nobis at laborum qui et tempora. Sequi dolorum iste amet vitae harum exercitationem deserunt vel doloremque eveniet facere.  Maiores ipsam quasi officiis atque error magnam facilis enim, perspiciatis voluptas illum delectus aperiam ipsa quos sed harum recusandae totam porro ab? At nisi est facilis necessitatibus nemo, officiis cumque!Esse veritatis illum delenitcusantium deserunt tempore quis impedit sit aliquid minima non, mollitia neque harum modi esse maiores libero cum. Minus similique officia ratione est porro! Incidunt, cumque recumque recumque reepudiandae"
-,
-      comments: [
-        { id: 1, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg')},
-        { id: 2, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg')},
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 4, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg')},
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-        { id: 3, username: "User12", content: "GoodJob", profileImage: require('./blog_img.jpeg') },
-      ]
+  const getDaysAgo = (timestamp) => {
+    const postDate = new Date(timestamp);
+    return formatDistanceToNow(postDate, { addSuffix: true });
+  }
+
+  useEffect( () => {
+    const func = async () => {
+      try {
+        const res = await fetch(`http://localhost:8080/blog/${id}`, {
+          method: 'GET',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        })
+
+        if(res.ok) {
+          const data = await res.json()
+          setBlogData(data.blog)
+          setLikes(data.blog.likes)
+          const index = data.blog.likedby.indexOf(user.userId)
+          if (index !== -1) {
+            setUpvoted(true)
+            setDownvoted(false)
+          }
+
+          const idx = data.blog.dislikedby.indexOf(user.userId)
+          if(idx !== -1){
+            setUpvoted(false)
+            setDownvoted(true)
+          }
+        } else {
+          alert('Error fetching blog. Please reload the page')
+        }
+      } catch (error) {
+      }
     }
-  ];
+
+    func()
+  }, [id]);
+
+  const handleComment = async () => {
+    try {
+      const res = await fetch(`http://localhost:8080/blog/comment/${id}`, {
+        method: 'POST',
+        credentials:'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ commenttext: comment, commenter: user.userName, commenterphoto: user.userImage , timestamp: new Date() }),
+      })
+
+      if(res.ok){
+        const data = await res.json()
+        const updatedComment = [...blogData.comments, {
+            commenttext: comment,
+            commenter: user.userName,
+            commenterphoto: user.userImage,
+            timestamp: new Date()
+        }]
+        const updatedBlogData = blogData
+        updatedBlogData.comments = updatedComment
+        setBlogData(updatedBlogData)
+        setComment("")
+      } else {
+        alert("Error adding comment. Please try again")
+      }
+    } catch (error) {
+      alert("Error adding comment. Please try again")
+    }
+  }
 
   return (
-    <div id="mainBodyDiv">
-      {blogData.map((blog) => (
-        <div key={blog.id} id="leftHalfBlogDiv">
+      <div id="mainBodyDiv">
+        <div key={blogData._id} id="leftHalfBlogDiv">
           <div id="headBlogDiv">
             <div id="profileImageBlogDiv">
-              <img src={blog.profileImageSrc} alt="" />
+              <img src={`data:image/jpeg;base64,${blogData.authorimage}`} alt="" />
             </div>
             <div id="subHeadBlogDiv">
               <div id="titleBlogDiv">
-                {blog.title}
+                {blogData.title}
               </div>
               <div id="subTitleBlogDiv">
-                    {/* subTitleBlogDiv for displaying : userDetails(username and upload time) & #upvotes #comments */}
-                    <div id="userDetailsBlogDiv">
-                      <div id="usernameBlogDiv">
-                        {blog.username}
-                      </div>
-                      <div id="uploadedDayBlogDiv">
-                        {blog.lastDate}
-                      </div>
-                    </div>
-                    
-                    <div id="votesNCommentsBlogDiv">
-                      <div id="upVotesBlogDiv">
-                        <button id="upVoteButton" onClick={handleUpvote} style={{ color: upvoted ? '#e2921b' : 'black' }}>
-                          &#x21e7;
-                        </button>
-                        {blog.upvotes} 
-                      </div>
-                      <div id="downVotes">
-                        <button id="downVoteButton" onClick={handleDownvote} style={{ color: downvoted ? 'red' : 'black' }}>
-                        &#x21e9;
-                        </button>
-                      </div>
-                      <div id="comments">
-                        Comments: {blog.noOfComments}
-                      </div>
-                    </div>
-
+                <div id="userDetailsBlogDiv">
+                  <div id="usernameBlogDiv">
+                    {blogData.authorname}
+                  </div>
+                  <div id="uploadedDayBlogDiv">
+                    {getDaysAgo(blogData.timestamp)}
+                  </div>
+                </div>
+                <div id="votesNCommentsBlogDiv">
+                  <div id="upVotesBlogDiv">
+                    <button id="upVoteButton" onClick={handleUpvote} style={{ color: upvoted ? '#e2921b' : 'black' }}>
+                      &#x21e7;
+                    </button>
+                    {likes}
+                  </div>
+                  <div id="downVotes">
+                    <button id="downVoteButton" onClick={handleDownvote} style={{ color: downvoted ? 'red' : 'black' }}>
+                      &#x21e9;
+                    </button>
+                  </div>
+                  <div id="comments">
+                    Comments: {blogData.comments.length}
+                  </div>
+                </div>
               </div>
             </div>
           </div>
           <div id="imagesBlogDiv">
-          <img src={blog.blogImages} alt="" />
+            <img src={`data:image/jpeg;base64,${blogData.image}`} alt="" />
           </div>
           <div id="contentBlogDiv">
-            {blog.content}
+            {blogData.content}
           </div>
         </div>
-      ))}
-      
-      <div id="rightHalfCommentsDiv">
-        <div id="headingCommentsDiv">
-          Comments:
-        </div>
-        <div id="commentsListDiv">
-          {blogData.map((blog) => (
-            blog.comments.map((comment) => (
-              <div key={comment.id} className="commentX">
-                <div className="commentHeadingDiv">
-                  <div className="commentProfilePhoto">
-                    <img src={comment.profileImage} alt="" />
+
+        <div id="rightHalfCommentsDiv">
+          <div id="headingCommentsDiv">
+            Comments:
+          </div>
+          <div id="commentsListDiv">
+            {blogData.comments.map((comment, index) => (
+                <div key={index} className="commentX">
+                  <div className="commentHeadingDiv">
+                    <div className="commentProfilePhoto">
+                      <img src={`data:image/jpeg;base64,${comment.commenterphoto}`} alt="" />
+                    </div>
+                    <div className="commentTitle">
+                      {comment.commenter}
+                    </div>
                   </div>
-                  <div className="commentTitle">
-                    {comment.username}
+                  <div className="commentContent">
+                    {comment.commenttext}
                   </div>
                 </div>
-                <div className="commentContent">
-                  {comment.content}
-                </div>
-              </div>
-            ))
-          ))}
-        </div>
-        <div id="addCommentsDiv">
-          <input type="text" placeholder="Add a comment" />
-          <button>Submit</button>
+            ))}
+          </div>
+          <div id="addCommentsDiv">
+            <input
+                type="text"
+                id="search"
+                placeholder="Add a comment"
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+            />
+            <button onClick={handleComment}>Submit</button>
+          </div>
         </div>
       </div>
-    </div>
   );
 }
 

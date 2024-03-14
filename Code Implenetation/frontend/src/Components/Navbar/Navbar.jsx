@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import GroupIcon from '@mui/icons-material/People';
 import CreateIcon from '@mui/icons-material/Create';
@@ -11,6 +11,7 @@ import {Link, useNavigate} from 'react-router-dom';
 const Navbar = ({setSignIn}) => {
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
+  const user = JSON.parse(localStorage.getItem("user"));
 
   const handleLogout = async () => {
     try {
@@ -23,7 +24,7 @@ const Navbar = ({setSignIn}) => {
       })
 
       if(response.ok) {
-        localStorage.removeItem("userInfo");
+        localStorage.clear();
         setSignIn(false);
         navigate("/")
       } else {
@@ -67,9 +68,9 @@ const Navbar = ({setSignIn}) => {
         </li>
       </ul>
       <div className="profile">
-        <img src={profileImg} alt="Profile Photo" className="profile-photo"/>
+        <img src={user.userImage ? `data:image/jpeg;base64,${user.userImage}` : profileImg} alt="Profile Photo" className="profile-photo"/>
         <div className="dropdown">
-          <span className="username">priyanshu799</span>
+          <span className="username">{user.userName}</span>
           <button className="dropbtn" onClick={() => setIsOpen(!isOpen)}>&#x25BC;</button>
           {isOpen && (
             <div className="dropdown-content">

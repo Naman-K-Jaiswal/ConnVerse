@@ -30,7 +30,10 @@ func main() {
 
 	router := gin.New()
 	router.Use(gin.Logger())
-	router.Use(cors.Default())
+	config := cors.DefaultConfig()
+	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowCredentials = true
+	router.Use(cors.New(config))
 
 	routes.ProfilesRoutes(router)
 	routes.BlogRoutes(router)
