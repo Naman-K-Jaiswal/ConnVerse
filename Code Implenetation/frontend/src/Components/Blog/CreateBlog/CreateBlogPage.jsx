@@ -20,7 +20,7 @@ const CreateBlogPage = () => {
     const [profileDetails, setProfileDetails] = useState({
         username: user.userName,
         totalPoints: "",
-        pointsThisYear: "",
+        postsThisYear: "",
         contributions: "",
         profileImg: user.userImage
     });
@@ -132,7 +132,7 @@ const CreateBlogPage = () => {
                 setProfileDetails({
                     username: profileDetails.username,
                     totalPoints: profileDetails.totalPoints,
-                    pointsThisYear: profileDetails.pointsThisYear + 1,
+                    postsThisYear: profileDetails.postsThisYear + 1,
                     contributions: profileDetails.contributions + 1,
                     profileImg: us.userImage
                 })
@@ -177,32 +177,37 @@ const CreateBlogPage = () => {
                                 <div id={styles.blogsList}>
                                     {posts.length === 0 && (<div>No blog to show</div>)}
                                     {posts.length > 0 && posts.map((blog, index) => (
-                                        <div key={index} className={styles.blogItemPrevBlogX} onClick={()=>handleRedirect(blog.ID)}>
-                                            <div className={styles.blogItemTop}>
-                                                <div className={styles.blogItemHeading}>
-                                                    <div className={styles.blogItemTitle}>{blog.title}</div>
-                                                    <div className={styles.blogItemLastTime}>{getDaysAgo(blog.timestamp)}</div>
-                                                </div>
-                                                <div className={styles.blogItemTags}>
-                                                    {blog.tags.map((tag, index) => (
-                                                        <div key={index} className={styles.blogItemTagX}>{tag}</div>
-                                                    ))}
-                                                </div>
-                                            </div>
-                                            <div className={styles.blogItemContent}>{blog.content.split(' ').slice(0, 20).join(' ')}{blog.content.split(' ').length > 20 ? '...' : ''}</div>
-                                        </div>
-                                    ))}
+                                    <div key={index} className={styles.blogItemPrevBlogX} onClick={()=>handleRedirect(blog.ID)}>
+                                    <div className={styles.blogItemTop}>
+                                    <div className={styles.blogItemHeading}>
+                                    <div className={styles.blogItemTitle} style={{ fontFamily: 'Arial, sans-serif', fontWeight: 'bold' }}>{blog.title}</div>
+                                    <div className={styles.blogItemLastTime} style={{ fontFamily: 'Georgia, serif', fontStyle: 'italic' }}>{getDaysAgo(blog.timestamp)}</div>
+                                </div>
+                                <div className={styles.blogItemTags}>
+                        {blog.tags.map((tag, index) => (
+                    <div key={index} className={styles.blogItemTagX} style={{ fontFamily: 'Helvetica, sans-serif', fontWeight: 'bold' }}>{tag}</div>
+                ))}
+            </div>
+        </div>
+    </div>
+))}
+
                                 </div>
                             </div>
                         </div>
 
                         <div id={styles.profileDetails}>
-                            <img id={styles.profile_photo} src={`data:image/jpeg;base64,${profileDetails.profileImg}`} alt="Profile Photo" className={styles['profile-photo']}/>
-                            <div id={styles.username}> {profileDetails.username}</div>
-                            <div id={styles['total-points']}>Total Points: {profileDetails.totalPoints}</div>
-                            <div id={styles['points-this-year']}>Posts This Year: {profileDetails.pointsThisYear}</div>
-                            <div id={styles.contributions}>Contributions: {profileDetails.contributions}</div>
-                        </div>
+    <hr className={styles.dottedLine} />
+    <img id={styles.profile_photo} src={`data:image/jpeg;base64,${profileDetails.profileImg}`} alt="Profile Photo" className={styles['profile-photo']} />
+    <div id={styles.username} style={{ fontFamily: 'helvetica neue, Helvetica, Arial, sans-serif', textDecoration: 'none !important', fontWeight: 700, color: 'black' }}> {profileDetails.username}</div>
+    <div id={styles['total-points']} style={{ fontFamily: 'helvetica neue, Helvetica, Arial, sans-serif', textDecoration: 'none !important', fontWeight: 700, color: 'black' }}>
+        Total Points: <span style={{ color: profileDetails.totalPoints < 10 ? 'red' : 'green' }}>{profileDetails.totalPoints}</span>
+    </div>
+    <div id={styles['points-this-year']} style={{ fontFamily: 'helvetica neue, Helvetica, Arial, sans-serif', textDecoration: 'none !important', fontWeight: 700, color: 'black' }}>Posts This Year: {profileDetails.postsThisYear}</div>
+    <div id={styles.contributions} style={{ fontFamily: 'helvetica neue, Helvetica, Arial, sans-serif', textDecoration: 'none !important', fontWeight: 700, color: 'black' }}>Total Posts: {profileDetails.contributions}</div>
+</div>
+
+
                     </div>
 
                     {/* Edit Blog Section */}
@@ -213,7 +218,7 @@ const CreateBlogPage = () => {
                         </div>
                         <div className={styles['input-group']} id={styles['input-group-tags']}>
                             <label htmlFor={styles.tags}>TAGS:</label>
-                            <input type="text" id={styles.tags} placeholder="Enter tags separated by commas" name="tags" value={postData.tags} onChange={handleChange}/>
+                            <input type="text" id={styles.tags} placeholder="Enter maximum of three tags separated by commas" name="tags" value={postData.tags} onChange={handleChange}/>
                         </div>
                         <div className={styles['input-group']} id={styles['input-group-images']}>
                             <label htmlFor={styles.images}>IMAGES:</label>

@@ -1,5 +1,5 @@
 .center-box {
-  background-color:white; /* Semi-transparent white */
+  background-color:#f4f4f4; /* Semi-transparent white */
   padding: 20px; /* Adjust padding as needed */
   border-radius: 15px; /* Add borderRadius for a rounded look */
   display: flex; /* Use flexbox for centering */
@@ -21,7 +21,7 @@
   align-items: flex-start; /* Align items to the top */
   width: 100%;
   position: absolute;
-  top: 0; /* Adjusting to start from the top */
+  top: 4vh; /* Adjusting to start from the top */
   left:7.5vmax; /* Start from the left */
   padding: 0px; /* Add some padding for spacing */
 }
@@ -44,11 +44,9 @@
 .loginPageImage {
   width: 20vw; /* Adjust width as needed */
   height: 40vh; /* Maintain aspect ratio */
-  margin-top: 4vh; /* Adjust margin as needed */
-  margin-bottom: 20px;
+  margin-top: -4vh; /* Adjust margin as needed */
   position: absolute;
   left: 6vmax; /* Position on the left side */
-  top: 50%; /* Adjust vertically as needed */
   transform: translateY(-50%);
 }
 .loginForm{
@@ -157,6 +155,7 @@
 }
 
 .about-us-head {
+  margin-bottom: 1vh;
   font-family: 'Inter', sans-serif;
   font-weight:bold;
   font-size: 0.7rem; /* Adjust the font size as needed */

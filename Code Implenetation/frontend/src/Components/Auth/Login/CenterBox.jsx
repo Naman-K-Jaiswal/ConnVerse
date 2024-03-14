@@ -93,17 +93,19 @@ const CenterBox = ({setSignIn}) => {
                   <KeyIcon/>
                   <input
                   type={'password'}
+                  style={{ margin: '1px' }}
                   placeholder='Password'
                   required
                   value={loginPassword}
                   onChange={(e)=>setLoginPassword(e.target.value)}
                   />
               </div>
-              <Link to='/password/forgot'>Forgot Password ?</Link>
+              <Link to='/password/forgot' style={{ margin: '10px' }}>Forgot Password ?</Link>
               <input
                   type='submit'
                   value= 'Login'
                   className='loginBtn'
+                  style={{ margin: '5px' }}
                 />
               <p>Don't have an account ? <Link to='/signup'>Register</Link></p>
           </form>
