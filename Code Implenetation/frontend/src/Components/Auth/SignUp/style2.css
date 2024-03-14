@@ -41,14 +41,13 @@
   color: #E2921B;
 }
 
-.signUpPageImage {
+
+.signUpPageImage{
   width: 20vw; /* Adjust width as needed */
   height: 40vh; /* Maintain aspect ratio */
-  margin-top: 4vh; /* Adjust margin as needed */
-  margin-bottom: 20px;
-  position: absolute;
-  left: 6vmax; /* Position on the left side */
-  top: 50%; /* Adjust vertically as needed */
+  position: relative;
+  margin-top: -15vmax;
+  left: -14vmax; /* Position on the left side */
   transform: translateY(-50%);
 }
 
@@ -168,4 +167,8 @@
   bottom: 2.6vmax; /* Adjust the distance from the bottom */
   left: 4%; /* Position in the center horizontally */
   z-index: 1; /* Ensure the text is above the image */
+}
+
+.registerhead{
+  margin-bottom: 2vmax;
 }
