@@ -86,7 +86,7 @@ const CenterBox = ({setSignIn}) => {
           },
         };
         const { data } = await axios.post(
-            "http://localhost:5000/api/user",
+            "http://localhost:5000/api/user/forgot",
             {
               name: name,
               email: signUpEmail,
@@ -121,7 +121,7 @@ const CenterBox = ({setSignIn}) => {
 
     try {
       const response = await axios.post(
-          "http://localhost:8080/signup",
+          "http://localhost:8080/forgot-password",
           {
             email: signUpEmail,
             old_password: validationCode,
@@ -168,7 +168,7 @@ const CenterBox = ({setSignIn}) => {
             </div>
             {showFirstForm && (
               <form className='signUpForm' onSubmit={handleSubmitFirstForm}>
-                <pre>Register</pre>
+                <pre>Change Password</pre>
                 <div className='line'></div>
                 <div className='signUpEmail'>
                     <EmailIcon/>
@@ -180,7 +180,6 @@ const CenterBox = ({setSignIn}) => {
                     onChange={(e)=>setSignUpEmail(e.target.value)}
                     />
                 </div>
-                <Link to='/alumn'>Are you an Alumn ?</Link>
                 <input
                     type='submit'
                     value= 'Send OTP'
@@ -223,10 +222,9 @@ const CenterBox = ({setSignIn}) => {
                     onChange={(e)=>setSignUpConfirmPassword(e.target.value)}
                     />
                 </div>
-                <Link to='/alumn'>Are you an Alumn ?</Link>
                 <input
                     type='submit'
-                    value= 'SIGN UP'
+                    value= 'Update Password'
                     className='signUpBtn'
                     />
               </form>

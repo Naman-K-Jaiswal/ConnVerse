@@ -108,16 +108,28 @@ const BlogTemplate = () => {
           const data = await res.json()
           setBlogData(data.blog)
           setLikes(data.blog.likes)
+          const response = await fetch(`http://localhost:8080/feed/add/tags`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userid: user.userId,
+              tags: data.blog.tags
+            })
+          })
           const index = data.blog.likedby.indexOf(user.userId)
           if (index !== -1) {
             setUpvoted(true)
             setDownvoted(false)
-          }
 
+          }
           const idx = data.blog.dislikedby.indexOf(user.userId)
           if(idx !== -1){
             setUpvoted(false)
             setDownvoted(true)
+
           }
         } else {
           alert('Error fetching blog. Please reload the page')
@@ -162,7 +174,7 @@ const BlogTemplate = () => {
 
   return (
       <div id="mainBodyDiv">
-        <div key={blogData._id} id="leftHalfBlogDiv">
+        <div key={blogData.ID} id="leftHalfBlogDiv">
           <div id="headBlogDiv">
             <div id="profileImageBlogDiv">
               <img src={`data:image/jpeg;base64,${blogData.authorimage}`} alt="" />
@@ -193,7 +205,7 @@ const BlogTemplate = () => {
                     </button>
                   </div>
                   <div id="comments">
-                    Comments: {blogData.comments.length}
+                    Comments: {blogData.comments!=null ? blogData.comments.length : 0}
                   </div>
                 </div>
               </div>
@@ -212,7 +224,7 @@ const BlogTemplate = () => {
             Comments:
           </div>
           <div id="commentsListDiv">
-            {blogData.comments.map((comment, index) => (
+            {blogData!=null && blogData.comments!=null && blogData.comments.map((comment, index) => (
                 <div key={index} className="commentX">
                   <div className="commentHeadingDiv">
                     <div className="commentProfilePhoto">

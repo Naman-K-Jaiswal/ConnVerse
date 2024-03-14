@@ -65,10 +65,11 @@ const Home = () => {
                     }
                 })
 
-                console.log(data)
-                if (data.blogs.length > 0) {
-                    setBlogData([...blogData, ...data.blogs]);
-                    setNum(prevState => prevState + 1)
+                if (data.blogs != null){
+                    if (data.blogs.length > 0) {
+                        setBlogData([...blogData, ...data.blogs]);
+                        setNum(prevState => prevState + 1)
+                    }
                 }
             } catch (error) {
                 console.log(error);
@@ -97,31 +98,6 @@ const Home = () => {
             appendBlogOnScroll();
         }
     }, [bottomInView]);
-
-    // useEffect(() => {
-    //     const func = async () => {
-    //         if(search === ""){
-    //             try {
-    //                 const { data } = await axios.get(`http://localhost:8080/feed/load/${num}/${user.userId}`,{
-    //                     withCredentials: true,
-    //                     headers: {
-    //                         'Content-Type': 'application/json'
-    //                     }
-    //                 })
-    //
-    //                 console.log(data)
-    //                 if (data.blogs.length > 0) {
-    //                     setBlogData(prevData => [...prevData, ...data.blogs]);
-    //                     setNum(prevState => prevState + 1)
-    //                 }
-    //             } catch (error) {
-    //                 console.log(error);
-    //             }
-    //         }
-    //     }
-    //
-    //     func()
-    // }, [search]);
 
     const handleSearch = async () => {
             try {
@@ -171,8 +147,8 @@ const Home = () => {
             <button id="searchButton" onClick={handleSearch}>Search</button>
           </div>
           <div id="blogLists">
-              {blogData.length === 0 && <div>No blogs to show</div>}
-            {blogData.length > 0 && blogData.map((blog) => (
+              {blogData != null && blogData.length === 0 && <div>No blogs to show</div>}
+            {blogData != null && blogData.length > 0 && blogData.map((blog) => (
                 <div key={blog._id} className="blogX" onClick={()=>handleRedirect(blog.ID)}>
                   <div className="blogLeftHalfDiv">
                     <div className="blogHeading">
@@ -184,7 +160,7 @@ const Home = () => {
                         <div className="blogUsername">{blog.authorname}</div>
                         <div className="blogLastDate">{getDaysAgo(blog.timestamp)}</div>
                         <div className="blogTags">
-                          {blog.tags.map((tag, index) => (
+                          {blog.tags != null && blog.tags.map((tag, index) => (
                               <div key={index} className="blogTagX">{tag}</div>
                           ))}
                         </div>

@@ -212,8 +212,8 @@ const CreateBlogPage = () => {
                                 <button id={styles.searchButton}>Search</button>
                             </div>
                             <div id={styles.blogsList}>
-                                {posts.length === 0 && (<div>No blog to show</div>)}
-                                {posts.length > 0 && posts.map((blog, index) => (
+                                {posts!=null && posts.length === 0 && (<div>No blog to show</div>)}
+                                {posts!=null && posts.length > 0 && posts.map((blog, index) => (
                                     <div key={index} className={styles.blogItemPrevBlogX} onClick={()=>handleRedirect(blog.ID)}>
                                         <div className={styles.blogItemTop}>
                                             <div className={styles.blogItemHeading}>

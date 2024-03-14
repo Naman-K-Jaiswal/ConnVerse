@@ -21,7 +21,6 @@ import (
 
 func SendOTP() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
 		var to ToEmail
 		err := c.ShouldBindJSON(&to)
 		if err != nil {
@@ -98,7 +97,7 @@ func SignUp() gin.HandlerFunc {
 			return
 		}
 
-		flag := CheckUserAlreadyExist(signup_details.Email)
+		flag, _ := CheckUserAlreadyExist(signup_details.Email)
 		if flag {
 			c.JSON(http.StatusConflict, gin.H{"error": "User already exists"})
 			return
