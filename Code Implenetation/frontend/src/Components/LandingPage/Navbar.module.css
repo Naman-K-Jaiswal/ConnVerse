@@ -7,13 +7,18 @@
     width: 100%;
     height: 8vh;
     background-color: rgba(255, 255, 255, 0.8);
+    justify-content: space-between;
     display: flex;
-    justify-content: flex-start;
     align-items: center;
     z-index: 999;
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
     padding: 0 20px;
+}
+
+.leftContent {
+    display: flex;
+    align-items: center;
 }
 
 #NavBarImage {
@@ -33,10 +38,13 @@
 
 .navlinks {
     display: flex;
+    flex-direction: row;
+    gap: 2vw;
 }
 
 .navlink {
     text-decoration: none;
+    margin-right: 2vw;
 }
 
 .navbutton {
