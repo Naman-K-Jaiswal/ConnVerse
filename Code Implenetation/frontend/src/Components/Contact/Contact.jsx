@@ -63,7 +63,7 @@ const ContactForm = () => {
             from_name: formData.firstName +" "+ formData.lastName,
             to_name: 'ConnVerse', // put your name here.
             from_email: formData.email,
-            to_email: 'eraiitk@gmail.com', //put your email here.
+            to_email: 'connverse22@gmail.com', //put your email here.
             message: formData.message,
         },
         '4nn9vaVYg9qqQwfZf' //paste your Public Key here. You'll get it in your profile section.
