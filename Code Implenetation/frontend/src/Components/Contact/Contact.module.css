@@ -1,0 +1,146 @@
+.hide {
+    display: none;
+}
+
+/* main.css */
+.main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 90%;
+    margin: auto;
+    margin-top: 10vh;
+}
+
+.title {
+    font-size: 2.5rem;
+    font-weight: bold;
+    padding: 1.5% 0;
+}
+
+.titleInfo {
+    padding-bottom: 2%;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    width: 60%;
+    padding: 2%;
+}
+
+.inputGroup,
+.textareaGroup {
+    padding: 1% 0;
+}
+
+.input{
+    color: #333;
+    width: 100%;
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid #757575;
+    padding: 1.5%;
+    font-size: 1.25rem;
+}
+
+.input:focus{
+    background-color: transparent;
+    outline: transparent;
+    border-bottom: 2px solid #E2921B;
+}
+
+.input::placeholder{
+    color: transparent;
+}
+
+.label {
+    color: #757575;
+    position: relative;
+    left: 0.5em;
+    top: -2em;
+    cursor: auto;
+    transition: 0.3s ease all;
+}
+
+.input:focus~label,
+.input:not(:placeholder-shown)~label {
+    top: -4em;
+    color: #E2921B;
+    font-size: 1rem;
+}
+
+.buttonDiv {
+    display: flex;
+    justify-content: center;
+}
+
+button[id="ContactButton"] {
+    padding: 2%;
+    width: 50%;
+    border: 1px solid;
+    border-color: #212121;
+    border-radius: 5px;
+    font-family: inherit;
+    font-size: 1rem;
+    background-color: black;
+    color: #fff;
+    box-shadow: 0 0 10px #212121;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+button[id="ContactButton"]:hover {
+    background-color: #424242;
+    color: #fbb54c;
+    transform: scale(1.1);
+}
+
+/* Media queries */
+@media screen and (max-width: 1200px) {
+    .form {
+        width: 70%;
+    }
+}
+
+@media screen and (max-width: 680px) {
+    .form {
+        width: 90%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .title {
+        font-size: 2rem;
+        padding-top: 6%;
+    }
+
+    .titleInfo {
+        font-size: 0.75rem;
+    }
+
+    .form {
+        padding: 6% 4%;
+        padding-top: 15%;
+    }
+
+    .inputGroup,
+    .textareaGroup {
+        padding: 3% 0;
+    }
+
+    .input{
+        font-size: 0.75rem;
+    }
+
+    .input:focus~label,
+    .input:not(:placeholder-shown)~label {
+        top: -3.5em;
+        left: 0.1em;
+    }
+
+    button[id="ContactButton"] {
+        font-size: 0.75rem;
+    }
+}
