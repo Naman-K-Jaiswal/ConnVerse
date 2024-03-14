@@ -4,8 +4,12 @@ import (
 	"backend/blog"
 	"backend/database"
 	"context"
+	"errors"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo"
+	"net/http"
 	"sort"
 	"time"
 )
@@ -20,13 +24,16 @@ func ReloadFeed() gin.HandlerFunc {
 		defer cancel()
 
 		cursor, err := collection.Find(ctx, bson.M{})
-		if err != nil {
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			c.JSON(http.StatusOK, gin.H{"message": "No blog posts found"})
+		} else if err != nil {
 			c.JSON(400, gin.H{"error": "Error retrieving blog posts"})
 			return
 		}
 
 		var feed Feed
 		err = feedCollection.FindOne(ctx, bson.M{"userid": id}).Decode(&feed)
+		fmt.Println(id, "here")
 		if err != nil {
 			c.JSON(400, gin.H{"error": "Error retrieving feed"})
 			return

@@ -16,7 +16,6 @@ import (
 // GetBlogPost retrieves a single blog post by ID
 func RetrieveBlogPost() gin.HandlerFunc {
 	return func(c *gin.Context) {
-
 		// Extract blog post ID from the request parameters
 		postID, err := primitive.ObjectIDFromHex(c.Param("id"))
 		// fmt.Println(postID)
@@ -38,6 +37,6 @@ func RetrieveBlogPost() gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, blogPost)
+		c.JSON(http.StatusOK, gin.H{"blog": blogPost})
 	}
 }

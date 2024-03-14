@@ -3,6 +3,7 @@ package blog
 import (
 	"backend/database"
 	"context"
+	"errors"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -25,10 +26,17 @@ func SearchBlogPosts() gin.HandlerFunc {
 		defer cancel()
 
 		filter := bson.M{}
-		filter["title"] = bson.M{"$regex": primitive.Regex{Pattern: search_query.Title, Options: "i"}}
+		flag := false
+		if search_query.Title != "" {
+			filter["title"] = bson.M{"$regex": primitive.Regex{Pattern: search_query.Title, Options: "i"}}
+			flag = true
+		}
 
 		cursor, err := collection.Find(ctx, filter)
-		if err != nil {
+		if errors.Is(err, mongo.ErrNoDocuments) {
+			c.JSON(http.StatusOK, gin.H{"message": "No blog posts found"})
+			return
+		} else if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to search blog posts"})
 			return
 		}
@@ -50,6 +58,14 @@ func SearchBlogPosts() gin.HandlerFunc {
 			posts = append(posts, post)
 		}
 
-		c.JSON(http.StatusOK, gin.H{"posts": posts})
+		if flag {
+			c.JSON(http.StatusOK, gin.H{"posts": posts})
+		} else {
+			if len(posts) > 10 {
+				c.JSON(http.StatusOK, gin.H{"posts": posts[:10]})
+			} else {
+				c.JSON(http.StatusOK, gin.H{"posts": posts})
+			}
+		}
 	}
 }
