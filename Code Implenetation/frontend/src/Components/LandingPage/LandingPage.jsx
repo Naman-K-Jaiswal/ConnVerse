@@ -5,8 +5,18 @@ import Logo from './Logo.png';
 import {Particles} from './Particles';
 import Typewriter from './Typewriter';
 import Navbar1 from './Navbar';
+import { useEffect } from 'react';
 
 const LandingPage = () => {
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    document.documentElement.style.overflow = 'hidden';
+
+    return () => {
+      document.body.style.overflow = 'visible';
+      document.documentElement.style.overflow = 'visible';
+    };
+  }, []);
   return (
     <>
       <MetaData title='ConnVerse' />

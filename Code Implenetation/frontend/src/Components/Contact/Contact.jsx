@@ -3,6 +3,7 @@ import styles from './Contact.module.css';
 import Navbar1 from '../LandingPage/Navbar';
 import Logo from './Logo.png';
 import emailjs from '@emailjs/browser';
+import MetaData from '../../MetaData';
 
 const InputField = ({ type, name, id, placeholder, value, handleChange }) => (
   <div className={styles.inputGroup}>
@@ -87,6 +88,7 @@ const ContactForm = () => {
 
     return (
     <>
+      <MetaData title={'Contact Us'} />
         <Navbar1 />
         <img
             src={Logo}

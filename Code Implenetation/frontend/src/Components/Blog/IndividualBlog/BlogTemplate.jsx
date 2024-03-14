@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import './style.css';
 import { useParams} from "react-router-dom";
 import {formatDistanceToNow} from "date-fns";
+import MetaData from '../../../MetaData';
 
 const BlogTemplate = () => {
   const { id } = useParams();
@@ -161,85 +162,88 @@ const BlogTemplate = () => {
   }
 
   return (
-      <div id="mainBodyDiv">
-        <div key={blogData._id} id="leftHalfBlogDiv">
-          <div id="headBlogDiv">
-            <div id="profileImageBlogDiv">
-              <img src={`data:image/jpeg;base64,${blogData.authorimage}`} alt="" />
-            </div>
-            <div id="subHeadBlogDiv">
-              <div id="titleBlogDiv">
-                {blogData.title}
+      <>
+        <MetaData title={blogData.title} />
+        <div id="mainBodyDiv">
+          <div key={blogData._id} id="leftHalfBlogDiv">
+            <div id="headBlogDiv">
+              <div id="profileImageBlogDiv">
+                <img src={`data:image/jpeg;base64,${blogData.authorimage}`} alt="" />
               </div>
-              <div id="subTitleBlogDiv">
-                <div id="userDetailsBlogDiv">
-                  <div id="usernameBlogDiv">
-                    {blogData.authorname}
+              <div id="subHeadBlogDiv">
+                <div id="titleBlogDiv">
+                  {blogData.title}
+                </div>
+                <div id="subTitleBlogDiv">
+                  <div id="userDetailsBlogDiv">
+                    <div id="usernameBlogDiv">
+                      {blogData.authorname}
+                    </div>
+                    <div id="uploadedDayBlogDiv">
+                      {getDaysAgo(blogData.timestamp)}
+                    </div>
                   </div>
-                  <div id="uploadedDayBlogDiv">
-                    {getDaysAgo(blogData.timestamp)}
+                  <div id="votesNCommentsBlogDiv">
+                    <div id="upVotesBlogDiv">
+                      <button id="upVoteButton" onClick={handleUpvote} style={{ color: upvoted ? '#e2921b' : 'black' }}>
+                        &#x21e7;
+                      </button>
+                      {likes}
+                    </div>
+                    <div id="downVotes">
+                      <button id="downVoteButton" onClick={handleDownvote} style={{ color: downvoted ? 'red' : 'black' }}>
+                        &#x21e9;
+                      </button>
+                    </div>
+                    <div id="comments">
+                      Comments: {blogData.comments.length}
+                    </div>
                   </div>
                 </div>
-                <div id="votesNCommentsBlogDiv">
-                  <div id="upVotesBlogDiv">
-                    <button id="upVoteButton" onClick={handleUpvote} style={{ color: upvoted ? '#e2921b' : 'black' }}>
-                      &#x21e7;
-                    </button>
-                    {likes}
-                  </div>
-                  <div id="downVotes">
-                    <button id="downVoteButton" onClick={handleDownvote} style={{ color: downvoted ? 'red' : 'black' }}>
-                      &#x21e9;
-                    </button>
-                  </div>
-                  <div id="comments">
-                    Comments: {blogData.comments.length}
-                  </div>
-                </div>
               </div>
             </div>
+            <div id="imagesBlogDiv">
+              <img src={`data:image/jpeg;base64,${blogData.image}`} alt="" />
+            </div>
+            <div id="contentBlogDiv">
+              {blogData.content}
+            </div>
           </div>
-          <div id="imagesBlogDiv">
-            <img src={`data:image/jpeg;base64,${blogData.image}`} alt="" />
-          </div>
-          <div id="contentBlogDiv">
-            {blogData.content}
-          </div>
-        </div>
 
-        <div id="rightHalfCommentsDiv">
-          <div id="headingCommentsDiv">
-            Comments:
-          </div>
-          <div id="commentsListDiv">
-            {blogData.comments.map((comment, index) => (
-                <div key={index} className="commentX">
-                  <div className="commentHeadingDiv">
-                    <div className="commentProfilePhoto">
-                      <img src={`data:image/jpeg;base64,${comment.commenterphoto}`} alt="" />
+          <div id="rightHalfCommentsDiv">
+            <div id="headingCommentsDiv">
+              Comments:
+            </div>
+            <div id="commentsListDiv">
+              {blogData.comments.map((comment, index) => (
+                  <div key={index} className="commentX">
+                    <div className="commentHeadingDiv">
+                      <div className="commentProfilePhoto">
+                        <img src={`data:image/jpeg;base64,${comment.commenterphoto}`} alt="" />
+                      </div>
+                      <div className="commentTitle">
+                        {comment.commenter}
+                      </div>
                     </div>
-                    <div className="commentTitle">
-                      {comment.commenter}
+                    <div className="commentContent">
+                      {comment.commenttext}
                     </div>
                   </div>
-                  <div className="commentContent">
-                    {comment.commenttext}
-                  </div>
-                </div>
-            ))}
-          </div>
-          <div id="addCommentsDiv">
-            <input
-                type="text"
-                id="search"
-                placeholder="Add a comment"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-            />
-            <button onClick={handleComment}>Submit</button>
+              ))}
+            </div>
+            <div id="addCommentsDiv">
+              <input
+                  type="text"
+                  id="search"
+                  placeholder="Add a comment"
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+              />
+              <button onClick={handleComment}>Submit</button>
+            </div>
           </div>
         </div>
-      </div>
+      </>
   );
 }
 
