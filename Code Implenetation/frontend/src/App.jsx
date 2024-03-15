@@ -12,6 +12,7 @@ import ChatProvider from "./Context/ChatProvider";
 import ChatPage from "./Pages/Chatpage";
 import LoginPage from "./Components/Auth/Login/LoginPage";
 import ContactForm from './Components/Contact/Contact';
+import Members from './Components/Members/Members';
 
 const App = () => {
   // console.log(Cookies.get('Authorization'));
@@ -81,11 +82,22 @@ const App = () => {
               <Route path='/contact' element={<ContactForm/>} />
               <Route path="/blog/:id" element={<Blogtempcomp setSignIn={setSignIn}/>} />
               <Route path="/chat" element={<ChatMainPage setSignIn={setSignIn}/>} />
+              <Route path="/members" element={<MembersComp setSignIn={setSignIn}/>} />
             </>
         )}
       </Routes>
   );
 };
+
+const MembersComp = ({setSignIn}) => {
+  return (
+    <>
+    <Navbar setSignIn={setSignIn}/>
+    <Members />
+  </>
+  )
+};
+
 
 const Blogtempcomp = ({setSignIn}) => {
   return (

@@ -65,9 +65,10 @@
   align-items: center;
 }
 .loginForm > div >input{
-  padding: 1vmax 4vmax;
-  padding-right: 1vmax;
+  padding: 0.5vmax 4vmax;
+  padding-right: 0.5vmax;
   width: 100%;
+  margin-bottom: 5px;
   box-sizing: border-box;
   border: 1px solid rgba(0, 0, 0, 0.267);
   border-radius: 4px;
@@ -86,16 +87,6 @@
 }
 .loginForm > div > svg:hover{
   color: #f2b65d;
-}
-.loginForm > div:nth-child(2) > input{
-  padding: 1vmax 4vmax;
-  padding-right: 3vmax; /* Adjust the padding to accommodate the eye icon */
-  width: 100%;
-  box-sizing: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.267);
-  border-radius: 4px;
-  font: 500 1.4vmax 'sans-serif';
-  outline: none;
 }
 .loginForm > a{
   color: rgba(0, 0, 0, 0.678);

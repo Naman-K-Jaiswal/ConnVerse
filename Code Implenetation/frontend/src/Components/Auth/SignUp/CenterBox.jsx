@@ -167,10 +167,10 @@ const CenterBox = ({setSignIn}) => {
               <p className='Verse' style={{fontSize:'30px'}}>Verse</p>
             </div>
             {showFirstForm && (
-              <form className='signUpForm' onSubmit={handleSubmitFirstForm}>
-                <pre>Register</pre>
-                <div className='line'></div>
-                <div className='signUpEmail'>
+              <form style={{marginTop:'7vh'}} className='signUpForm' onSubmit={handleSubmitFirstForm}>
+                <pre className='registerFont' style={{marginTop:'1vh'}}>Register</pre>
+                <div style={{marginTop:'1vh'}} className='line'></div>
+                <div style={{marginTop:'1vh'}} className='signUpEmail'>
                     <EmailIcon/>
                     <input 
                     type='email'
@@ -180,11 +180,12 @@ const CenterBox = ({setSignIn}) => {
                     onChange={(e)=>setSignUpEmail(e.target.value)}
                     />
                 </div>
-                <Link to='/alumn'>Are you an Alumn ?</Link>
+                <Link style={{marginTop:'1vh'}} to='/alumn'>Are you an Alumn ?</Link>
                 <input
                     type='submit'
                     value= 'Send OTP'
                     className='signUpBtn'
+                    style={{marginTop:'5vh'}}
                     />
               </form>
               )
@@ -193,7 +194,7 @@ const CenterBox = ({setSignIn}) => {
               <form className='signUpForm' onSubmit={handleSignUp}>
                 {/* <pre>Register</pre>
                 <div className='line'></div> */}
-                <div className='signUpEmail'>
+                <div style={{marginTop:'1vh'}} className='signUpEmail'>
                     <ValidationIcon/>
                     <input 
                     type='text'
@@ -228,6 +229,7 @@ const CenterBox = ({setSignIn}) => {
                     type='submit'
                     value= 'SIGN UP'
                     className='signUpBtn'
+                    style={{marginTop:'5vh'}}
                     />
               </form>
             )}

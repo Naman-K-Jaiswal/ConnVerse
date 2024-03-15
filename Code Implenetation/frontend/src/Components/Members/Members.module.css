@@ -1,0 +1,344 @@
+
+/* ///////////////////////////MAIN BODY/////////////////////////  */
+.mainBody{
+    display: flex;
+    flex-direction: column;
+    margin-left: 4.5vw;
+    height: 100%;
+    width: 95vw;
+    gap: 1vmax;
+    margin-top: 4%;
+}
+
+/*  *****************************SEARCH BAR*************************** */
+.searchBoxDiv{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    margin-top: 2.5vh;
+    align-items: center;
+    width: 95%;
+    height: 5vh; 
+    border-radius: 3vmax;
+    background-color: #ffffff;
+}
+
+.search{
+    width: 90%;
+    height: 70%;
+    font-size: 1.5em;
+    background-color: white;
+    font-size: 1.2em;
+    border-radius: 5px;
+}
+
+.searchbarButton{
+    margin-left: 1%;
+    margin-top: -1.2vh;
+    width: 2.3vw;
+    height: 2.5vh;
+    background-color: #ffffff;
+    color: #ffffff;
+}
+
+.searchButtonimage img{
+    height: 90%;
+    width: 100%;
+}
+.filterButtonimage img{
+    height: 90%;
+    width: 100%;
+}
+
+/*  *****************************BLOG LISTS*************************** */
+#memberLists {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 1vmax;
+    margin-right: 30vw;
+    width: 95%;
+    /* height: 400vh; Remove or comment out this line */
+    gap: 1vmax;
+}
+
+
+.memberX{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 25vh;
+    border-radius: 15px;
+    padding: 0%;
+    background-color: white;
+    margin-left: 0vw;
+    margin-top: 1vh;
+    margin-right: 0vw;
+    gap: 1vmax;
+}
+.memberX:hover{
+    transform: scale(1.01);
+    box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
+    transition: all 0.2s linear;
+}
+
+.memberLeftHalfDiv{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2%;
+    margin-left: 2%;
+    width: 20%;
+    height: 100%;
+    gap: 1vmax;
+}
+
+.memberHeading{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 70%;
+    margin-top:5%;
+    gap: 1vmax;
+}
+
+.memberProfileImageDiv{
+    height: 80%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.memberProfileImageDiv img{
+    height: 100%;
+    width: auto;
+    border-radius: 50%;
+}
+
+.degreeDetails{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    margin-top: 5%;
+    width: 50%;
+    height: 100%;
+    gap: .5vmax;
+}
+
+.memberDegree{
+    font-size: 1.65em;
+}
+
+.memberheadingLeft{
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 50%;
+    height: 100%;
+    gap: 1vmax;
+}
+.memberheadingRight{
+    display: flex;
+    flex-direction: column;
+    align-items: right;
+    width: 50%;
+    height: 100%;
+    gap: 1vmax;
+}
+.memberhead{
+    display: flex;
+    flex-direction: row;
+    margin-top: 1%;
+    align-items: right;
+    justify-content: space-around;
+}
+
+.memberUsername{
+    font-size: 1.3em;
+}
+
+
+.memberTags{
+    display: flex;
+    flex-direction: row;
+    gap: 1vmax;
+    margin-top: 1%;
+    font-size: 1em;
+    align-items: right;
+}
+
+.memberTagX{
+    background-color: #e2921b;
+    border-radius: 10px;
+    padding: .5vmax;
+    display: inline;
+}
+
+.memberAbout{
+    display: flex;
+    justify-content: left;
+    align-items: justified;
+    width: 100%;
+    height: 80%;
+    margin-top: 2%;
+    border-radius: 1vmax;
+}
+
+.memberRightHalfDiv{
+    display: flex;
+    justify-content: right;
+    flex-direction: column;
+    margin-top: 2%;
+    align-items: right;
+    width: 80%;
+    height: 100%;
+    border-radius: 1vmax;
+}
+
+
+/* /////////////////////////////NAVBAR///////////////////////////////// */
+.navbar {
+    display: flex;
+    width: 95vw;
+    justify-content: center;
+    align-items: center;
+    background-color: #e2921b;
+    border-radius: 20px;
+    padding: 1vmax 2vmax;
+    margin-left: 0.6vw;
+    margin-top: 1vmax;
+    margin-bottom: 1vmax;
+}
+
+.nav-item {
+    background-color: #e2921b;
+    text-align: center;
+    width: 15vmax;
+    font-size: 3vh;
+    text-decoration: none;
+    color: white;
+    padding: 0;
+    padding: 5px 1vmax;
+    transition: all 0.5s;
+}
+
+.nav-item:hover {
+    transform: scale(1.2);
+    background-color: #e29a2e;
+    /* color: ; */
+}
+.profile {
+    margin-left: 60vmax;
+    display: flex;
+    align-items: center;
+}
+#profilePhotoNavbar{
+    height: 5vmax;
+    width: 5vmax;
+    background-color: #e29a2e;
+    border-radius: 50%;
+}
+
+/* style.css */
+
+.filterPopup {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: stretch;
+    border-radius: 10px;
+    position: fixed;
+    top: 12vmax;
+    right: 2vmax;
+    bottom: 2vmax;
+    height: 60%;
+    width: 50%;
+    background-color: rgb(255, 255, 255);
+    padding: 2vmax;
+    border-left: 1px solid #ccc;
+    box-shadow: -2px 0 4px rgba(0, 0, 0, 0.1);
+    overflow-y: auto;
+  }
+  
+  .filterPopup h2 {
+    margin-top: 0;
+    font-size: 3vmax;
+  }
+  
+  .filterPopup label {
+    margin-bottom: 5px;
+  }
+  
+  .filterPopup input[type="text"],
+  .filterPopup select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 1vmax;
+    border: 1px solid #f5a810;
+    border-radius: 3px;
+  }
+  
+  /* Horizontal alignment for skills */
+  .filterPopup .skillInputs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    flex-direction: row;
+    padding: auto;
+    margin-bottom: 2vmax;
+  }
+  .filterPopup.open {
+    max-height: 40vmax; /* Adjust height based on content */
+  }
+
+  .filterPopup .skillInput {
+    flex: 0 0 20%;
+    padding: 8px;
+    margin-right: 5px;
+  }
+  
+  .filterPopup .skillInput:last-child {
+    margin-right: 0;
+    padding: auto;
+  }
+  .branch{
+    display: flex;
+    flex-direction: column;
+    gap: 0.012vmax;
+    width: 70%;
+  }
+  .programme{
+    display: flex;
+    flex-direction: column;
+    gap: 0.012vmax;
+    width: 20%;
+  }
+  .filterRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1vmax; /* Add some margin between filter rows */
+  }
+  /* Styling for dropdown */
+  .filterPopup select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 100%; /* Set width to 100% for full width */
+    padding: 8px;
+    margin-bottom: 1vmax;
+    border: 1px solid #fda104;
+    border-radius: 3px;
+    padding-right: 3vmax; /* Add space for dropdown arrow */
+    background-color: #ffffff; /* Dropdown background color */
+    background-image: url('data:image/svg+xml;utf8,<svg fill="%231c1c1c" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6-6-6 1.41-1.41z"></path></svg>');
+    background-repeat: no-repeat;
+    background-position: right 8px top 50%; /* Adjust position of arrow */
+    background-size: 14px auto; /* Adjust size of arrow */
+  }
+  /* You can add more styles as needed */
+  
