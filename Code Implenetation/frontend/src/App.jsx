@@ -12,6 +12,7 @@ import ChatProvider from "./Context/ChatProvider";
 import ChatPage from "./Pages/Chatpage";
 import LoginPage from "./Components/Auth/Login/LoginPage";
 import ForgotPass from "./Components/Auth/ForgotPass/ForgotPass"
+import ContactForm from './Components/Contact/Contact';
 
 const App = () => {
   // console.log(Cookies.get('Authorization'));

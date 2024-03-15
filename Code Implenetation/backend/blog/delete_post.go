@@ -1,6 +1,7 @@
 package blog
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
@@ -8,6 +9,7 @@ import (
 
 func DeleteBlogPost() gin.HandlerFunc {
 	return func(c *gin.Context) {
+		fmt.Println("hua")
 		postID := c.Param("id")
 
 		objID, err := primitive.ObjectIDFromHex(postID)

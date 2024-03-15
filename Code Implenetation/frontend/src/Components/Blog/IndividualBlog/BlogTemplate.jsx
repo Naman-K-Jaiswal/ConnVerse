@@ -1,10 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './style.css';
-import { useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import {formatDistanceToNow} from "date-fns";
 
 const BlogTemplate = () => {
   const { id } = useParams();
+
+  const navigate = useNavigate()
 
   const [comment, setComment] = useState("")
 
@@ -172,6 +174,27 @@ const BlogTemplate = () => {
     }
   }
 
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`http://localhost:8080/blog/compose/delete/${id}`, {
+        method: 'POST',
+        credentials:'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userid: blogData.authorid }),
+      })
+
+      if(res.ok){
+        navigate('/createblog')
+      } else {
+        alert('Error deleting blog')
+      }
+    } catch (error) {
+      alert('Error deleting blog')
+    }
+  }
+
   return (
       <div id="mainBodyDiv">
         <div key={blogData.ID} id="leftHalfBlogDiv">
@@ -190,6 +213,9 @@ const BlogTemplate = () => {
                   </div>
                   <div id="uploadedDayBlogDiv">
                     {getDaysAgo(blogData.timestamp)}
+                  </div>
+                  <div>
+                    <button onClick={handleDelete}>Delete</button>
                   </div>
                 </div>
                 <div id="votesNCommentsBlogDiv">
