@@ -6,18 +6,39 @@ import { Link, useNavigate } from 'react-router-dom';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import EmailIcon from '@mui/icons-material/Email';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
+import emailjs from '@emailjs/browser';
 
 const Leftbox = () => {
     const [alumnEmail, setAlumnEmail] = useState('');
     const [alumnName, setAlumnName] = useState('');
     const [alumnBatch, setAlumnBatch] = useState('');
     const navigate = useNavigate();
+
     const handleSubmit = (e) => {
-        e.preventDefault(); // Prevent default form submission behavior
-        // Display alert message
-        alert("We'll reach back to you soon!");
-        // Redirect to login page
-        navigate("/login");
+        e.preventDefault();
+        emailjs
+            .send(
+            'service_4banen1', // paste your ServiceID here (you'll get one when your service is created).
+            'template_mtftc1a', // paste your TemplateID here (you'll find it under email templates).
+            {
+                from_name: alumnName,
+                to_name: 'ConnVerse', // put your name here.
+                from_email: alumnEmail,
+                to_email: 'connverse22@gmail.com', //put your email here.
+                message: alumnBatch,
+            },
+            'IZJzWB4BqQB-FHsHO' //paste your Public Key here. You'll get it in your profile section.
+            )
+            .then(
+            () => {
+                alert('Thank you. We will get back to you as soon as possible.');
+                navigate("/login");
+            },
+            (error) => {
+                console.log(error);
+                alert('Something went wrong. Please try again.');
+            }
+        );
     };
     return (
         <div className='everything'>

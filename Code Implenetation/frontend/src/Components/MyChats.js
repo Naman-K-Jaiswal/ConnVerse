@@ -9,6 +9,7 @@ import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 import SideDrawer from "./miscellaneous/SideDrawer";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
@@ -36,6 +37,37 @@ const MyChats = ({ fetchAgain }) => {
         duration: 5000,
         isClosable: true,
         position: "bottom-left",
+      });
+    }
+  };
+
+   const deleteChatEvent = async (chatId) => {
+    try {
+      const config = {
+        headers: {
+          "Content-type": "application/json",
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      await axios.delete(`http://localhost:5000/api/chat/${chatId}`, config);
+      // Remove the deleted chat from the chats state
+      setChats(chats.filter((chat) => chat._id !== chatId));
+      toast({
+        title: "Chat Deleted",
+        description: "Chat has been successfully deleted",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    } catch (error) {
+      toast({
+        title: "Error Occurred",
+        description: "Failed to delete the chat",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
       });
     }
   };
@@ -102,10 +134,17 @@ const MyChats = ({ fetchAgain }) => {
                 borderRadius="lg"
                 key={chat._id}
               >
-                <Text>
+                <Text d="flex" justifyContent="space-between" alignItems="center">
                   {!chat.isGroupChat
                     ? getSender(loggedUser, chat.users)
                     : chat.chatName}
+                    <DeleteIcon
+                      color="black"
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent the click from propagating to the Box
+                        deleteChatEvent(chat._id);
+                      }}
+                    />
                 </Text>
                 {chat.latestMessage && (
                   <Text fontSize="xs">

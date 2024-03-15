@@ -59,6 +59,43 @@ const registerUser = asyncHandler(async (req, res) => {
   }
 });
 
+const forgot = asyncHandler(async (req, res) => {
+  const { name, email, password, pic } = req.body;
+
+  if (!name || !email || !password) {
+    res.status(400);
+    throw new Error("Please Enter all the Feilds");
+  }
+
+  const userExists = await User.findOne({ email });
+
+  if (!userExists) {
+    res.status(400);
+    throw new Error("User not exist");
+  }
+
+  const user = await User.updateOne({email},{
+    name,
+    email,
+    password,
+    pic,
+  });
+
+  if (user) {
+    res.status(201).json({
+      _id: user._id,
+      name: user.name,
+      email: user.email,
+      isAdmin: user.isAdmin,
+      pic: user.pic,
+      token: generateToken(user._id),
+    });
+  } else {
+    res.status(400);
+    throw new Error("User Not Found");
+  }
+});
+
 //@description     Auth the user
 //@route           POST /api/users/login
 //@access          Public
@@ -82,4 +119,4 @@ const authUser = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { allUsers, registerUser, authUser };
+module.exports = { allUsers, registerUser, authUser,forgot };
