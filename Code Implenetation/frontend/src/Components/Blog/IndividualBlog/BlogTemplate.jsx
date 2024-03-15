@@ -1,11 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import './style.css';
-import { useParams} from "react-router-dom";
+import { useNavigate, useParams} from "react-router-dom";
 import {formatDistanceToNow} from "date-fns";
 import MetaData from '../../../MetaData';
 
 const BlogTemplate = () => {
   const { id } = useParams();
+
+  const navigate = useNavigate();
 
   const [comment, setComment] = useState("")
 
@@ -109,6 +111,17 @@ const BlogTemplate = () => {
           const data = await res.json()
           setBlogData(data.blog)
           setLikes(data.blog.likes)
+          const response = await fetch(`http://localhost:8080/feed/add/tags`, {
+            method: 'POST',
+            credentials: 'include',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              userid: user.userId,
+              tags: data.blog.tags
+            })
+          })
           const index = data.blog.likedby.indexOf(user.userId)
           if (index !== -1) {
             setUpvoted(true)
@@ -161,11 +174,32 @@ const BlogTemplate = () => {
     }
   }
 
+  const handleDelete = async () => {
+    try {
+      const res = await fetch(`http://localhost:8080/blog/compose/delete/${id}`, {
+        method: 'POST',
+        credentials:'include',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ userid: blogData.authorid }),
+      })
+
+      if(res.ok){
+        navigate('/createblog')
+      } else {
+        alert('Error deleting blog')
+      }
+    } catch (error) {
+      alert('Error deleting blog')
+    }
+  }
+
   return (
       <>
         <MetaData title={blogData.title} />
         <div id="mainBodyDiv">
-          <div key={blogData._id} id="leftHalfBlogDiv">
+          <div key={blogData.ID} id="leftHalfBlogDiv">
             <div id="headBlogDiv">
               <div id="profileImageBlogDiv">
                 <img src={`data:image/jpeg;base64,${blogData.authorimage}`} alt="" />
@@ -182,6 +216,9 @@ const BlogTemplate = () => {
                     <div id="uploadedDayBlogDiv">
                       {getDaysAgo(blogData.timestamp)}
                     </div>
+                    <div>
+                      <button onClick={handleDelete}>Delete</button>
+                    </div>
                   </div>
                   <div id="votesNCommentsBlogDiv">
                     <div id="upVotesBlogDiv">
@@ -196,7 +233,7 @@ const BlogTemplate = () => {
                       </button>
                     </div>
                     <div id="comments">
-                      Comments: {blogData.comments.length}
+                      Comments: {blogData.comments!=null && blogData.comments.length}
                     </div>
                   </div>
                 </div>
@@ -215,7 +252,7 @@ const BlogTemplate = () => {
               Comments:
             </div>
             <div id="commentsListDiv">
-              {blogData.comments.map((comment, index) => (
+              {blogData.comments!=null && blogData.comments.map((comment, index) => (
                   <div key={index} className="commentX">
                     <div className="commentHeadingDiv">
                       <div className="commentProfilePhoto">

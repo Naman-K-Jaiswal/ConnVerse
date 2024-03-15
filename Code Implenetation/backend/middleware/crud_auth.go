@@ -15,6 +15,10 @@ import (
 	"time"
 )
 
+type temp struct {
+	Userid string `json:"userid"`
+}
+
 func CRUDAuth(c *gin.Context) {
 	tokenStr, err := c.Cookie("Authorization")
 	if err != nil {
@@ -33,7 +37,11 @@ func CRUDAuth(c *gin.Context) {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
 
-		authorId := c.GetHeader("Authorization")
+		var temp temp
+		err := c.ShouldBindJSON(&temp)
+		if err != nil {
+			c.AbortWithStatus(http.StatusUnauthorized)
+		}
 
 		collection := database.DB.Collection("Users")
 		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
@@ -49,7 +57,7 @@ func CRUDAuth(c *gin.Context) {
 			}
 		}
 
-		if user.UserID != authorId {
+		if user.UserID != temp.Userid {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
 

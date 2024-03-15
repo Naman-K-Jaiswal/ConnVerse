@@ -134,7 +134,7 @@ func CheckUserExist(email string) (bson.M, error) {
 	return result, err
 }
 
-func CheckUserAlreadyExist(email string) bool {
+func CheckUserAlreadyExist(email string) (bool, *profile.User) {
 	collection := database.DB.Collection("Users")
 	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
 	defer cancel()
@@ -142,7 +142,7 @@ func CheckUserAlreadyExist(email string) bool {
 	var user profile.User
 	err := collection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
 	if err != nil && errors.Is(err, mongo.ErrNoDocuments) {
-		return false
+		return false, nil
 	}
-	return true
+	return true, &user
 }

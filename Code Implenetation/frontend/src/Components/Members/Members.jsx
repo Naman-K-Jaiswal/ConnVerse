@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from 'react';
-import styles from './Members.module.css';
-import searchb from './image.png'
-import filter from './filter.png'
+import React, { useState, useEffect, useRef } from "react";
+import styles from "./Members.module.css";
+import searchb from "./image.png";
+import filter from "./filter.png";
 
 //Branches = { "CSE", "EE", "ME", "CE", "MSE", "AE", "MTH", "PHY", "ECO", "CHE", "MBA","ES","BSBE","ES"}
 
@@ -13,15 +13,19 @@ const Members = () => {
   const memberData = [];
   useEffect(() => {
     const handleClickOutside = (event) => {
-      if (showFilterPopup && filterPopupRef.current && !filterPopupRef.current.contains(event.target)) {
+      if (
+        showFilterPopup &&
+        filterPopupRef.current &&
+        !filterPopupRef.current.contains(event.target)
+      ) {
         setShowFilterPopup(false);
       }
     };
 
-    document.addEventListener('mousedown', handleClickOutside);
+    document.addEventListener("mousedown", handleClickOutside);
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [showFilterPopup]);
   const toggleFilterPopup = () => {
@@ -29,56 +33,81 @@ const Members = () => {
   };
 
   return (
-    <div style={{backgroundColor:'#f4f4f4'}}>
+    <div style={{ backgroundColor: "#f4f4f4" }}>
       <div className={styles.mainBody}>
         <div className={styles.searchBoxDiv}>
-          <input type="text" className={styles.search} placeholder="Search for members" value={search} onChange={(e) => setSearch(e.target.value)}/>
-           <button className={styles.searchbarButton}>
+          <input
+            type="text"
+            className={styles.search}
+            placeholder="Search for members"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <button className={styles.searchbarButton}>
             <div className={styles.searchButtonimage}>
-                <img src= {searchb} alt="search"/>
+              <img src={searchb} alt="search" />
             </div>
-           </button>
-           <button className={styles.searchbarButton} onClick={toggleFilterPopup}>
+          </button>
+          <button
+            className={styles.searchbarButton}
+            onClick={toggleFilterPopup}
+          >
             <div className={styles.filterButtonimage}>
-                <img src= {filter} alt="search" />
+              <img src={filter} alt="search" />
             </div>
-           </button>
+          </button>
         </div>
         <div id={styles.memberLists}>
-  {memberData.map((member) => (
-    <div key={member.id} className={styles.memberX}>
-      <div className={styles.memberLeftHalfDiv}>
-        <div className={styles.memberHeading}>
-          <div className={styles.memberProfileImageDiv}>
-            <img src={member.profileImageSrc} alt="Profile Photo" />
-          </div>
-          <div className={styles.memberUsername} style={{ fontWeight: 'bold' }}>{member.username}</div>
-        </div>
-      </div>
-    
-      <div className={styles.memberRightHalfDiv}>
-        <div className={styles.memberhead}>
-          <div className={styles.memberheadingLeft}>
-            <div className={styles.memberDegree} style={{ fontWeight: 'bold' }}>{member.degree}</div>
-          </div>
-          <div className={styles.memberheadingRight}>                    
-            <div className={styles.memberTags}>
-              {member.tags.map((tag, index) => (
-                <div key={index} className={styles.memberTagX} style={{ color: 'black' }}>{tag}</div>
-              ))}
+          {memberData.map((member) => (
+            <div key={member.id} className={styles.memberX}>
+              <div className={styles.memberLeftHalfDiv}>
+                <div className={styles.memberHeading}>
+                  <div className={styles.memberProfileImageDiv}>
+                    <img src={member.profileImageSrc} alt="Profile Photo" />
+                  </div>
+                  <div
+                    className={styles.memberUsername}
+                    style={{ fontWeight: "bold" }}
+                  >
+                    {member.username}
+                  </div>
+                </div>
+              </div>
+
+              <div className={styles.memberRightHalfDiv}>
+                <div className={styles.memberhead}>
+                  <div className={styles.memberheadingLeft}>
+                    <div
+                      className={styles.memberDegree}
+                      style={{ fontWeight: "bold" }}
+                    >
+                      {member.degree}
+                    </div>
+                  </div>
+                  <div className={styles.memberheadingRight}>
+                    <div className={styles.memberTags}>
+                      {member.tags.map((tag, index) => (
+                        <div
+                          key={index}
+                          className={styles.memberTagX}
+                          style={{ color: "black" }}
+                        >
+                          {tag}
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
+                <hr style={{ border: "1px solid black", width: "11%" }} />
+                <div className={styles.memberAbout}>
+                  <p style={{ fontStyle: "italic", marginRight: "2vw" }}>
+                    {member.about}
+                  </p>
+                </div>
+              </div>
             </div>
-          </div>
+          ))}
         </div>
-        <hr style={{ border: '1px solid black', width: '11%' }} />
-        <div className={styles.memberAbout}>
-          <p style={{ fontStyle: 'italic', marginRight: '2vw'}}>{member.about}</p>
-        </div> 
-      </div>    
-    </div>
-  ))}
-</div>
-
-
       </div>
       {showFilterPopup && (
         // Inside the filterPopup div in the JSX
@@ -88,7 +117,13 @@ const Members = () => {
             <label htmlFor="skills">Skills:</label>
             <div className={styles.skillInputs}>
               {[...Array(5)].map((_, index) => (
-                <input key={index} type="text" className={styles.skillInput} name={`skill${index + 1}`} placeholder={`Skill ${index + 1}`} />
+                <input
+                  key={index}
+                  type="text"
+                  className={styles.skillInput}
+                  name={`skill${index + 1}`}
+                  placeholder={`Skill ${index + 1}`}
+                />
               ))}
             </div>
           </div>
@@ -128,10 +163,9 @@ const Members = () => {
           </div>
           {/* Add more filters here if needed */}
         </div>
-
       )}
     </div>
   );
-}
+};
 
 export default Members;

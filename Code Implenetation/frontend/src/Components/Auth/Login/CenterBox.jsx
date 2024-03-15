@@ -100,7 +100,7 @@ const CenterBox = ({setSignIn}) => {
                   onChange={(e)=>setLoginPassword(e.target.value)}
                   />
               </div>
-              <Link to='/password/forgot' style={{ margin: '10px' }}>Forgot Password ?</Link>
+              <Link to='/forgot' style={{ margin: '10px' }}>Forgot Password ?</Link>
               <input
                   type='submit'
                   value= 'Login'

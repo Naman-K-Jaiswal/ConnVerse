@@ -10,4 +10,5 @@ func AuthRoutes(incomingRoutes *gin.Engine) {
 	incomingRoutes.POST("/signup", authn.SignUp())
 	incomingRoutes.POST("/login", authn.Login())
 	incomingRoutes.POST("/logout", authn.LogOut())
+	incomingRoutes.POST("/forgot-password", authn.ForgotPassword())
 }

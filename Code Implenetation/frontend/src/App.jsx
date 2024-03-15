@@ -13,6 +13,7 @@ import ChatPage from "./Pages/Chatpage";
 import LoginPage from "./Components/Auth/Login/LoginPage";
 import ContactForm from './Components/Contact/Contact';
 import Members from './Components/Members/Members';
+import ForgotPass from './Components/Auth/ForgotPass/ForgotPass';
 
 const App = () => {
   // console.log(Cookies.get('Authorization'));
@@ -68,6 +69,7 @@ const App = () => {
               <Route path="/signup" element={<SignUpComp setSignIn={setSignIn} />} />
               <Route path="/alumn" element={<AlumnComp/>} />
               <Route path='/contact' element={<ContactForm/>} />
+              <Route path="/forgot" element={<ForgotPass setSignIn={setSignIn}/>} />
             </>
         )}
         {signIn && (
@@ -76,6 +78,7 @@ const App = () => {
               <Route path="/login" element={<LoginComp setSignIn={setSignIn} />} />
               <Route path="/signup" element={<SignUpComp setSignIn={setSignIn} />} />
               <Route path="/alumn" element={<AlumnComp/>} />
+              <Route path="/forgot" element={<ForgotPass setSignIn={setSignIn}/>} />
               <Route path="/home" element={<HomeComp setSignIn={setSignIn}/>} />
               <Route path="/createblog" element={<CreateBlogComp setSignIn={setSignIn}/>} />
               <Route path="/userprofile" element={<UserProfileComp setSignIn={setSignIn}/>} />
