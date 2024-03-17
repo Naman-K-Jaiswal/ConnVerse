@@ -86,7 +86,7 @@ const CenterBox = ({setSignIn}) => {
           },
         };
         const { data } = await axios.post(
-            "http://localhost:5000/api/user/forgot",
+            "http://localhost:5001/api/user/forgot",
             {
               name: name,
               email: signUpEmail,

@@ -48,7 +48,7 @@
     margin-top: 10px;
 }
 #search{
-    width: 80%;
+    width: 83%;
     padding: 10px;
     font-size: 1.5em;
     border: 1px solid #ccc;
@@ -56,6 +56,7 @@
 }
 #searchButton{
     padding: 10px 20px;
+    background-color: white;
     border: 1px solid #ccc;
     border-radius: 5px;
     margin-left: 10px;
@@ -224,12 +225,13 @@ font-size: 1.5em;
 }
 
 #uploadButton {
+    display: flex;
+
     padding: 10px;
     padding-top: 0;
-    height: 4vh;
-    margin-left: 3px;
-    margin-top: -1px;
-    position:absolute;
+    height: 5vh;
+    margin-left: 0.2vw;
+    margin-top: 1vh;
     display: block;
     color: black;
     font-size: 15px;
@@ -238,7 +240,7 @@ font-size: 1.5em;
     border-radius: 4px;
     border: 1px solid #ccc;
     cursor: pointer;
-    background-color: rgb(178, 174, 174);
+    background-color: white;
 
 }
 
