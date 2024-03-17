@@ -23,7 +23,7 @@ func LoadFeed() gin.HandlerFunc {
 
 		collection := database.DB.Collection("Feeds")
 		blogCollection := database.DB.Collection("BlogPosts")
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 		defer cancel()
 
 		var feed Feed

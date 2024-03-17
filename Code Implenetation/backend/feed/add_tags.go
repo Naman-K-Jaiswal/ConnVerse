@@ -18,7 +18,7 @@ func AddTags() gin.HandlerFunc {
 		}
 
 		collection := database.DB.Collection("Feeds")
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 		defer cancel()
 
 		for _, tag := range tag_req.Tags {

@@ -182,7 +182,7 @@ const BlogTemplate = () => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ userid: blogData.authorid }),
+        body: JSON.stringify({ requesterid: blogData.authorid }),
       })
 
       if(res.ok){

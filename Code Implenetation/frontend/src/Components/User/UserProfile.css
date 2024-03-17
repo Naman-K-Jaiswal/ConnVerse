@@ -1,0 +1,591 @@
+#personalProfileMainDiv{
+    display: flex;
+    flex-direction: column;
+    width: 100vw;
+    margin-top: 8vh;
+    gap: 2vh;
+    background-color: whitesmoke;
+    padding-top: 2vh;
+}
+
+/* {profileImageAndDetailDiv Section} */
+#profileImageAndDetailDiv{
+    /* background-color:; */
+    width: 87vw;
+    margin-left: 6.5vw;
+
+}
+
+#backgroundProfileImageDiv{
+    /* border: 1px solid black; */
+}
+
+/*  */
+#backgroundProfileImageImg{
+    z-index: -5;
+    width: 87vw;
+    width: 87vw;
+    max-height: 80vh;
+    border-radius: 20px;
+}
+
+#profileImageDiv{
+    display: inline-block;
+    margin-top: -18vh;
+    width: 23vw;
+    margin-left: 2vw;
+    
+}
+
+#profileImageImg{
+    border-radius: 50%;
+    border: 10px solid white;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+#userProfileDescription{
+    position: relative;
+    top: -5vh;
+    display: inline-block;
+    width: 61vw;
+    margin-left: 1vw;
+    padding: 5px;
+    min-height: 20vh;
+    border-radius: 10px;
+}
+
+#userUsernameAndName{
+    display: flex;
+    flex-direction: column;
+    margin-top: -5vh;
+    align-items: center;
+    max-width: 27vw;
+}
+
+
+/* {skillAndTopPostDiv Section} */
+#skillAndTopPostDiv{
+    display: flex;
+    flex-direction: row;
+    height:40vh;
+    gap: 3%;
+    margin-left: 6vw;
+    margin-right: 6vw;
+}
+
+#skillsDiv{
+    display: flex;
+    flex-direction: column;
+    background-color: #fbe8cb;
+    width: 50vw;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#skillHeading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1vh;
+}
+
+#skillTitle{
+    font-size: 1.5em;
+    margin-left: 1vw;
+}
+
+#addSkillIcon{
+    margin-right: 0.8vw;
+}
+
+#skillList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    overflow-y:scroll;
+    margin-left: 1vw;
+    margin-top: 0.5vh;
+    height: 30vh;
+}
+
+#skillListScroller{
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#skillItemX{
+    border-radius: 10px;
+    margin-top: 0.8vh;
+    background-color: white;
+    width: 97%; 
+    font-size: 3vh;
+    padding-left: 1vw;
+}
+
+#topPostDiv{
+    display: flex;
+    flex-direction: column;
+    background-color: #fbe8cb;
+    margin-right: 0;
+    width: 35vw;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#topPostHeading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1vh;
+}
+
+#topPostTitle{
+    font-size: 1.5em;
+    margin-left: 1vw;
+}
+
+#addTopPostIcon{
+    margin-right: 0.8vw;
+}
+
+#topPostList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vh;
+    margin-left: 1vw;
+    /* overflow-y:auto; */
+    margin-top: 0.5vh;
+}
+
+#topPostListScroller{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#topPostItemX{
+    border-radius: 10px;
+    margin-top: 0.8vh;
+    background-color: white;
+    width: 97%; 
+    font-size: 3vh;
+    padding-left: 1vw;
+}
+
+
+/* {achievementsAndCredentialsDiv Section} */
+#achievementsAndCredentialsDiv{
+    display: flex;
+    flex-direction: row;
+    height: 40vh;
+    gap: 3vw;
+}
+
+#achievementsDiv{
+    display: flex;
+    flex-direction: column;
+    background-color: #fbe8cb;
+    width: 35vw;
+    border-radius: 20px;
+    margin-left: 6vw;
+    padding: 10px;
+}
+
+#achievementHeading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1vh;
+}
+
+#achievementTitle{
+    font-size: 1.5em;
+    margin-left: 1vw;
+}
+
+#addAchievementIcon{
+    margin-right: 0.8vw;
+}
+
+#achievementList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vh;
+    margin-left: 1vw;
+    /* overflow-y:auto; */
+    margin-top: 0.5vh;
+}
+
+#achievementListScroller{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#achievementItemX{
+    border-radius: 10px;
+    margin-top: 0.8vh;
+    background-color: white;
+    width: 97%; 
+    font-size: 3vh;
+    padding-left: 1vw;
+}
+
+#credentialsDiv{
+    display: flex;
+    flex-direction: column;
+    background-color: #fbe8cb;
+    width: 50vw;
+    border-radius: 20px;
+    padding: 10px;
+}
+
+#credentialHeading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1vh;
+}
+
+#credentialTitle{
+    font-size: 1.5em;
+    margin-left: 1vw;
+}
+
+#addCredentialIcon{
+    margin-right: 0.8vw;
+}
+
+#credentialList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vh;
+    margin-left: 1vw;
+    /* overflow-y:auto; */
+    margin-top: 0.5vh;
+}
+
+#credentialListScroller{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#credentialItemX{
+    border-radius: 10px;
+    margin-top: 0.8vh;
+    background-color: white;
+    width: 97%; 
+    font-size: 3vh;
+    padding-left: 1vw;
+}
+
+
+/* {projectsListDiv Section} */
+
+#projectsListDiv{
+    display: flex;
+    flex-direction: column;
+    background-color: #fbe8cb;
+    width: 100%;
+    border-radius: 20px;
+    width: 88vw;
+    margin-left: 6vw;
+    padding: 10px;
+    height: 40vh;
+}
+
+#projectHeading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1vh;
+}
+
+#projectTitle{
+    font-size: 1.5em;
+    margin-left: 1vw;
+}
+
+#addProjectIcon{
+    margin-right: 0.8vw;
+}
+
+#projectList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vh;
+    margin-left: 1vw;
+    /* overflow-y:auto; */
+    margin-top: 0.5vh;
+}
+
+#projectListScroller{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+}
+
+#projectItemX{
+    border-radius: 10px;
+    margin-top: 0.8vh;
+    background-color: white;
+    width: 97%; 
+    font-size: 3vh;
+    padding-left: 1vw;
+}
+
+#projectItemName{
+    font-size: 2.5vh;
+    margin-top: 0.5vh;
+}
+
+#projectItemInstructor{
+    font-size: 2vh;
+    margin-top: 0.5vh;
+}
+
+#projectItemSkills{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    margin-top: 0.5vh;
+}
+
+#projectItemSkillX{
+    border-radius: 10px;
+    margin-top: 0.8vh;
+    background-color: #f5f5f5;
+    font-size: 2vh;
+    padding-left: 1vw;
+    padding-right: 1vw;
+    margin-right: 0.5vw;
+}
+
+#projectItemDescription{
+    font-size: 2vh;
+    margin-top: 0.5vh;
+}
+
+#projectItemFromTo{
+    font-size: 2vh;
+    margin-top: 0.5vh;
+}
+
+
+
+/* {coursesTakenListDiv Section} */
+#coursesTakenListDiv{
+    display: flex;
+    flex-direction: column;
+    background-color: #fbe8cb;
+    width: 100%;
+    border-radius: 20px;
+    width: 88vw;
+    margin-left: 6vw;
+    padding: 10px;
+    height: 40vh;
+}
+
+
+#courseHeading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1vh;
+}
+
+#courseTitle{
+    font-size: 1.5em;
+    margin-left: 1vw;
+}
+
+#addCourseIcon{
+    margin-right: 0.8vw;
+}
+
+#courseList{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 30vh;
+    margin-left: 1vw;
+    /* overflow-y:auto; */
+    margin-top: 0.5vh;
+}
+
+#courseListScroller{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    overflow-y: scroll;
+}
+.dimmed{
+    opacity: 0.2;
+}
+#courseItemX{
+    border-radius: 10px;
+    margin-top: 0.8vh;
+    background-color: white;
+    width: 97%; 
+    font-size: 3vh;
+    padding-left: 1vw;
+}
+#AddCredButton{
+    background-color: #f5f5f5;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5vh 1vw;
+    font-size: 2vh;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    cursor: pointer;
+}
+#AddCredButton:hover{
+    background-color: #e5e5e5;
+}
+#credentialPopup{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 30vw;
+    height: 50vh;
+    border-radius: 20px;
+    border: 2.5px solid #f5f5f5;
+    padding: 20px;
+    z-index: 100;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+#credentialForm {
+    display: flex;
+    margin-top: 4%;
+    flex-direction: column; /* Arrange items vertically */
+    align-items: left; /* Center items horizontally */
+}
+  
+#credentialForm input {
+    margin-bottom: 10px; /* Add some space between input fields */
+}
+  
+#credentialPopupHeading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1vh;
+    font-size: 2em;
+}
+#projectPopup{
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    width: 30vw;
+    height: 60vh;
+    border-radius: 20px;
+    border: 2.5px solid #f5f5f5;
+    padding: 20px;
+    z-index: 100;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+#projectForm {
+    display: flex;
+    margin-top: 4%;
+    flex-direction: column; /* Arrange items vertically */
+    align-items: left; /* Center items horizontally */
+}
+#projectForm input {
+    margin-bottom: 10px; /* Add some space between input fields */
+}
+#projectPopupHeading{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1vh;
+    font-size: 2em;
+}
+#PopupButtons{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 1vh;
+}
+#closeBtn{
+    background-color: #000000;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5vh 1vw;
+    font-size: 3vh;
+    color: #ffffff;
+    margin-top: 1vh;
+    margin-left: 3.5%;
+    cursor: pointer;
+    width: 30%;
+}
+#closeBtn:hover{
+    background-color: #00000093;
+}
+#addNewCredBtn{
+    background-color: #f5a810;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5vh 1vw;
+    font-size: 3vh;
+    color: #ffffff;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    cursor: pointer;
+    width: 50%;
+}
+#addNewCredBtn:hover{
+    background-color: #f5a91093;
+}
+#addNewProjectBtn{
+    background-color: #f5a810;
+    border: none;
+    border-radius: 10px;
+    padding: 0.5vh 1vw;
+    font-size: 3vh;
+    color: #ffffff;
+    margin-top: 1vh;
+    margin-left: 1vw;
+    cursor: pointer;
+    width: 50%;
+}
+#addNewProjectBtn:hover{
+    background-color: #f5a91093;
+}
+
+#courseItemName{
+    font-size: 2.5vh;
+    margin-top: 0.5vh;
+}
+
+#courseItemInstructor{
+    font-size: 2vh;
+    margin-top: 0.5vh;
+}
+
+#courseItemDescription{
+    font-size: 2vh;
+    margin-top: 0.5vh;
+}
+
+#courseItemYearSemester{
+    font-size: 2vh;
+    margin-top: 0.5vh;
+}

@@ -20,7 +20,7 @@ func ReloadFeed() gin.HandlerFunc {
 
 		collection := database.DB.Collection("BlogPosts")
 		feedCollection := database.DB.Collection("Feeds")
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 		defer cancel()
 
 		cursor, err := collection.Find(ctx, bson.M{})

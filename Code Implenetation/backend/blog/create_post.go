@@ -47,7 +47,7 @@ func CreateBlogPost() gin.HandlerFunc {
 		}
 
 		collection := database.DB.Collection("Users")
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 		defer cancel()
 
 		_, err = collection.UpdateOne(ctx, bson.M{"userid": new_post.AuthorID}, bson.M{"$push": bson.M{"blogposts": new_post.ID.Hex()}})

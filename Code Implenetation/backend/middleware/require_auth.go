@@ -35,7 +35,7 @@ func RequireAuth(c *gin.Context) {
 
 		var user authn.LoginDetails
 		collection := database.DB.Collection("login_details")
-		ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 		defer cancel()
 
 		err := collection.FindOne(ctx, bson.M{"email": claims["sub"]}).Decode(&user)

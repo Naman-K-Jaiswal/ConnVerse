@@ -45,7 +45,7 @@ func Login() gin.HandlerFunc {
 			c.SetCookie("Authorization", tokenString, 3600*24, "", "", false, false)
 
 			collection := database.DB.Collection("Users")
-			ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+			ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 			defer cancel()
 
 			var user profile.User

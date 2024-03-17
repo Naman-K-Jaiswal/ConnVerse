@@ -16,7 +16,7 @@ import (
 
 func InitializeUser(res bson.M) (error, []byte) {
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	url := "https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/" + res["i"].(string) + "_0.jpg"
@@ -81,7 +81,7 @@ func InitializeUser(res bson.M) (error, []byte) {
 	}
 
 	collection = database.DB.Collection("Feeds")
-	ctx, cancel = context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel = context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	_, err = collection.InsertOne(ctx, user_feed)
@@ -94,7 +94,7 @@ func InitializeUser(res bson.M) (error, []byte) {
 
 func AddUserToDB(new_user User) (string, error) {
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	res, err := collection.InsertOne(ctx, new_user)
@@ -109,7 +109,7 @@ func AddUserToDB(new_user User) (string, error) {
 
 func UpdateUserInDB(updated_user UserUpdate) error {
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	_, err := collection.UpdateOne(ctx, bson.M{"userid": updated_user.UserID}, bson.M{"$set": updated_user})
@@ -125,7 +125,7 @@ func GetUserByNickName(nickname string) (*User, error) {
 		return nil, nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	var user User
@@ -142,7 +142,7 @@ func GetUsersByName(name string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"name": bson.M{"$regex": primitive.Regex{Pattern: name, Options: "i"}}}
@@ -168,7 +168,7 @@ func GetUsersByNickname(nickname string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"nickname": bson.M{"$regex": primitive.Regex{Pattern: nickname, Options: "i"}}}
@@ -194,7 +194,7 @@ func GetUsersBySkills(skills []string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"skills": bson.M{"$in": skills}}
@@ -220,7 +220,7 @@ func GetUsersByDegree(degree string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"degree": bson.M{"$regex": primitive.Regex{Pattern: degree, Options: "i"}}}
@@ -246,7 +246,7 @@ func GetUsersByOrganization(organization string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"credentials.organisation": bson.M{"$regex": primitive.Regex{Pattern: organization, Options: "i"}}}
@@ -272,7 +272,7 @@ func GetUsersByCourses(courses []string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"courses.coursename": bson.M{"$in": courses}}
@@ -298,7 +298,7 @@ func GetUserByID(userID string) (*User, error) {
 		return nil, nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"userid": bson.M{"$regex": primitive.Regex{Pattern: userID, Options: "i"}}}
@@ -316,7 +316,7 @@ func GetUsersByNameAndSkills(name string, skills []string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"name": bson.M{"$regex": primitive.Regex{Pattern: name, Options: "i"}}, "skills": bson.M{"$in": skills}}
@@ -342,7 +342,7 @@ func GetUsersByNameAndDegree(name string, degree string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"name": bson.M{"$regex": primitive.Regex{Pattern: name, Options: "i"}}, "degree": bson.M{"$regex": primitive.Regex{Pattern: degree, Options: "i"}}}
@@ -368,7 +368,7 @@ func GetUsersByNameAndOrganization(name string, organization string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"name": bson.M{"$regex": primitive.Regex{Pattern: name, Options: "i"}}, "credentials.organisation": bson.M{"$regex": primitive.Regex{Pattern: organization, Options: "i"}}}
@@ -394,7 +394,7 @@ func GetUsersByNameAndCourses(name string, courses []string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"name": bson.M{"$regex": primitive.Regex{Pattern: name, Options: "i"}}, "courses.coursename": bson.M{"$in": courses}}
@@ -420,7 +420,7 @@ func GetUsersByNicknameAndSkills(nickname string, skills []string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"nickname": bson.M{"$regex": primitive.Regex{Pattern: nickname, Options: "i"}}, "skills": bson.M{"$in": skills}}
@@ -446,7 +446,7 @@ func GetUsersByNicknameAndDegree(nickname string, degree string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"nickname": bson.M{"$regex": primitive.Regex{Pattern: nickname, Options: "i"}}, "degree": bson.M{"$regex": primitive.Regex{Pattern: degree, Options: "i"}}}
@@ -472,7 +472,7 @@ func GetUsersByNicknameAndOrganization(nickname string, organization string) []U
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"nickname": bson.M{"$regex": primitive.Regex{Pattern: nickname, Options: "i"}}, "credentials.organisation": bson.M{"$regex": primitive.Regex{Pattern: organization, Options: "i"}}}
@@ -498,7 +498,7 @@ func GetUsersByNicknameAndCourses(nickname string, courses []string) []User {
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"nickname": bson.M{"$regex": primitive.Regex{Pattern: nickname, Options: "i"}}, "courses.coursename": bson.M{"$in": courses}}
@@ -524,7 +524,7 @@ func GetUsersByNameAndDegreeAndSkills(name string, degree string, skills []strin
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"name": bson.M{"$regex": primitive.Regex{Pattern: name, Options: "i"}}, "degree": bson.M{"$regex": primitive.Regex{Pattern: degree, Options: "i"}}, "skills": bson.M{"$in": skills}}
@@ -550,7 +550,7 @@ func GetUsersByNameAndDegreeAndSkillsAndOrganization(name string, degree string,
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{}
@@ -580,7 +580,7 @@ func GetUsersByNameAndDegreeAndSkillsAndCourses(name string, degree string, skil
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{}
@@ -610,7 +610,7 @@ func GetUsersByNicknameAndDegreeAndSkills(nickname string, degree string, skills
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{}
@@ -639,7 +639,7 @@ func GetUsersByNicknameAndDegreeAndSkillsAndOrganization(nickname string, degree
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{}
@@ -669,7 +669,7 @@ func GetUsersByNicknameAndDegreeAndSkillsAndCourses(nickname string, degree stri
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{}
@@ -699,7 +699,7 @@ func GetUsersByNameAndDegreeAndSkillsAndOrganizationAndCourses(name string, degr
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{}
@@ -730,7 +730,7 @@ func GetUsersByNicknameAndDegreeAndSkillsAndOrganizationAndCourses(nickname stri
 		return nil
 	}
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 3*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{}

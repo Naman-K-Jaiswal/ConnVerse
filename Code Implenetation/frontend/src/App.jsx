@@ -3,7 +3,6 @@ import Navbar from './Components/Navbar/Navbar';
 import SignUp from './Components/Auth/SignUp/SignupPage'
 import Alumn from './Components/Auth/Alumn/AlumnRegisterPage'
 import Home from './Components/Home/Home'
-import User from './Components/User/UserProfile'
 import CreateBlogPage from './Components/Blog/CreateBlog/CreateBlogPage'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import LandingPage from './Components/LandingPage/LandingPage';
@@ -14,6 +13,7 @@ import LoginPage from "./Components/Auth/Login/LoginPage";
 import ContactForm from './Components/Contact/Contact';
 import Members from './Components/Members/Members';
 import ForgotPass from './Components/Auth/ForgotPass/ForgotPass';
+import UserProfile from './Components/User/UserProfile';
 
 const App = () => {
   // console.log(Cookies.get('Authorization'));
@@ -81,7 +81,7 @@ const App = () => {
               <Route path="/forgot" element={<ForgotPass setSignIn={setSignIn}/>} />
               <Route path="/home" element={<HomeComp setSignIn={setSignIn}/>} />
               <Route path="/createblog" element={<CreateBlogComp setSignIn={setSignIn}/>} />
-              <Route path="/userprofile" element={<UserProfileComp setSignIn={setSignIn}/>} />
+              <Route path="/userprofile/:id" element={<UserProfileComp setSignIn={setSignIn}/>} />
               <Route path='/contact' element={<ContactForm/>} />
               <Route path="/blog/:id" element={<Blogtempcomp setSignIn={setSignIn}/>} />
               <Route path="/chat" element={<ChatMainPage setSignIn={setSignIn}/>} />
@@ -169,7 +169,7 @@ const UserProfileComp = ({setSignIn}) => {
   return (
     <>
     <Navbar setSignIn={setSignIn}/>
-    <User/>
+    <UserProfile/>
   </>
   )
 };
