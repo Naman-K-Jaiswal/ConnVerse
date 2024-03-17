@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import './style.css';
+import './styleIndividual.css';
 import { useNavigate, useParams} from "react-router-dom";
 import {formatDistanceToNow} from "date-fns";
 import MetaData from '../../../MetaData';
