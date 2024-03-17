@@ -5,8 +5,10 @@ import { useNavigate } from "react-router-dom";
 import MetaData from "../../../MetaData";
 import Loader1 from '../../Loader/Loader1';
 import Loader from "../../Loader/Loader";
+import { useToast } from "@chakra-ui/toast";
 
 const CreateBlogPage = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const [postData, setPostData] = useState({
@@ -71,10 +73,25 @@ const CreateBlogPage = () => {
           });
         }
       } else {
-        alert("Failed to retrieve your blog posts.");
+        toast({
+            title: "Please Try Again!",
+            description: "Failed to retrieve your Blog Posts",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
+
       }
     } catch (error) {
-      alert("Failed to retrieve your blog posts.");
+      toast({
+            title: "Please Try Again!",
+            description: "Failed to retrieve your Blog Posts",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
     }
   };
 
@@ -140,7 +157,13 @@ const CreateBlogPage = () => {
       if (response.ok) {
         const data = await response.json();
         setPosts((prevPosts) => [data.blog, ...prevPosts]);
-        alert("Blog post created successfully");
+        toast({
+            title: "Blog post created successfully!",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
         setProfileDetails({
           username: profileDetails.username,
           totalPoints: profileDetails.totalPoints,
@@ -158,12 +181,26 @@ const CreateBlogPage = () => {
         setLoading(false);
       } else {
         console.error("Failed to create blog post");
-        alert("Failed to create blog post");
+        toast({
+          title: "Please Try Again!",
+          description: "Failed to create blog post",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
         setLoading(false);
       }
     } catch (error) {
       console.error("Error:", error);
-      alert("Failed to create blog post");
+      toast({
+          title: "Please Try Again!",
+          description: "Failed to create blog post",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
       setLoading(false);
     }
     setLoading(false);

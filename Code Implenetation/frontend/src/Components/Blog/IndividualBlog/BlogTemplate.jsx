@@ -3,9 +3,13 @@ import './style.css';
 import { useNavigate, useParams} from "react-router-dom";
 import {formatDistanceToNow} from "date-fns";
 import MetaData from '../../../MetaData';
+import { useToast } from "@chakra-ui/toast";
+import Loader from '../../Loader/Loader';
 
 const BlogTemplate = () => {
+  const toast = useToast();
   const { id } = useParams();
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -96,8 +100,9 @@ const BlogTemplate = () => {
     return formatDistanceToNow(postDate, { addSuffix: true });
   }
 
-  useEffect( () => {
+  useEffect(() => {
     const func = async () => {
+      setLoading(true);
       try {
         const res = await fetch(`http://localhost:8080/blog/${id}`, {
           method: 'GET',
@@ -134,12 +139,19 @@ const BlogTemplate = () => {
             setDownvoted(true)
           }
         } else {
-          alert('Error fetching blog. Please reload the page')
+          toast({
+            title: "Error Fetching Blog!",
+            description: "Please reload the page",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+          });
         }
       } catch (error) {
       }
+      setLoading(false);
     }
-
     func()
   }, [id]);
 
@@ -167,10 +179,24 @@ const BlogTemplate = () => {
         setBlogData(updatedBlogData)
         setComment("")
       } else {
-        alert("Error adding comment. Please try again")
+        toast({
+            title: "Error Adding Comment!",
+            description: "Please try again",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+          });
       }
     } catch (error) {
-      alert("Error adding comment. Please try again")
+      toast({
+          title: "Error Adding Comment!",
+          description: "Please try again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
     }
   }
 
@@ -188,16 +214,31 @@ const BlogTemplate = () => {
       if(res.ok){
         navigate('/createblog')
       } else {
-        alert('Error deleting blog')
+        toast({
+            title: "Error Deleting Blog!",
+            description: "Please try again",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
       }
     } catch (error) {
-      alert('Error deleting blog')
+      toast({
+          title: "Error Deleting Blog!",
+          description: "Please try again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
     }
   }
 
   return (
-      <>
-        <MetaData title={blogData.title} />
+    <>
+      <MetaData title={blogData.title} />
+      {loading ? <Loader/> : 
         <div id="mainBodyDiv">
           <div key={blogData.ID} id="leftHalfBlogDiv">
             <div id="headBlogDiv">
@@ -280,7 +321,8 @@ const BlogTemplate = () => {
             </div>
           </div>
         </div>
-      </>
+      }
+    </>
   );
 }
 

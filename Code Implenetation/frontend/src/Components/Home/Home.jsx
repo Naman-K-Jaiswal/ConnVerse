@@ -6,8 +6,10 @@ import { useInView } from "react-intersection-observer";
 import axios from "axios";
 import MetaData from "../../MetaData";
 import Loader from '../Loader/Loader';
+import { useToast } from "@chakra-ui/toast";
 
 const Home = () => {
+  const toast = useToast();
   const navigate = useNavigate();
   const [blogData, setBlogData] = useState([]);
   const [search, setSearch] = useState("");
@@ -51,11 +53,25 @@ const Home = () => {
               setBlogData(data.blogs);
             }
           } catch (error) {
-            alert("Error fetching feed. Please reload the page");
+            toast({
+              title: "Error Fetching Feed!",
+              description: "Please reload the page",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom-left",
+            });
           }
         }
       } catch (error) {
-        alert("Error fetching feed. Please reload the page");
+        toast({
+          title: "Error Fetching Feed!",
+          description: "Please reload the page",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
       }
     };
     fetchData();
@@ -132,11 +148,24 @@ const Home = () => {
       } else {
         const data = await response.json();
         setBlogData([]);
-        alert(data["error"]);
+        toast({
+          description: data["error"],
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
       }
     } catch (error) {
       setBlogData([]);
-      alert("Something went wrong! Please reload the page");
+      toast({
+        title: "Something went wrong!",
+        description: "Please reload the page",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
     }
 
     if (search === "") {

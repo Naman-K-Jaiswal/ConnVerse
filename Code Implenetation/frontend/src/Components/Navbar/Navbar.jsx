@@ -3,12 +3,15 @@ import HomeIcon from '@mui/icons-material/Home';
 import GroupIcon from '@mui/icons-material/People';
 import CreateIcon from '@mui/icons-material/Create';
 import ChatIcon from '@mui/icons-material/Chat';
+import { useToast } from "@chakra-ui/toast";
 
 import './style.css';
 import profileImg from './profile_pic.JPG';
-import {Link, useNavigate} from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-const Navbar = ({setSignIn}) => {
+
+const Navbar = ({ setSignIn }) => {
+  const toast = useToast();
   const navigate = useNavigate()
   const [isOpen, setIsOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
@@ -28,10 +31,24 @@ const Navbar = ({setSignIn}) => {
         setSignIn(false);
         navigate("/")
       } else {
-        alert("error in logging out, please try again!")
+        toast({
+          title: "Error In Logging Out!",
+          description: "Please Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
       }
     } catch (error) {
-      alert("error in logging out, please try again!")
+      toast({
+          title: "Error In Logging Out!",
+          description: "Please Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom-left",
+        });
     }
   };
 

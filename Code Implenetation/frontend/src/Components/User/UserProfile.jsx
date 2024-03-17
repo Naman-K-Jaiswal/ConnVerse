@@ -9,9 +9,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import backgroundImageFile from "./backgroundImage.jpg";
 import profileImageFile from "./userProfileImage.JPG";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
+import { useToast } from "@chakra-ui/toast";
 import { useParams, useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
+  const toast = useToast();
   const { id } = useParams();
   const navigate = useNavigate();
   const [name, setName] = useState("Name");
@@ -79,15 +81,18 @@ const UserProfile = () => {
     if (event.target.files.length > 0) {
       Promise.all([convertToBase64(event.target.files[0])]).then(([img]) => {
         setProfileImage(img);
+        localStorage.setItem('user', JSON.stringify({
+          userId: user.userId,
+          userImage: img.substring(23),
+          userName: user.userName
+        }))
       });
     }
   };
 
   // Profile Description Functionalities
   const [descriptionProfileDescription, setDescriptionProfileDescription] =
-    useState(
-      ""
-    );
+    useState("");
 
   const [isEditingProfileDescription, setIsEditingProfileDescription] =
     useState(false);
@@ -172,7 +177,7 @@ const UserProfile = () => {
 
   const handleAddSkill = (e) => {
     e.preventDefault();
-    const up = ["New Skill", ...skills]
+    const up = ["New Skill", ...skills];
     setSkills(up);
   };
 
@@ -343,7 +348,6 @@ const UserProfile = () => {
   const [newProject, setNewProject] = useState({
     name: "",
     instructorname: "",
-    skills: "",
     description: "",
     from: "",
     to: "",
@@ -352,7 +356,6 @@ const UserProfile = () => {
   const [editProjectIndex, setEditProjectIndex] = useState(null);
   const editRefProjectNames = useRef([]);
   const editRefProjectInstructor = useRef(null);
-  const editRefProjectSkills = useRef(null);
   const editRefProjectDescription = useRef(null);
   // Functions for the project
   const handleInputChangeProject = (e) => {
@@ -367,7 +370,6 @@ const UserProfile = () => {
     setNewProject({
       name: "",
       instructorname: "",
-      skills: [],
       description: "",
       from: "",
       to: "",
@@ -425,7 +427,6 @@ const UserProfile = () => {
     const newProject = {
       name: siblings[0].textContent,
       instructorname: siblings[1].textContent,
-      skills: siblings[3].textContent.split(","),
       description: siblings[4].textContent,
       from: fromtos[0].textContent,
       to: fromtos[2].textContent,
@@ -598,14 +599,35 @@ const UserProfile = () => {
               setBlogposts([]);
             }
           } else {
-            alert("Error fetching details. Please reload the page");
+            toast({
+              title: "Error fetching details!",
+              description: "Please reload the page",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+            });
           }
           setOk(1);
         } else {
-          alert("Error fetching details. Please reload the page");
+          toast({
+              title: "Error fetching details!",
+              description: "Please reload the page",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+            });
         }
       } catch (error) {
-        alert("Error fetching details. Please reload the page");
+        toast({
+          title: "Error fetching details!",
+          description: "Please reload the page",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
       }
     };
 
@@ -614,38 +636,62 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (ok > 0) {
-      const func = async () => {
-        try {
-          const res = await fetch(`http://localhost:8080/profile/update`, {
-            method: "POST",
-            credentials: "include",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              userid: id,
-              nickname: nickname,
-              profilephoto: profileImage.substring(23),
-              bannerphoto: backgroundImage.substring(23),
-              about: descriptionProfileDescription,
-              skills: skills,
-              achievements: achievements,
-              credentials: credentials,
-              projects: projects,
-              courses: courses,
-            }),
-          });
+      if (ok === 1) {
+        setOk(2);
+      } else {
+        const func = async () => {
+          try {
+            const res = await fetch(`http://localhost:8080/profile/update`, {
+              method: "POST",
+              credentials: "include",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify({
+                userid: id,
+                nickname: nickname,
+                profilephoto: profileImage.substring(23),
+                bannerphoto: backgroundImage.substring(23),
+                about: descriptionProfileDescription,
+                skills: skills,
+                achievements: achievements,
+                credentials: credentials,
+                projects: projects,
+                courses: courses,
+              }),
+            });
 
-          if (res.ok) {
-            alert("Details updated successfully");
-          } else {
-            alert("Error updating details. Please reload the page");
+            if (res.ok) {
+              toast({
+                title: "Details updated successfully!",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+              });
+            } else {
+              toast({
+                title: "Error updating details!",
+                description: "Please reload the page",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+              });
+            }
+          } catch (error) {
+              toast({
+                title: "Error updating details!",
+                description: "Please reload the page",
+                status: "error",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+              });
           }
-        } catch (error) {
-          alert("Error updating details. Please reload the page");
-        }
-      };
-      func();
+        };
+        func();
+      }
     }
   }, [
     ok,
@@ -1159,13 +1205,6 @@ const UserProfile = () => {
                     </div>
                     <div
                       contentEditable={editProjectIndex === index}
-                      ref={editRefProjectSkills}
-                      id="credentialItemFromTo"
-                    >
-                      {project.skills.join(",")}
-                    </div>
-                    <div
-                      contentEditable={editProjectIndex === index}
                       ref={editRefProjectDescription}
                       id="credentialItemFromTo"
                     >
@@ -1427,15 +1466,6 @@ const UserProfile = () => {
               placeholder="Instructor Name"
               autoComplete="off"
               value={newProject.instructorname}
-              onChange={handleInputChangeProject}
-              required
-            />
-            <input
-              type="text"
-              name="skills"
-              placeholder="Skills"
-              autoComplete="off"
-              value={newProject.skills}
               onChange={handleInputChangeProject}
               required
             />

@@ -116,7 +116,6 @@ const CenterBox = ({ setSignIn }) => {
         setSignIn(true)
         navigate("/home");
       } catch (error) {
-        alert("");
         toast({
           description: "An error occurred, Please Try Again",
           status: "error",
@@ -127,7 +126,13 @@ const CenterBox = ({ setSignIn }) => {
       }
 
     } catch (err) {
-        alert("an error occurred, please try again");
+        toast({
+          description: "An error occurred, Please Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
     }
   };
 
@@ -136,7 +141,13 @@ const CenterBox = ({ setSignIn }) => {
     setLoading(true);
     e.preventDefault();
     if (signUpPassword !== signUpConfirmPassword) {
-      alert("Passwords do not match");
+      toast({
+          description: "Passwords do not match",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
       return;
     }
 
@@ -169,10 +180,22 @@ const CenterBox = ({ setSignIn }) => {
         }))
         await postDetails(responseData.img, responseData.name, hashedPassword)
       } else {
-        alert(response["error"]);
+        toast({
+          description: response["error"],
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
       }
     } catch (err) {
-      alert("Invalid OTP or User Already Exists");
+      toast({
+          description: "Invalid OTP or User Already Exists",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
     }
     setLoading(false);
   };

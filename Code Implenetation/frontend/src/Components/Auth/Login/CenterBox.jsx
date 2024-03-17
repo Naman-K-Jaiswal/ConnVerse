@@ -9,9 +9,11 @@ import MetaData from '../../../MetaData.jsx';
 import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useToast } from "@chakra-ui/toast";
 import Loader from '../../Loader/Loader.jsx';
 
-const CenterBox = ({setSignIn}) => {
+const CenterBox = ({ setSignIn }) => {
+  const toast = useToast();
   const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
@@ -55,15 +57,36 @@ const CenterBox = ({setSignIn}) => {
                 setLoading(false);
                 navigate("/home")
               } catch (error) {
-                alert("Please Try Again, Don't Forget To Verify Your Details");
+                toast({
+                    title: "Please Try Again!",
+                    description: "Don't Forget To Verify Your Details",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "bottom",
+                });
                 setLoading(false);
               }
           } else {
-            alert(response["error"] || "Please Try Again, Don't Forget To Verify Your Details");
+            toast({
+                    title: "Please Try Again!",
+                    description: response["error"] || "Don't Forget To Verify Your Details",
+                    status: "error",
+                    duration: 5000,
+                    isClosable: true,
+                    position: "bottom",
+                });
             setLoading(false);
           }
       } catch (error) {
-        alert("Please Try Again, Don't Forget To Verify Your Details");
+        toast({
+            title: "Please Try Again!",
+            description: "Don't Forget To Verify Your Details",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
         setLoading(false);
       }
   }

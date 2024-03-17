@@ -11,9 +11,11 @@ import LockIcon from '@mui/icons-material/Lock';
 import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useToast } from "@chakra-ui/toast";
 import Loader from '../../Loader/Loader.jsx';
 
-const CenterBox = ({setSignIn}) => {
+const CenterBox = ({ setSignIn }) => {
+  const toast = useToast();
   const navigate = useNavigate();
   const [showFirstForm, setShowFirstForm] = useState(true);
   const [signUpEmail, setSignUpEmail] = useState('');
@@ -38,10 +40,22 @@ const CenterBox = ({setSignIn}) => {
       if (response.status === 200){
         setShowFirstForm(false);
       } else {
-        alert('Please enter valid IITK Email')
+        toast({
+            description: "Please enter valid IITK Email",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
       }
     } catch (error) {
-      alert('Please enter valid IITK Email');
+      toast({
+            description: "Please enter valid IITK Email",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
     }
     setLoading(false);
   }
@@ -103,11 +117,23 @@ const CenterBox = ({setSignIn}) => {
         setSignIn(true)
         navigate("/home");
       } catch (error) {
-        alert("an error occurred, please try again");
+        toast({
+            description: "An Error Occurred, Please Try Again",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
       }
 
     } catch (err) {
-        alert("an error occurred, please try again");
+        toast({
+            description: "An Error Occurred, Please Try Again",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
     }
   };
 
@@ -116,7 +142,13 @@ const CenterBox = ({setSignIn}) => {
     setLoading(true);
     e.preventDefault();
     if (signUpPassword !== signUpConfirmPassword) {
-      alert("Passwords do not match");
+      toast({
+            description: "Passwords Do Not Match",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
       setLoading(false);
       return;
     }
@@ -151,11 +183,23 @@ const CenterBox = ({setSignIn}) => {
         await postDetails(responseData.img, responseData.name, hashedPassword)
         setLoading(false);
       } else {
-        alert(response["error"]);
+        toast({
+            description: response["error"],
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
         setLoading(false);
       }
     } catch (err) {
-      alert("Invalid OTP or User Already Exists");
+      toast({
+            description: "Invalid OTP or User Already Exists",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
       navigate("/login");
       setLoading(false);
     }

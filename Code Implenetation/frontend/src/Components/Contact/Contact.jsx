@@ -4,6 +4,7 @@ import Navbar1 from '../LandingPage/Navbar';
 import Logo from './Logo.png';
 import emailjs from '@emailjs/browser';
 import MetaData from '../../MetaData';
+import { useToast } from "@chakra-ui/toast";
 
 const InputField = ({ type, name, id, placeholder, value, handleChange }) => (
   <div className={styles.inputGroup}>
@@ -42,6 +43,7 @@ const SubmitButton = ({ handleSubmit }) => (
 );
 
 const ContactForm = () => {
+  const toast = useToast();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -71,11 +73,25 @@ const ContactForm = () => {
         )
         .then(
         () => {
-            alert('Thank you. We will get back to you as soon as possible.');
+            toast({
+                title: "Thank You!",
+                description: "We will get back to you as soon as possible",
+                status: "success",
+                duration: 5000,
+                isClosable: true,
+                position: "bottom",
+            });
         },
         (error) => {
-            console.log(error);
-            alert('Something went wrong. Please try again.');
+          console.log(error);
+          toast({
+              title: "Something went wrong!",
+              description: "Please try again",
+              status: "error",
+              duration: 5000,
+              isClosable: true,
+              position: "bottom",
+          });
         }
     );
     setFormData({
