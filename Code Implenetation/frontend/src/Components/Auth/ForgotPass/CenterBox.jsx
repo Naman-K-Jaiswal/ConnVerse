@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import './style2.css';
+import './styleForgot.css';
 import registerImg from "./registration.png";
 import { Link } from 'react-router-dom';
 import MetaData from '../../../MetaData.jsx';
@@ -152,26 +152,30 @@ const CenterBox = ({setSignIn}) => {
   };
   return (
     <>
-      <MetaData title='SignUp' />
       <div className="center-box">
-        <div className="container">
-          <p className='Conn'>Conn</p>
-          <p className='Verse'>Verse</p>
-        </div>
-        <img className = "signUpPageImage" src={registerImg} alt="Your GIF" style={{height: '33.33vh', float: 'left', top:'18vmax' }} />
-        <div className="rectangular-box" style={{right: '3vw', width: '30vw', height: '50vh', borderRadius:'15px', backgroundColor: 'white', position: 'absolute', zIndex: '9999'}}>
-            <div className="container" style={{left:'1.5vw',top:'0.5vh'}}>
-              <p style={{fontSize:'20px', font:'Roboto'}}>Welcome To</p>
+        <div className="upperHalfDiv">          
+          <div className="leftHalfDiv">
+            <div className="container">
+              <p className='Conn'>Conn</p>
+              <p className='Verse'>Verse</p>
             </div>
-            <div className="container" style={{left:'1.38vw',top:'3.33vh'}}>
-              <p className='Conn' style={{fontSize:'30px'}}>Conn</p>
-              <p className='Verse' style={{fontSize:'30px'}}>Verse</p>
-            </div>
-            {showFirstForm && (
-              <form style={{marginTop:'7vh'}} className='signUpForm' onSubmit={handleSubmitFirstForm}>
-                <pre className='registerFont' style={{marginTop:'1vh'}}>Change Password</pre>
-                <div style={{marginTop:'1vh'}} className='line'></div>
-                <div style={{marginTop:'1vh'}} className='signUpEmail'>
+            <img className='loginPageImage' src={registerImg} alt="Your GIF" style={{height: '33.33vh', float: 'left', top:'18vmax' }} />
+          </div>
+
+          <div className="rightHalfDiv" >
+              
+              <div className="subHeading">
+                <p style={{fontSize:'20px', font:'Roboto'}}>Welcome To</p>
+              </div>
+              <div className="subHeading">
+                <p className='Conn' style={{fontSize:'30px'}}>Conn</p>
+                <p className='Verse' style={{fontSize:'30px'}}>Verse</p>
+              </div>        
+              {showFirstForm && (
+              <form className='signUpForm' onSubmit={handleSubmitFirstForm}>
+                <pre>Change Password</pre>
+                <div className='line' style={{marginTop:'-3.2vh'}}></div>
+                <div className='signUpEmail'>
                     <EmailIcon/>
                     <input 
                     type='email'
@@ -181,12 +185,11 @@ const CenterBox = ({setSignIn}) => {
                     onChange={(e)=>setSignUpEmail(e.target.value)}
                     />
                 </div>
-                <Link style={{marginTop:'1vh'}} to='/alumn'>Are you an Alumn ?</Link>
+                <Link to='/alumn'>Are you an Alumn ?</Link>
                 <input
                     type='submit'
                     value= 'Send OTP'
                     className='signUpBtn'
-                    style={{marginTop:'5vh'}}
                     />
               </form>
               )
@@ -195,7 +198,7 @@ const CenterBox = ({setSignIn}) => {
               <form className='signUpForm' onSubmit={handleSignUp}>
                 {/* <pre>Register</pre>
                 <div className='line'></div> */}
-                <div style={{marginTop:'1vh'}} className='signUpEmail'>
+                <div className='signUpEmail'>
                     <ValidationIcon/>
                     <input 
                     type='text'
@@ -228,20 +231,27 @@ const CenterBox = ({setSignIn}) => {
                 <Link to='/alumn'>Are you an Alumn ?</Link>
                 <input
                     type='submit'
-                    value= 'Update Password'
+                    value= 'SIGN UP'
                     className='signUpBtn'
-                    style={{marginTop:'5vh'}}
                     />
               </form>
             )}
+          </div>
         </div>
-        <p className='about-us-head'>About Us</p>
-        <p className="about-us">Welcome to ConnVerse – Your Gateway to Connection and Knowledge!<br></br>
-        At ConnVerse, we believe in the power of shared experiences and the strength of community.
-        Founded with the mission to bridge the gap between present students and esteemed Alumni of the<br></br>
+
+        <div className="developerDetailsDiv">
+          <div className="about-us-head">
+            <p>About Us</p>
+          </div>
+          <div className="about-us">Welcome to ConnVerse – Your Gateway to Connection and Knowledge!
+          At ConnVerse, we believe in the power of shared experiences and the strength of community.
+          Founded with the mission to bridge the gap between present students and esteemed Alumni of the
           Indian Institute of Technology, Kanpur, ConnVerse serves as a dynamic platform for meaningful connections, insights, 
-          and knowledge exchange.</p>
+          and knowledge exchange.</div>
+        </div>  
+      
       </div>
+
     </>
   );
 };

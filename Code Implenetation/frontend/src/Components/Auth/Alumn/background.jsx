@@ -1,7 +1,7 @@
 import React from "react";
 import image from "./Images/OAT.jpeg";
 import logoimg from "./Images/Logo.png";
-import './style.css';
+import './styleAlumn.css';
 import Leftbox from "./Leftbox.jsx";
 
 function Component() {

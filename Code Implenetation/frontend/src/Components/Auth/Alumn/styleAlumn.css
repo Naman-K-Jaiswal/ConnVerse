@@ -1,0 +1,219 @@
+.everything {
+    /* overflow: hidden; */
+    display: flex;
+    flex-direction: column;
+    gap: 4vh;
+    position: fixed;
+    height: 100%;
+    width: 100%;
+}
+
+.container1 {
+    margin-left: 7.2vw;
+    display: flex;
+    justify-content: flex-start;
+    /* Align to the top left */
+    align-items: flex-start;
+    /* Align items to the top */
+    width: 100%;
+    padding: 0px;
+    /* Add some padding for spacing */
+}
+
+.line1 {
+    border-bottom: 0.2vmax solid black;
+    /* Bold line below text */
+    width: 25vmax;
+    /* Adjust width of the line as needed */
+    margin-top: 8vmax;
+    /* Adjust margin as needed */
+    margin-left: 7.5vmax;
+}
+
+.alumhead1 {
+    margin-left: 7.8vmax;
+    font-family: "Inter", sans-serif;
+    font-size: 2.5vmax;
+    /* Increase the font size */
+    font-weight: bold;
+    /* Make the text bold */
+    color: black;
+    /* Change the text color */
+    text-transform: uppercase;
+    /* Convert the text to uppercase */
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+    /* Add a subtle text shadow */
+}
+
+.Conn1 {
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    font-size: 4vmax;
+    color: black;
+    margin-left: 2vmax;
+}
+
+.Verse1 {
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+    font-size: 4vmax;
+    color: #E2921B;
+}
+
+.img1 {
+    width: 20vw;
+    /* Adjust width as needed */
+    height: 40vh;
+    /* Maintain aspect ratio */
+    margin-top: 4vh;
+    /* Adjust margin as needed */
+    margin-bottom: 20px;
+    position: absolute;
+    left: 6vmax;
+    /* Position on the left side */
+    top: 50%;
+    /* Adjust vertically as needed */
+    transform: translateY(-50%);
+}
+
+.logo11 {
+    top: 4vmax;
+    /* Adjust top position as needed */
+    right: 5000px;
+    /* Adjust left position as needed */
+    width: 7vmax;
+    height: auto;
+}
+
+.alumline1 {
+    margin-left: 8vmax;
+    font-family: "Inter", sans-serif;
+    font-size: 1.5vmax;
+    /* Increase the font size */
+    color: black;
+    /* Change the text color */
+}
+
+.iitklogo1 {
+    margin-left: 14vw;
+    margin-top: -3.5vh;
+    height: 20vh;
+    width: 20vh;
+}
+
+.copyright1 {
+    margin-top: -0.5vh;
+    margin-left: 8vw;
+    font-family: "Inter", sans-serif;
+    font-size: 1vmax;
+    /* Increase the font size */
+    color: black;
+    /* Change the text color */
+}
+
+.signUpAlumnForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2vmax;
+    justify-content: space-evenly;
+    height: 52vh;
+    margin-left: 2vw;
+    margin-top: -3vh;
+    width: 36.5vw;
+    transition: all 0.5s;
+}
+
+.signUpAlumnForm>div {
+    display: flex;
+    width: 100%;
+    align-items: center;
+}
+
+.signUpAlumnForm>div>input {
+    padding: 1vmax 4vmax;
+    padding-right: 1vmax;
+    width: 100%;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.267);
+    border-radius: 4px;
+    font: 500 1.4vmax 'sans-serif';
+    outline: none;
+}
+
+.signUpAlumnForm>div>svg {
+    position: absolute;
+    transform: translateX(1vmax);
+    font-size: 1.6vmax;
+    color: black;
+}
+
+.signUpAlumnForm>div>svg:hover {
+    color: #f2b65d;
+}
+
+.signUpAlumnForm>a {
+    color: rgba(0, 0, 0, 0.678);
+    text-decoration: none;
+    align-self: flex-end;
+    transition: all 0.5s;
+    font: 400 1.2vmax "Gill Sans";
+}
+
+.signUpAlumnForm>a:hover {
+    color: black;
+    transform: scale(1.02);
+}
+
+.signUpAlumnBtn {
+    border: none;
+    background-color: #f2b65d;
+    color: black;
+    transition: all 0.5s;
+    font: 500 1.4vmax 'Inter', sans-serif;
+    padding: 0.8vmax;
+    width: 100%;
+    cursor: pointer;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+.signUpAlumnBtn:hover {
+    background-color: #f2b65dca;
+}
+
+.signUpAlumnForm>pre {
+    text-decoration: none;
+    color: black;
+    font: 600 2vmax "Roboto";
+    align-self: center;
+    margin-top: -1vh;
+}
+
+.line {
+    border-top: 1px solid black;
+    margin-top: -4vh;
+}
+
+.signUpAlumnForm>p {
+    text-decoration: none;
+    color: black;
+    font: 400 1.2vmax "Gill Sans";
+    margin-bottom: -0.5vh;
+}
+
+.signUpAlumnForm>p>a {
+    color: #f2b65d;
+}
+
+
+@media screen and (max-width: 768px) {
+    .signUpAlumnForm {
+        margin-right: 2vw;
+    }
+
+    /* Write media queries for the form */
+    /* Add your code here */
+}

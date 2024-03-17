@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import IITKlogo from './Images/IITK_logo.png';
-import './style.css';
+import './styleAlumn.css';
 import { Link, useNavigate } from 'react-router-dom';
 import HowToRegIcon from '@mui/icons-material/HowToReg';
 import EmailIcon from '@mui/icons-material/Email';
@@ -43,14 +43,19 @@ const Leftbox = () => {
     return (
         <div className='everything'>
             <div className="container1">
-                <p className='Conn1'>Conn</p>
-                <p className='Verse1'>Verse</p>
+                <div className='Conn1'>Conn</div>
+                <div className='Verse1'>Verse</div>
             </div>
-            <div className="line1"></div>
-            <h1 className="alumhead1" style={{ marginBottom: '0.1vmax' }}>Greetings, Alum!</h1>
-            <span className='alumline1'>Welcome to Connverse Community.</span>
+            {/* <div className="line1"></div> */}
+            
+            <div className="alumhead1" style={{ marginBottom: '0.1vmax' }}>
+                Greetings, Alum!
+            </div>
+            
+            {/* <div className='alumline1'>Welcome to Connverse Community.</div> */}
+            
             <form className='signUpAlumnForm' onSubmit={handleSubmit}>
-                <pre>Register</pre>
+                <div style={{fontSize:'1.8em',marginBottom:'2.2vh',marginLeft:'24vw',fontFamily:'600 2vmax "Roboto"',fontWeight:'bold'}}>Register</div>
                 <div className='line'></div>
                 <div className='signUpAlumnEmail'>
                     <HowToRegIcon/>

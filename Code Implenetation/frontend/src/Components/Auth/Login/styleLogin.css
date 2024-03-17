@@ -1,0 +1,192 @@
+.center-box {
+  display: flex;
+  flex-direction: column;
+  width: 60vw;
+  height: 66vh;
+}
+
+.upperHalfDiv {
+  display: flex;
+  flex-direction: row;
+  width: 60vw;
+  height: 53vh;
+}
+
+.leftHalfDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 29vw;
+  flex-direction: row;
+}
+
+
+.container {
+  margin-top: 2vh;
+}
+
+
+.Conn {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 3vmax;
+  color: black;
+}
+
+.Verse {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 3vmax;
+  color: #E2921B;
+}
+
+.loginPageImage {}
+
+.rightHalfDiv {
+  display: flex;
+  padding: 2vh;
+  flex-direction: column;
+  align-items: left;
+  height: 52vh;
+  width: 29vw;
+  background-color: white;
+  margin-top: 2vh;
+  border-radius: 10px;
+  z-index: 9999;
+}
+
+.subHeading {
+  display: flex;
+  flex-direction: row;
+}
+
+
+.loginForm {
+  margin-top: 2vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5vh;
+}
+
+.loginForm>div {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.loginForm>div>input {
+  padding: 1vmax 4vmax;
+  padding-right: 1vmax;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  border-radius: 4px;
+  font: 500 1.4vmax 'sans-serif';
+  outline: none;
+}
+
+.loginForm>div:nth-child(2) {
+  position: relative;
+  width: 100%;
+}
+
+.loginForm>div>svg {
+  position: absolute;
+  transform: translateX(1vmax);
+  font-size: 1.6vmax;
+  color: black;
+}
+
+.loginForm>div>svg:hover {
+  color: #f2b65d;
+}
+
+.loginForm>div:nth-child(2)>input {
+  padding: 1vmax 4vmax;
+  padding-right: 3vmax;
+  /* Adjust the padding to accommodate the eye icon */
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  border-radius: 4px;
+  font: 500 1.4vmax 'sans-serif';
+  outline: none;
+}
+
+.loginForm>a {
+  color: rgba(0, 0, 0, 0.678);
+  text-decoration: none;
+  align-self: flex-end;
+  transition: all 0.5s;
+  font: 400 1.2vmax "Gill Sans";
+}
+
+.loginForm>a:hover {
+  color: black;
+  transform: scale(1.02);
+}
+
+.loginBtn {
+  border: none;
+  background-color: #f2b65d;
+  color: black;
+  transition: all 0.5s;
+  font: 500 1.4vmax 'Inter', sans-serif;
+  padding: 0.8vmax;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.loginBtn:hover {
+  background-color: #f2b65dca;
+}
+
+.loginForm>p {
+  text-decoration: none;
+  color: black;
+  font: 400 1.2vmax "Gill Sans";
+  margin-bottom: -1vh;
+}
+
+.loginForm>p>a {
+  color: #f2b65d;
+}
+
+.loginForm>p>a:hover {
+  color: #f2b65dca;
+}
+
+.developerDetailsDiv {
+  display: flex;
+  flex-direction: column;
+  padding: 2vh;
+  height: 20vh;
+  width: 60vw;
+  /* background-color: white; */
+  border-radius: 10px;
+}
+
+.about-us {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 0.6rem;
+  /* Adjust the font size as needed */
+  text-align: left;
+  /* Center the text */
+  z-index: 1;
+  /* Ensure the text is above the image */
+  margin-right: 30px;
+}
+
+.about-us-head {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 0.7rem;
+  /* Adjust the font size as needed */
+  z-index: 1;
+  /* Ensure the text is above the image */
+}

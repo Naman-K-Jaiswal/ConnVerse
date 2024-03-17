@@ -1,0 +1,214 @@
+.center-box {
+  background-color: #f4f4f4;
+  /* Semi-transparent white */
+  padding: 20px;
+  /* Adjust padding as needed */
+  border-radius: 15px;
+  /* Add borderRadius for a rounded look */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  /* Optional subtle shadow */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 60vw;
+  height: 66vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  /* Align to the top left */
+  align-items: flex-start;
+  /* Align items to the top */
+  position: absolute;
+  top: 0;
+  /* Adjusting to start from the top */
+  left: 7.5vmax;
+  /* Start from the left */
+  padding: 0px;
+  /* Add some padding for spacing */
+}
+
+.upperHalfDiv {
+  display: flex;
+  flex-direction: row;
+  width: 60vw;
+  height: 53vh;
+}
+
+.leftHalfDiv {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 29vw;
+  flex-direction: row;
+}
+
+
+.container {
+  margin-top: 2vh;
+}
+
+
+.Conn {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 3vmax;
+  color: black;
+}
+
+.Verse {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 3vmax;
+  color: #E2921B;
+}
+
+.loginPageImage {}
+
+.rightHalfDiv {
+  display: flex;
+  padding: 2vh;
+  align-items: left;
+  flex-direction: column;
+  height: 52vh;
+  width: 29vw;
+  background-color: white;
+  margin-top: 2vh;
+  border-radius: 10px;
+  z-index: 9999;
+}
+
+.subHeading {
+  display: flex;
+  flex-direction: row;
+}
+
+.signUpForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 3vh;
+  height: 70%;
+  margin-top: 2vh;
+  transition: all 0.5s;
+}
+
+.signUpForm>div {
+  display: flex;
+  width: 100%;
+  align-items: center;
+}
+
+.signUpForm>div>input {
+  padding: 1vmax 4vmax;
+  padding-right: 1vmax;
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.267);
+  border-radius: 4px;
+  font: 500 1.4vmax 'sans-serif';
+  outline: none;
+}
+
+.signUpForm>div>svg {
+  position: absolute;
+  transform: translateX(1vmax);
+  font-size: 1.6vmax;
+  color: black;
+}
+
+.signUpForm>div>svg:hover {
+  color: #f2b65d;
+}
+
+.signUpForm>a {
+  color: rgba(0, 0, 0, 0.678);
+  text-decoration: none;
+  align-self: flex-end;
+  transition: all 0.5s;
+  font: 400 1.2vmax "Gill Sans";
+}
+
+.signUpForm>a:hover {
+  color: black;
+  transform: scale(1.02);
+}
+
+.signUpBtn {
+  border: none;
+  background-color: #f2b65d;
+  color: black;
+  transition: all 0.5s;
+  font: 500 1.4vmax 'Inter', sans-serif;
+  padding: 0.8vmax;
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.219);
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.signUpBtn:hover {
+  background-color: #f2b65dca;
+}
+
+.signUpForm>pre {
+  text-decoration: none;
+  color: black;
+  font: 600 2vmax "Roboto";
+  align-self: flex-start;
+  margin-top: -1vh;
+}
+
+.line {
+  border-top: 1px solid black;
+  margin-top: -4vh;
+}
+
+.signUpForm>p {
+  text-decoration: none;
+  color: black;
+  font: 400 1.2vmax "Gill Sans";
+  margin-bottom: -0.5vh;
+}
+
+.signUpForm>p>a {
+  color: #f2b65d;
+}
+
+.logo {
+  position: absolute;
+  top: 4vmax;
+  /* Adjust top position as needed */
+  left: 50px;
+  /* Adjust left position as needed */
+  width: 7vmax;
+  height: auto;
+}
+
+.about-us {
+  font-family: 'Inter', sans-serif;
+  font-weight: 300;
+  font-size: 0.6rem;
+  /* Adjust the font size as needed */
+  text-align: left;
+  /* Center the text */
+  z-index: 1;
+  /* Ensure the text is above the image */
+  margin-right: 30px;
+}
+
+.about-us-head {
+  font-family: 'Inter', sans-serif;
+  font-weight: bold;
+  font-size: 0.7rem;
+  /* Adjust the font size as needed */
+  z-index: 1;
+  /* Ensure the text is above the image */
+}
