@@ -33,7 +33,7 @@ const CreateBlogPage = () => {
   const getPosts = async () => {
     try {
       const us = JSON.parse(localStorage.getItem("user"));
-      const response = await fetch("http://localhost:8080/blog/retrieve", {
+      const response = await fetch(`${process.env.BACKEND_URL}/blog/retrieve`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,7 +143,7 @@ const CreateBlogPage = () => {
 
     try {
       const us = JSON.parse(localStorage.getItem("user"));
-      const response = await fetch("http://localhost:8080/blog/compose/new", {
+      const response = await fetch(`${process.env.BACKEND_URL}/blog/compose/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

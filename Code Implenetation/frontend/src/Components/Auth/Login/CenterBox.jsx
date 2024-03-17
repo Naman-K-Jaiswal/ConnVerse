@@ -24,7 +24,7 @@ const CenterBox = ({ setSignIn }) => {
     const hashedPassword = CryptoJS.SHA256(loginPassword).toString(CryptoJS.enc.Hex);
 
       try {
-          const response = await fetch('http://localhost:8080/login', {
+          const response = await fetch(`${process.env.BACKEND_URL}/login`, {
               method: 'POST',
               credentials: 'include',
               headers: {
@@ -43,7 +43,7 @@ const CenterBox = ({ setSignIn }) => {
                   };
 
                   const { data } = await axios.post(
-                      "http://localhost:5000/api/user/login",
+                      `${process.env.CHAT_SERVICE}/api/user/login`,
                       { email: loginEmail, password : hashedPassword },
                       config
                   );

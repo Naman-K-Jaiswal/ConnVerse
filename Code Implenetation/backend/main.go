@@ -31,7 +31,7 @@ func main() {
 	router := gin.New()
 	router.Use(gin.Logger())
 	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{"http://localhost:3000"}
+	config.AllowOrigins = []string{os.Getenv("FRONTEND_URL")}
 	config.AllowCredentials = true
 	router.Use(cors.New(config))
 

@@ -29,7 +29,7 @@ const CenterBox = ({ setSignIn }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:8080/send-otp', {
+      const response = await fetch(`${process.env.BACKEND_URL}/send-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const CenterBox = ({ setSignIn }) => {
           },
         };
         const { data } = await axios.post(
-            "http://localhost:5000/api/user",
+            `${process.env.CHAT_SERVICE}/api/user`,
             {
               name: name,
               email: signUpEmail,
@@ -159,7 +159,7 @@ const CenterBox = ({ setSignIn }) => {
 
     try {
       const response = await axios.post(
-          "http://localhost:8080/signup",
+          `${process.env.BACKEND_URL}/signup`,
           {
             email: signUpEmail,
             old_password: validationCode,
