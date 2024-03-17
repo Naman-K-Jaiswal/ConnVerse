@@ -730,8 +730,9 @@ const UserProfile = () => {
                   <AddAPhotoIcon
                     id="addBackgroundImageIcon"
                     style={{
-                      marginLeft: "85vw",
-                      marginTop: "-0.1vw",
+                      marginLeft: "84.5vw",
+                      position: "relative",
+                      top: "-4.4vh",
                       fontSize: "30px",
                       cursor: "pointer",
                     }}
@@ -758,8 +759,10 @@ const UserProfile = () => {
                     style={{
                       fontSize: "30px",
                       color: "black",
+                      position: "relative",
+                      top: "-3.5vw",
+                      left: "-0.5vw",
                       marginLeft: "20vw",
-                      marginTop: "-3vh",
                       cursor: "pointer",
                     }}
                   />
@@ -793,8 +796,8 @@ const UserProfile = () => {
                 <DoneIcon
                   onClick={handleSaveClickProfileDescription}
                   style={{
-                    position: "relative",
-                    left: "0vw",
+                    position: "absolute",
+                    left: "58.5vw",
                     cursor: "pointer",
                   }}
                 />
@@ -807,8 +810,8 @@ const UserProfile = () => {
                     <EditIcon
                       onClick={handleEditClickProfileDescription}
                       style={{
-                        position: "relative",
-                        left: "57.5vw",
+                        position: "absolute",
+                        left: "58.5vw",
                         cursor: "pointer",
                       }}
                     />
@@ -821,9 +824,12 @@ const UserProfile = () => {
             <p
               ref={editNicknameRef}
               contentEditable={isNicknameEditable === true}
-              style={{ fontSize: "2em" }}
+              style={{ 
+              fontSize: "2em", 
+              display: "inline-block",
+            }}
             >
-              {nickname}
+            {nickname}
             </p>
             {editable && !isNicknameEditable && (
               <div className="editIcons">
@@ -832,8 +838,7 @@ const UserProfile = () => {
                     setIsNicknameEditable(true);
                   }}
                   style={{
-                    position: "relative",
-                    left: "57.5vw",
+                    display: "inline-block",
                     cursor: "pointer",
                   }}
                 />
@@ -851,7 +856,7 @@ const UserProfile = () => {
                 ></DoneIcon>
               </div>
             )}
-            <p style={{ fontSize: "2em" }}>{degree}</p>
+            <p style={{ fontSize: "2em",textAlign:'center'}}>{degree}</p>
             <p style={{ fontSize: "1.5em" }}>{name}</p>
           </div>
         </div>

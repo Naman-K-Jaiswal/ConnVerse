@@ -25,27 +25,30 @@
     z-index: -5;
     width: 87vw;
     width: 87vw;
-    max-height: 80vh;
+    height: 70vh;
     border-radius: 20px;
 }
 
 #profileImageDiv{
     display: inline-block;
     margin-top: -18vh;
-    width: 23vw;
+    width: 22vw;
+    height: 22vw;
     margin-left: 2vw;
     
 }
 
 #profileImageImg{
     border-radius: 50%;
+    width: 22vw;
+    height: 22vw;
     border: 10px solid white;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 
 #userProfileDescription{
-    position: relative;
-    top: -5vh;
+    position: absolute;
+   
     display: inline-block;
     width: 61vw;
     margin-left: 1vw;
