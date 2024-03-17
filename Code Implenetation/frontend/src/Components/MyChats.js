@@ -27,7 +27,7 @@ const MyChats = ({ fetchAgain }) => {
         },
       };
 
-      const { data } = await axios.get(`${process.env.CHAT_SERVICE}/api/chat`, config);
+      const { data } = await axios.get(`http://localhost:5000/api/chat`, config);
       setChats(data);
     } catch (error) {
       toast({
@@ -49,7 +49,7 @@ const MyChats = ({ fetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      await axios.delete(`${process.env.CHAT_SERVICE}/api/chat/${chatId}`, config);
+      await axios.delete(`http://localhost:5000/api/chat/${chatId}`, config);
       // Remove the deleted chat from the chats state
       setChats(chats.filter((chat) => chat._id !== chatId));
       toast({

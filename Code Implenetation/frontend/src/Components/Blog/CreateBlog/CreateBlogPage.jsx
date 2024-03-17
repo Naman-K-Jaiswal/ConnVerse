@@ -33,7 +33,7 @@ const CreateBlogPage = () => {
   const getPosts = async () => {
     try {
       const us = JSON.parse(localStorage.getItem("user"));
-      const response = await fetch(`${process.env.BACKEND_URL}/blog/retrieve`, {
+      const response = await fetch(`http://localhost:8080/blog/retrieve`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -143,7 +143,7 @@ const CreateBlogPage = () => {
 
     try {
       const us = JSON.parse(localStorage.getItem("user"));
-      const response = await fetch(`${process.env.BACKEND_URL}/blog/compose/new`, {
+      const response = await fetch(`http://localhost:8080/blog/compose/new`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -165,7 +165,7 @@ const CreateBlogPage = () => {
         setPosts((prevPosts) => [data.blog, ...prevPosts]);
         toast({
             title: "Blog post created successfully!",
-            status: "error",
+            status: "success",
             duration: 5000,
             isClosable: true,
             position: "bottom",

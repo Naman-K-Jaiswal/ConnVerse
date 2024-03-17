@@ -6,7 +6,7 @@ import { Link } from 'react-router-dom';
 import EmailIcon from '@mui/icons-material/Email';
 import KeyIcon from '@mui/icons-material/Key';
 import MetaData from '../../../MetaData.jsx';
-import CryptoJS from 'crypto-js';
+import { sha256 } from 'js-sha256';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useToast } from "@chakra-ui/toast";
@@ -21,10 +21,11 @@ const CenterBox = ({ setSignIn }) => {
   const handleLogin = async (e) => {
     setLoading(true);
     e.preventDefault();
-    const hashedPassword = CryptoJS.SHA256(loginPassword).toString(CryptoJS.enc.Hex);
+    const hashedPassword = sha256(loginPassword);
 
       try {
-          const response = await fetch(`${process.env.BACKEND_URL}/login`, {
+        console.log(process.env.BACKEND_URL)
+          const response = await fetch(`http://localhost:8080/login`, {
               method: 'POST',
               credentials: 'include',
               headers: {
@@ -43,7 +44,7 @@ const CenterBox = ({ setSignIn }) => {
                   };
 
                   const { data } = await axios.post(
-                      `${process.env.CHAT_SERVICE}/api/user/login`,
+                      `http://localhost:5000/api/user/login`,
                       { email: loginEmail, password : hashedPassword },
                       config
                   );

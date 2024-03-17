@@ -1,4 +1,3 @@
-// // blog/likeblogpost.go
 package blog
 
 import (
@@ -79,8 +78,19 @@ func AddUserToLikedBy(postID string, userID string) (error, int) {
 	if err != nil {
 		return err, 0
 	}
-
-	already, err := HasUserLikedPost(existingPost, userID)
+	disliked,err := HasUserDislikedPost(existingPost, userID)
+	if err!=nil{
+		return err,-1
+	}
+	if disliked {
+		existingPost.DislikedBy= removeUserFromArray(existingPost.DislikedBy, userID)
+		existingPost.Dislikes--
+		UpdateBlogDisLike(existingPost)
+	}
+	already,erro := HasUserLikedPost(existingPost, userID)
+	if erro!=nil{
+		return erro,-2
+	}
 	if !already {
 		existingPost.Likes++
 		existingPost.LikedBy = append(existingPost.LikedBy, userID)
@@ -117,8 +127,20 @@ func AddUserToDislikedBy(postID string, userID string) (error, int) {
 	if err != nil {
 		return err, 0
 	}
+	liked,err := HasUserLikedPost(existingPost, userID)
+	if err!=nil{
+		return err,0
+	}
+	if liked {
+		existingPost.LikedBy= removeUserFromArray(existingPost.LikedBy, userID)
+		existingPost.Likes--
+		UpdateBlogLike(existingPost)
+	}
 
 	already, err := HasUserDislikedPost(existingPost, userID)
+	if err != nil {
+		return err, 0
+	}
 	if !already {
 		existingPost.Dislikes++
 		existingPost.DislikedBy = append(existingPost.DislikedBy, userID)

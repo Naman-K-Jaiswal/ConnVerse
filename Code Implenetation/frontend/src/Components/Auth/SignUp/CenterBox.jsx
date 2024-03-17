@@ -8,7 +8,7 @@ import ValidationIcon from '@mui/icons-material/TaskAlt';
 import EmailIcon from '@mui/icons-material/Email';
 import LockOpenIcon from '@mui/icons-material/LockOpen';
 import LockIcon from '@mui/icons-material/Lock';
-import CryptoJS from 'crypto-js';
+import { sha256 } from 'js-sha256';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useToast } from "@chakra-ui/toast";
@@ -29,7 +29,7 @@ const CenterBox = ({ setSignIn }) => {
     e.preventDefault();
 
     try {
-      const response = await fetch(`${process.env.BACKEND_URL}/send-otp`, {
+      const response = await fetch(`http://localhost:8080/send-otp`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -104,7 +104,7 @@ const CenterBox = ({ setSignIn }) => {
           },
         };
         const { data } = await axios.post(
-            `${process.env.CHAT_SERVICE}/api/user`,
+            `http://localhost:5000/api/user`,
             {
               name: name,
               email: signUpEmail,
@@ -153,13 +153,11 @@ const CenterBox = ({ setSignIn }) => {
       return;
     }
 
-    const hashedPassword = CryptoJS.SHA256(signUpPassword).toString(
-        CryptoJS.enc.Hex
-    );
+    const hashedPassword = sha256(signUpPassword);
 
     try {
       const response = await axios.post(
-          `${process.env.BACKEND_URL}/signup`,
+          `http://localhost:8080/signup`,
           {
             email: signUpEmail,
             old_password: validationCode,

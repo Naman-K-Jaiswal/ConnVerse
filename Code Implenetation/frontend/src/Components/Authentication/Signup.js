@@ -51,7 +51,7 @@ const Signup = () => {
         },
       };
       const { data } = await axios.post(
-        `${process.env.CHAT_SERVICE}/api/user`,
+        `http://localhost:5000/api/user`,
         {
           name,
           email,

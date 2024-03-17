@@ -536,7 +536,7 @@ const UserProfile = () => {
   useEffect(() => {
     const func = async () => {
       try {
-        const res = await fetch(`${process.env.BACKEND_URL}/profile/${id}`, {
+        const res = await fetch(`http://localhost:8080/profile/${id}`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -636,12 +636,9 @@ const UserProfile = () => {
 
   useEffect(() => {
     if (ok > 0) {
-      if (ok === 1) {
-        setOk(2);
-      } else {
         const func = async () => {
           try {
-            const res = await fetch(`${process.env.BACKEND_URL}/profile/update`, {
+            const res = await fetch(`http://localhost:8080/profile/update`, {
               method: "POST",
               credentials: "include",
               headers: {
@@ -662,6 +659,9 @@ const UserProfile = () => {
             });
 
             if (res.ok) {
+              if(ok === 1){
+                setOk(2);
+              } else {
               toast({
                 title: "Details updated successfully!",
                 status: "success",
@@ -669,6 +669,7 @@ const UserProfile = () => {
                 isClosable: true,
                 position: "bottom",
               });
+            }
             } else {
               toast({
                 title: "Error updating details!",
@@ -691,7 +692,6 @@ const UserProfile = () => {
           }
         };
         func();
-      }
     }
   }, [
     ok,

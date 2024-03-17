@@ -27,7 +27,7 @@ const Home = () => {
       try {
         const us = JSON.parse(localStorage.getItem("user"));
         const response = await fetch(
-          `${process.env.BACKEND_URL}/feed/reload/${us.userId}`,
+          `http://localhost:8080/feed/reload/${us.userId}`,
           {
             method: "GET",
             credentials: "include",
@@ -39,7 +39,7 @@ const Home = () => {
         if (response.ok) {
           try {
             const res = await fetch(
-              `${process.env.BACKEND_URL}/feed/load/0/${us.userId}`,
+              `http://localhost:8080/feed/load/0/${us.userId}`,
               {
                 method: "GET",
                 credentials: "include",
@@ -87,7 +87,7 @@ const Home = () => {
       try {
         const us = JSON.parse(localStorage.getItem("user"));
         const { data } = await axios.get(
-          `${process.env.BACKEND_URL}/feed/load/${num}/${us.userId}`,
+          `http://localhost:8080/feed/load/${num}/${us.userId}`,
           {
             withCredentials: true,
             headers: {
@@ -132,7 +132,7 @@ const Home = () => {
 
   const handleSearch = async () => {
     try {
-      const response = await fetch(`${process.env.BACKEND_URL}/blog/search`, {
+      const response = await fetch(`http://localhost:8080/blog/search`, {
         method: "POST",
         credentials: "include",
         headers: {

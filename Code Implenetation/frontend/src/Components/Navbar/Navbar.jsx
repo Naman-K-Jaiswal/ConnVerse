@@ -18,7 +18,7 @@ const Navbar = ({ setSignIn }) => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch(`${process.env.BACKEND_URL}/logout`, {
+      const response = await fetch(`http://localhost:8080/logout`, {
         method: 'POST',
         credentials: 'include',
         headers: {

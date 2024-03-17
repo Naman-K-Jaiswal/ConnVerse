@@ -52,6 +52,7 @@ func CreateBlogPost() gin.HandlerFunc {
 
 		_, err = collection.UpdateOne(ctx, bson.M{"userid": new_post.AuthorID}, bson.M{"$push": bson.M{"blogposts": new_post.ID.Hex()}})
 		if err != nil {
+			fmt.Println("idhar", err)
 			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update user's blog posts"})
 			return
 		}
