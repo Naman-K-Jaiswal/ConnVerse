@@ -91,7 +91,7 @@ const Navbar = ({ setSignIn }) => {
           <button className="dropbtn" onClick={() => setIsOpen(!isOpen)}>&#x25BC;</button>
           {isOpen && (
             <div className="dropdown-content">
-              <Link to="/profile">My Profile</Link>
+              <Link to={`/userprofile/${user.userId}`}>My Profile</Link>
               <Link to="/" onClick={handleLogout}>Log Out</Link>
             </div>
           )}

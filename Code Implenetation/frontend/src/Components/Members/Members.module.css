@@ -252,10 +252,10 @@
     align-items: stretch;
     border-radius: 10px;
     position: fixed;
-    top: 12vmax;
+    top: 9vmax;
     right: 2vmax;
     bottom: 2vmax;
-    height: 60%;
+    height: 76%;
     width: 50%;
     background-color: rgb(255, 255, 255);
     padding: 2vmax;
@@ -266,7 +266,7 @@
   
   .filterPopup h2 {
     margin-top: 0;
-    font-size: 3vmax;
+    font-size: 1.8vmax;
   }
   
   .filterPopup label {
@@ -339,6 +339,16 @@
     background-repeat: no-repeat;
     background-position: right 8px top 50%; /* Adjust position of arrow */
     background-size: 14px auto; /* Adjust size of arrow */
+  }
+  .ApplyButton {
+    background-color: #fda104;
+    color: #ffffff;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.2em;
+    margin-top: 1vmax;
   }
   /* You can add more styles as needed */
   

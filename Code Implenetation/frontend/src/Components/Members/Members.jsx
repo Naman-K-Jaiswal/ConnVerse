@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import styles from "./Members.module.css";
+import profileImg from "./pp.jpeg";
 import searchb from "./image.png";
 import filter from "./filter.png";
 
@@ -9,8 +10,50 @@ const Members = () => {
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const filterPopupRef = useRef(null);
   const [search, setSearch] = useState("");
+  const memberData = [
+    {
+      id: 1,
+      degree: "BT CSE'26",
+      username: "User123",
+      tags: ["#Leadership", "#Management", "#Business"],
+      about:
+        "A leader not by imposition, but by example, fostering an environment where collective success was celebrated as much as individual achievement.Driven by a passion for both AI and game development, I explore the realms where technology and creativity converge. Aspiring to contribute innovative solutions to .....",
+      profileImageSrc: profileImg,
+    },
+    {
+      id: 2,
+      degree: "BT CSE'26",
+      username: "User123",
+      tags: ["#Leadership", "#Management", "#Business", "Randomized"],
+      about: "I am the best",
 
-  const memberData = [];
+      profileImageSrc: profileImg,
+    },
+    {
+      id: 3,
+      degree: "BT CSE'26",
+      username: "User123",
+      tags: ["#Leadership", "#Management", "#Business"],
+      about: "I am the best",
+      profileImageSrc: profileImg,
+    },
+    {
+      id: 4,
+      degree: "BT CSE'26",
+      username: "User123",
+      tags: ["#Leadership", "#Management", "#Business"],
+      about: "I am the best",
+      profileImageSrc: profileImg,
+    },
+    {
+      id: 5,
+      degree: "BT CSE'26",
+      username: "User123",
+      tags: ["#Leadership", "#Management", "#Business"],
+      about: "I am the best",
+      profileImageSrc: profileImg,
+    },
+  ];
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -32,6 +75,66 @@ const Members = () => {
     setShowFilterPopup(!showFilterPopup);
   };
 
+  const [filters, setFilters] = useState({
+    name : "",
+    degree: "",
+    skills: [],
+    organisation: "",
+    courses: [],
+  });
+  const handleFilterSubmit = (event) => {
+    event.preventDefault();
+    const formData = new FormData(event.target);
+    const newFilters = {
+      degree: formData.get("programme") + " " + formData.get("branch"),
+      skills: [formData.get("skill1"), formData.get("skill2"), formData.get("skill3"),formData.get("skill4")],
+      organisation: formData.get("Organisation"),
+      courses: [formData.get("course1"), formData.get("course2"),formData.get("course3"), formData.get("course4")],
+    };
+
+    console.log(newFilters);
+    setFilters({...filter ,newFilters});
+    setShowFilterPopup(false);
+  };
+  const handleSearchSubmit = (event) => {
+    event.preventDefault();
+
+    function containsOnlyNumbers(str) {
+      return /^\d+$/.test(str);
+    }
+
+    if(containsOnlyNumbers(search)){
+      setFilters({...filters, userid: search, name:""});
+    } else {
+      setFilters({...filters, name: search, userid:""})
+    }
+  };
+
+  const handleSearchChange = (event) => {
+    const val = event.target.value;
+    setSearch(val);
+  }
+
+  useEffect(() => {
+    const func = async () => {
+      try{
+        const res = await fetch(`http://localhost:8080/profile/search`,{
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+
+          })
+        })
+      } catch(error) {
+
+      }
+    }
+
+    func();
+  }, [filters]);
   return (
     <div style={{ backgroundColor: "#f4f4f4" }}>
       <div className={styles.mainBody}>
@@ -40,10 +143,9 @@ const Members = () => {
             type="text"
             className={styles.search}
             placeholder="Search for members"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
+            onChange={handleSearchChange}
           />
-          <button className={styles.searchbarButton}>
+          <button className={styles.searchbarButton} onClick={handleSearchSubmit}>
             <div className={styles.searchButtonimage}>
               <img src={searchb} alt="search" />
             </div>
@@ -65,44 +167,27 @@ const Members = () => {
                   <div className={styles.memberProfileImageDiv}>
                     <img src={member.profileImageSrc} alt="Profile Photo" />
                   </div>
-                  <div
-                    className={styles.memberUsername}
-                    style={{ fontWeight: "bold" }}
-                  >
-                    {member.username}
-                  </div>
+                  <div className={styles.memberUsername}>{member.username}</div>
                 </div>
               </div>
 
               <div className={styles.memberRightHalfDiv}>
                 <div className={styles.memberhead}>
                   <div className={styles.memberheadingLeft}>
-                    <div
-                      className={styles.memberDegree}
-                      style={{ fontWeight: "bold" }}
-                    >
-                      {member.degree}
-                    </div>
+                    <div className={styles.memberDegree}>{member.degree}</div>
                   </div>
                   <div className={styles.memberheadingRight}>
                     <div className={styles.memberTags}>
                       {member.tags.map((tag, index) => (
-                        <div
-                          key={index}
-                          className={styles.memberTagX}
-                          style={{ color: "black" }}
-                        >
+                        <div key={index} className={styles.memberTagX}>
                           {tag}
                         </div>
                       ))}
                     </div>
                   </div>
                 </div>
-                <hr style={{ border: "1px solid black", width: "11%" }} />
                 <div className={styles.memberAbout}>
-                  <p style={{ fontStyle: "italic", marginRight: "2vw" }}>
-                    {member.about}
-                  </p>
+                  <p>{member.about}</p>
                 </div>
               </div>
             </div>
@@ -113,54 +198,124 @@ const Members = () => {
         // Inside the filterPopup div in the JSX
         <div className={styles.filterPopup}>
           <h2>Filter Results</h2>
-          <div>
-            <label htmlFor="skills">Skills:</label>
-            <div className={styles.skillInputs}>
-              {[...Array(5)].map((_, index) => (
-                <input
-                  key={index}
-                  type="text"
-                  className={styles.skillInput}
-                  name={`skill${index + 1}`}
-                  placeholder={`Skill ${index + 1}`}
-                />
-              ))}
+          <form className={styles.filterForm} onSubmit={handleFilterSubmit}>
+            <div>
+              <label htmlFor="skills">Skills:</label>
+              <div className={styles.skillInputs}>
+                {[...Array(4)].map((_, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    className={styles.skillInput}
+                    name={`skill${index + 1}`}
+                    placeholder={`Skill ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-          <div className={styles.filterRow}>
-            <div className={styles.programme}>
-              <label htmlFor="programme">Programme :</label>
-              <select name="programme" id={styles.programme}>
-                <option value="BS">BS</option>
-                <option value="BT">BTech</option>
-                <option value="MS">MS</option>
-                <option value="MT-BT">MT-BT</option>
-                <option value="MT">MTech</option>
-                <option value="PhD">PhD</option>
-                {/* Add more options as needed */}
-              </select>
+            <div className={styles.filterRow}>
+              <div className={styles.programme}>
+                <label htmlFor="programme">Programme :</label>
+                <select name="programme" id={styles.programme}>
+                  <option value="BS">BS</option>
+                  <option value="BTech">BTech</option>
+                  <option value="MS">MS</option>
+                  <option value="MTech">MTech</option>
+                  <option value="PhD">PhD</option>
+                  {/* Add more options as needed */}
+                </select>
+              </div>
+              <div className={styles.branch}>
+                <label htmlFor="branch">Branch :</label>
+                <select name="branch" id={styles.branch}>
+                  <option value="Computer Science and Engineering">CSE</option>
+                  <option value="Electrical Engineering">EE</option>
+                  <option value="Mechanical Engineering">ME</option>
+                  <option value="Civil Engineering">CE</option>
+                  <option value="Materials Science and Engineering">MSE</option>
+                  <option value="Aerospace Engineering">AE</option>
+                  <option value="Mathematics and Scientific Computing">
+                    MTH
+                  </option>
+                  <option value="Physics">PHY</option>
+                  <option value="Economics">ECO</option>
+                  <option value="Chemical Engineering">CHE</option>
+                  <option value="Earth Science">ES</option>
+                  <option value="Biological Sciences and Engineering">
+                    BSBE
+                  </option>
+                </select>
+              </div>
             </div>
-            <div className={styles.branch}>
-              <label htmlFor="branch">Branch :</label>
-              <select name="branch" id={styles.branch}>
-                <option value="CSE">CSE</option>
-                <option value="EE">EE</option>
-                <option value="ME">ME</option>
-                <option value="CE">CE</option>
-                <option value="MSE">MSE</option>
-                <option value="AE">AE</option>
-                <option value="MTH">MTH</option>
-                <option value="PHY">PHY</option>
-                <option value="ECO">ECO</option>
-                <option value="CHE">CHE</option>
-                <option value="MBA">MBA</option>
-                <option value="ES">ES</option>
-                <option value="BSBE">BSBE</option>
-                <option value="ES">ES</option>
-                {/* Add more options as needed */}
-              </select>
+            <div>
+              <label htmlFor="courses">Courses Taken :</label>
+              <div className={styles.skillInputs}>
+                {[...Array(4)].map((_, index) => (
+                  <input
+                    key={index}
+                    type="text"
+                    className={styles.skillInput}
+                    name={`course${index + 1}`}
+                    placeholder={`Course ${index + 1}`}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
+            <div>
+              <label htmlFor="Organisation">Organisation</label>
+              <div className={styles.branch}>
+                <select name="Organisation" id={styles.branch}>
+                  <option value="Programming Club"> Programming club</option>
+                  <option value="Electronics Club"> Electronics Club</option>
+                  <option value="IITK Consulting Group">
+                    {" "}
+                    IITK Consulting Group
+                  </option>
+                  <option value="IITK Motorsports"> IITK Motorsports</option>
+                  <option value="Robotics Club"> Robotics Club</option>
+                  <option value="AUV"> AUV</option>
+                  <option value="Aero Club"> Aeromodelling Club</option>
+                  <option value="Astro Club"> Astro Club</option>
+                  <option value="Dance Club"> Dance Club</option>
+                  <option value="Music Club"> Music Club</option>
+                  <option value="Fine Arts Club"> Fine Arts Club</option>
+                  <option value="Comedy"> Humour House </option>
+                  <option value="Dramatics Club"> Dramatics Club</option>
+                  <option value="Literary Club">
+                    {" "}
+                    English Literary Society
+                  </option>
+                  <option value="Hindi Sahitya Sabha">
+                    {" "}
+                    Hindi Sahitya Sabha
+                  </option>
+                  <option value="Quiz Club"> Quiz Club</option>
+                  <option value="Debating Club"> Debating Society</option>
+                  <option value="Photography Club"> Photography Club</option>
+                  <option value="Chess Club"> Chess Club</option>
+                  <option value="Badminton Club"> Badminton Team</option>
+                  <option value="Table Tennis team"> Table Tennis Team</option>
+                  <option value="Basketball Team"> Basketball Team</option>
+                  <option value="RaSet"> RaSet</option>
+                  <option value="Gymkhana"> President Gymkhana's Office</option>
+                  <option value="Counselling Service">
+                    {" "}
+                    Counselling Service
+                  </option>
+                  <option value="NCC"> NCC</option>
+                  <option value="NSS"> NSS</option>
+                </select>
+              </div>
+            </div>
+            <div>
+              <input
+                type="submit"
+                value="ApplyFilters"
+                className={styles.ApplyButton}
+              />
+            </div>
+          </form>
+
           {/* Add more filters here if needed */}
         </div>
       )}
