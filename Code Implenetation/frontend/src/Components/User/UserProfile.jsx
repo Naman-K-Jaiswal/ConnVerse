@@ -9,15 +9,43 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import backgroundImageFile from "./backgroundImage.jpg";
 import profileImageFile from "./userProfileImage.JPG";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 
 const UserProfile = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [name, setName] = useState("Name");
   const [degree, setDegree] = useState("BT CSE");
+  const [nickname, setNickname] = useState("Nickname");
   const user = JSON.parse(localStorage.getItem("user"));
 
   const [editable, setEditable] = useState(user.userId === id);
+  const [ok, setOk] = useState(0);
+
+  const editNicknameRef = useRef(null);
+  const [isNicknameEditable, setIsNicknameEditable] = useState(false);
+  const handleChangeNickname = (event) => {
+    const par = event.target.parentNode.parentNode;
+    const sib = par.querySelectorAll("p");
+    const siblings = Array.from(sib);
+    const newNickname = siblings[0].textContent;
+    setNickname(newNickname);
+    setIsNicknameEditable(false);
+  };
+
+  useEffect(() => {
+    if (isNicknameEditable) {
+      editNicknameRef.current.focus();
+
+      const textLength = editNicknameRef.current.textContent.length;
+      const range = document.createRange();
+      const selection = window.getSelection();
+      range.setStart(editNicknameRef.current.childNodes[0], textLength);
+      range.collapse(true);
+      selection.removeAllRanges();
+      selection.addRange(range);
+    }
+  }, [isNicknameEditable]);
 
   // profileImageAndDetail functionalities
   const [profileImage, setProfileImage] = useState(profileImageFile);
@@ -58,7 +86,7 @@ const UserProfile = () => {
   // Profile Description Functionalities
   const [descriptionProfileDescription, setDescriptionProfileDescription] =
     useState(
-      "You should bring together user attitudes and behaviours in relation to a product or service. You can also include demographic information about the individual.You can present your user profiles in a range of different ways using content that is relevant to the project.You should bring together user attitudes and behaviours in relation to a product or service. You can also include demographic information about the individual.You can present your user profiles in a range of different ways using content that is relevant to the project."
+      ""
     );
 
   const [isEditingProfileDescription, setIsEditingProfileDescription] =
@@ -90,58 +118,7 @@ const UserProfile = () => {
   }, [isEditingProfileDescription]);
 
   // Skills Functionalities
-  const [skills, setSkills] = useState([
-    "Skill1",
-    "Skill2",
-    "Skill3",
-    "Skill4",
-    "Skill5",
-    "Skill6",
-    "Skill7",
-    "Skill8",
-    "Skill9",
-    "Skill10",
-    "Skill11",
-    "Skill12",
-    "Skill13",
-    "Skill14",
-    "Skill15",
-    "Skill16",
-    "Skill17",
-    "Skill18",
-    "Skill19",
-    "Skill20",
-    "Skill21",
-    "Skill22",
-    "Skill23",
-    "Skill24",
-    "Skill25",
-    "Skill26",
-    "Skill27",
-    "Skill28",
-    "Skill29",
-    "Skill30",
-    "Skill31",
-    "Skill32",
-    "Skill33",
-    "Skill34",
-    "Skill35",
-    "Skill36",
-    "Skill37",
-    "Skill38",
-    "Skill39",
-    "Skill40",
-    "Skill41",
-    "Skill42",
-    "Skill43",
-    "Skill44",
-    "Skill45",
-    "Skill46",
-    "Skill47",
-    "Skill48",
-    "Skill49",
-    "Skill50",
-  ]);
+  const [skills, setSkills] = useState([]);
 
   const [editingIndexSkills, setEditingIndexSkills] = useState(null);
   const editRefSkills = useRef([]);
@@ -193,38 +170,19 @@ const UserProfile = () => {
     setSkills(newSkills);
   };
 
-  const handleAddSkill = () => {
-    setSkills(["New Skill", ...skills]);
-    setEditingIndexSkills(0);
-    handleEditSkills(0);
+  const handleAddSkill = (e) => {
+    e.preventDefault();
+    const up = ["New Skill", ...skills]
+    setSkills(up);
   };
 
   //  Blog Posts Functionalities
-  const [blogpostsBlogPosts, setBlogpostsBlogPosts] = useState([
-    "hello",
-    "Software Dev Seocond",
-    "Software Dev",
-    "Software Dev",
-    "Software Dev",
-    "Software Dev Last",
-    "Software Dev Last",
-    " Software Dev Last",
-    "Software",
-  ]);
+  const [blogpostsBlogPosts, setBlogpostsBlogPosts] = useState([]);
+
+  const [blogposts, setBlogposts] = useState([]);
 
   // achievements functionalites : here we will have to add the functionality to add, delete, edit and move up and down the achievements
-  const [achievements, setAchievements] = useState([
-    "Achievement1",
-    "Achievement2",
-    "Achievement3",
-    "Achievement4",
-    "Achievement5",
-    "Achievement6",
-    "Achievement7",
-    "Achievement8",
-    "Achievement9",
-    "Achievement10",
-  ]);
+  const [achievements, setAchievements] = useState([]);
 
   const [editingIndexAchievements, setEditingIndexAchievements] =
     useState(null);
@@ -283,51 +241,12 @@ const UserProfile = () => {
 
   const handleAddAchievement = () => {
     setAchievements(["New Achievement", ...achievements]);
-    setEditingIndexAchievements(0); // Start editing the newly added achievement at index 0
-    handleEditAchievements(0);
   };
 
   // credentials functionalities
   // here we will have to add the functionality to add, delete, edit and move up and down the credentials
   // we will have to add some extra features because we have to add the organization and the time period also
-  const [credentials, setCredentials] = useState([
-    {
-      post: "Senior Manager at Google",
-      organization: "Google",
-      from: "2019",
-      to: "Present",
-    },
-    {
-      post: "Senior Manager at Google",
-      organization: "Google",
-      from: "2019",
-      to: "Present",
-    },
-    {
-      post: "Senior Manager at Google",
-      organization: "Google",
-      from: "2019",
-      to: "Present",
-    },
-    {
-      post: "Senior Manager at Google",
-      organization: "Google",
-      from: "2019",
-      to: "Present",
-    },
-    {
-      post: "Senior Manager at Google",
-      organization: "Google",
-      from: "2019",
-      to: "Present",
-    },
-    {
-      post: "Senior Manager at Google",
-      organization: "Google",
-      from: "2019",
-      to: "Present",
-    },
-  ]);
+  const [credentials, setCredentials] = useState([]);
   const [showCredentialPopup, setShowCredentialPopup] = useState(false);
   const [newCredential, setNewCredential] = useState({
     post: "",
@@ -418,24 +337,7 @@ const UserProfile = () => {
     setEditingCredentialIndex(null);
   };
 
-  const [projects, setProjects] = useState([
-    {
-      name: "Project1",
-      instructorname: "Instructor1",
-      skills: ["Skill1", "Skill2", "Skill3"],
-      description: "This is a project description",
-      from: "2019",
-      to: "Present",
-    },
-    {
-      name: "Project1",
-      instructorname: "Instructor1",
-      skills: ["Skill1", "Skill2", "Skill3"],
-      description: "This is a project description",
-      from: "2019",
-      to: "Present",
-    },
-  ]);
+  const [projects, setProjects] = useState([]);
 
   const [showProjectPopup, setShowProjectPopup] = useState(false);
   const [newProject, setNewProject] = useState({
@@ -537,50 +439,7 @@ const UserProfile = () => {
   };
 
   // Course Functionalities: the functionalities are implemented in same way as the credentials
-  const [courses, setCourses] = useState([
-    {
-      coursename: "Course1",
-      instructorname: "Instructor1",
-      description: "This is a course description",
-      year: "2019",
-      semester: "Spring",
-    },
-    {
-      coursename: "Course1",
-      instructorname: "Instructor1",
-      description: "This is a course description",
-      year: "2019",
-      semester: "Spring",
-    },
-    {
-      coursename: "Course1",
-      instructorname: "Instructor1",
-      description: "This is a course description",
-      year: "2019",
-      semester: "Spring",
-    },
-    {
-      coursename: "Course1",
-      instructorname: "Instructor1",
-      description: "This is a course description",
-      year: "2019",
-      semester: "Spring",
-    },
-    {
-      coursename: "Course1",
-      instructorname: "Instructor1",
-      description: "This is a course description",
-      year: "2019",
-      semester: "Spring",
-    },
-    {
-      coursename: "Course1",
-      instructorname: "Instructor1",
-      description: "This is a course description",
-      year: "2019",
-      semester: "Spring",
-    },
-  ]);
+  const [courses, setCourses] = useState([]);
 
   const [showCoursePopup, setShowCoursePopup] = useState(false);
   const [newCourse, setNewCourse] = useState({
@@ -686,18 +545,62 @@ const UserProfile = () => {
 
         if (res.ok) {
           const data = await res.json();
-          console.log(data.user);
-          setName(data.user.name);
-          setDegree(data.user.degree);
-          setProfileImage("data:image/jpeg;base64," + data.user.profilephoto);
-          setBackgroundImage("data:image/jpeg;base64," + data.user.bannerphoto);
-          setDescriptionProfileDescription(data.user.about);
-          setSkills(data.user.skills);
-          setAchievements(data.user.achievements);
-          setBlogpostsBlogPosts(data.user.blogposts);
-          setCredentials(data.user.credentials);
-          setProjects(data.user.projects);
-          setCourses(data.user.courses);
+          if (data.user != null) {
+            setName(data.user.name);
+            setDegree(data.user.degree);
+            setProfileImage("data:image/jpeg;base64," + data.user.profilephoto);
+            setBackgroundImage(
+              "data:image/jpeg;base64," + data.user.bannerphoto
+            );
+            if (data.user.about != "") {
+              setDescriptionProfileDescription(data.user.about);
+            } else {
+              setDescriptionProfileDescription(
+                "This is a default description. Please change it if you want to add your thoughts here."
+              );
+            }
+            if (data.user.nickname != "") {
+              setNickname(data.user.nickname);
+            }
+            if (data.user.skills != null) {
+              setSkills(data.user.skills);
+            } else {
+              setSkills([]);
+            }
+            if (data.user.achievements != null) {
+              setAchievements(data.user.achievements);
+            } else {
+              setAchievements([]);
+            }
+            if (data.user.blogposts != null) {
+              setBlogpostsBlogPosts(data.user.blogposts);
+            } else {
+              setBlogpostsBlogPosts([]);
+            }
+            if (data.user.credentials != null) {
+              setCredentials(data.user.credentials);
+            } else {
+              setCredentials([]);
+            }
+            if (data.user.projects != null) {
+              setProjects(data.user.projects);
+            } else {
+              setProjects([]);
+            }
+            if (data.user.courses != null) {
+              setCourses(data.user.courses);
+            } else {
+              setCourses([]);
+            }
+            if (data.blogs != null) {
+              setBlogposts(data.blogs);
+            } else {
+              setBlogposts([]);
+            }
+          } else {
+            alert("Error fetching details. Please reload the page");
+          }
+          setOk(1);
         } else {
           alert("Error fetching details. Please reload the page");
         }
@@ -709,8 +612,45 @@ const UserProfile = () => {
     func();
   }, []);
 
-  useEffect(() => {}, [
+  useEffect(() => {
+    if (ok > 0) {
+      const func = async () => {
+        try {
+          const res = await fetch(`http://localhost:8080/profile/update`, {
+            method: "POST",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              userid: id,
+              nickname: nickname,
+              profilephoto: profileImage.substring(23),
+              bannerphoto: backgroundImage.substring(23),
+              about: descriptionProfileDescription,
+              skills: skills,
+              achievements: achievements,
+              credentials: credentials,
+              projects: projects,
+              courses: courses,
+            }),
+          });
+
+          if (res.ok) {
+            alert("Details updated successfully");
+          } else {
+            alert("Error updating details. Please reload the page");
+          }
+        } catch (error) {
+          alert("Error updating details. Please reload the page");
+        }
+      };
+      func();
+    }
+  }, [
+    ok,
     profileImage,
+    nickname,
     backgroundImage,
     descriptionProfileDescription,
     skills,
@@ -832,6 +772,39 @@ const UserProfile = () => {
             )}
           </div>
           <div id="userUsernameAndName">
+            <p
+              ref={editNicknameRef}
+              contentEditable={isNicknameEditable === true}
+              style={{ fontSize: "2em" }}
+            >
+              {nickname}
+            </p>
+            {editable && !isNicknameEditable && (
+              <div className="editIcons">
+                <EditIcon
+                  onClick={() => {
+                    setIsNicknameEditable(true);
+                  }}
+                  style={{
+                    position: "relative",
+                    left: "57.5vw",
+                    cursor: "pointer",
+                  }}
+                />
+              </div>
+            )}
+            {editable && isNicknameEditable && (
+              <div className="editIcons">
+                <DoneIcon
+                  onClick={(event) => handleChangeNickname(event)}
+                  style={{
+                    fontSize: "20px",
+                    color: "black",
+                    marginRight: "5px",
+                  }}
+                ></DoneIcon>
+              </div>
+            )}
             <p style={{ fontSize: "2em" }}>{degree}</p>
             <p style={{ fontSize: "1.5em" }}>{name}</p>
           </div>
@@ -932,8 +905,14 @@ const UserProfile = () => {
               <div id="topPostListScroller">
                 {blogpostsBlogPosts.map((blogpost, index) => {
                   return (
-                    <div key={index} id="topPostItemX">
-                      <div>{blogpost}</div>
+                    <div
+                      key={index}
+                      id="topPostItemX"
+                      onClick={() => {
+                        navigate(`/blog/${blogpost}`);
+                      }}
+                    >
+                      <div>{blogposts[index]}</div>
                     </div>
                   );
                 })}
