@@ -1,5 +1,3 @@
-
-
 #mainBodyDiv{
     display: flex;
     /* justify-content: center; */
@@ -50,10 +48,14 @@
     font-size: 2.5em;
     font-weight: bold;
 }
-
-#subTitleBlogDiv{
+#rowUsername{
     display: flex;
     flex-direction: row;
+    gap: auto;
+}
+#subTitleBlogDiv{
+    display: flex;
+    flex-direction: column;
 }
 
 #userDetailsBlogDiv{
@@ -62,13 +64,20 @@
 }
 
 #usernameBlogDiv{
+    margin-right: 5vw;
     font-size: 1.5em;
     font-weight: bold;
+    font-family: "Arial", sans-serif; /* Example font-family */
+    color: #3366cc; /* Example color */
+    text-decoration: underline; /* Example text decoration */
 }
 
+
 #uploadedDayBlogDiv{
-    font-size: 1em;
+    font-size: 1.5em;
+    font-family: "Times New Roman", serif; /* Example font-family */
 }
+
 
 #votesNCommentsBlogDiv{
     display: flex;
@@ -80,35 +89,22 @@
     gap: 1vw;
 }
 
-#upVotesBlogDiv{
+#upVotesBlogDiv, #downVotesBlogDiv {
     display: flex;
     flex-direction: row;
     align-items: center;
 }
 
-#upVoteButton{
-    color : black;
-    font-size: 1.5em;
-    background-color: whitesmoke;
-    border-radius: 10px;
-    border: none;
-    padding: 1%;
-}
-
-#downVotesBlogDiv{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-}
-
-#downVoteButton{
-    color : black;
+#upVoteButton, #downVoteButton {
+    color: black;
     font-size: 1.5em;
     background-color: whitesmoke;
     border: none;
     border-radius: 10px;
     padding: 1%;
+    margin-right: 10px; /* Add margin between the buttons */
 }
+
 
 #commentsBlogDiv{
     display: flex;
@@ -124,25 +120,30 @@
 
 /* Section 2 BLog */
 #imagesBlogDiv{
+    max-height: 50vh;
     height: 50vh;
     width: auto;
     display: flex;
-    overflow-y: auto;
     justify-content: center;
     gap: 1vw;
 }
 
 #imagesBlogDiv img{
     border-radius: 10px;
-    height: 100%;
+    margin-top: 5vw;
+    height: 20vw;
 }
 
 /* Section 3 BLog */
-#contentBlogDiv{
+#contentBlogDiv {
+    font-family: 'Open Sans', sans-serif;
     font-size: 1.3em;
     padding: 0.5%;
-
 }
+.solid {
+    border-top: 2px solid #333; /* Dark color */
+  }
+  
 
 /* ////////////Comments related to single blog//////////// */
 #rightHalfCommentsDiv{

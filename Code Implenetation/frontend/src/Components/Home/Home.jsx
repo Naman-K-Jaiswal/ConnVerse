@@ -242,7 +242,7 @@ const Home = () => {
                           className="blogTags"
                           style={{ fontFamily: "Montserrat", fontSize: "16px" }}
                         >
-                          {blog.tags!=null && blog.tags.map((tag, index) => (
+                          {blog.tags!=null && blog.tags.slice(0,4).map((tag, index) => (
                             <div
                               key={index}
                               className="blogTagX"

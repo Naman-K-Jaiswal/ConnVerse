@@ -16,7 +16,7 @@ import (
 )
 
 type temp struct {
-	Userid string `json:"userid"`
+	RequesterId string `json:"requesterid"`
 }
 
 func CRUDAuth(c *gin.Context) {
@@ -57,7 +57,7 @@ func CRUDAuth(c *gin.Context) {
 			}
 		}
 
-		if user.UserID != temp.Userid {
+		if user.UserID != temp.RequesterId {
 			c.AbortWithStatus(http.StatusUnauthorized)
 		}
 

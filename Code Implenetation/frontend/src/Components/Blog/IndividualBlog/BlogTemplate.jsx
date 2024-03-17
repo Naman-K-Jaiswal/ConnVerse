@@ -3,13 +3,14 @@ import "./style.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { formatDistanceToNow } from "date-fns";
 import MetaData from "../../../MetaData";
-import { useToast } from "@chakra-ui/toast";
-import Loader from "../../Loader/Loader";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
+import HeartBrokenOutlinedIcon from "@mui/icons-material/HeartBrokenOutlined";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 
 const BlogTemplate = () => {
-  const toast = useToast();
   const { id } = useParams();
-  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -19,7 +20,7 @@ const BlogTemplate = () => {
   const [downvoted, setDownvoted] = useState(false);
   const [likes, setLikes] = useState(0);
   const user = JSON.parse(localStorage.getItem("user"));
-  const [editable, setEditable] = useState(false);
+  const [editable, isEditable] = useState(false);
 
   const [blogData, setBlogData] = useState({
     _id: "",
@@ -103,7 +104,6 @@ const BlogTemplate = () => {
 
   useEffect(() => {
     const func = async () => {
-      setLoading(true);
       try {
         const res = await fetch(`http://localhost:8080/blog/${id}`, {
           method: "GET",
@@ -117,8 +117,8 @@ const BlogTemplate = () => {
           const data = await res.json();
           setBlogData(data.blog);
           setLikes(data.blog.likes);
-          if (data.blog.authorid === user.userId) {
-            setEditable(true);
+          if (data.blog.authorid == user.userId) {
+            isEditable(true);
           }
           const response = await fetch(`http://localhost:8080/feed/add/tags`, {
             method: "POST",
@@ -143,18 +143,11 @@ const BlogTemplate = () => {
             setDownvoted(true);
           }
         } else {
-          toast({
-            title: "Error Fetching Blog!",
-            description: "Please reload the page",
-            status: "error",
-            duration: 5000,
-            isClosable: true,
-            position: "bottom",
-          });
+          alert("Error fetching blog. Please reload the page");
         }
       } catch (error) {}
-      setLoading(false);
     };
+
     func();
   }, [id]);
 
@@ -190,24 +183,10 @@ const BlogTemplate = () => {
         setBlogData(updatedBlogData);
         setComment("");
       } else {
-        toast({
-          title: "Error Adding Comment!",
-          description: "Please try again",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        });
+        alert("Error adding comment. Please try again");
       }
     } catch (error) {
-      toast({
-        title: "Error Adding Comment!",
-        description: "Please try again",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
+      alert("Error adding comment. Please try again");
     }
   };
 
@@ -228,122 +207,127 @@ const BlogTemplate = () => {
       if (res.ok) {
         navigate("/createblog");
       } else {
-        toast({
-          title: "Error Deleting Blog!",
-          description: "Please try again",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        });
+        alert("Error deleting blog");
       }
     } catch (error) {
-      toast({
-        title: "Error Deleting Blog!",
-        description: "Please try again",
-        status: "error",
-        duration: 5000,
-        isClosable: true,
-        position: "bottom",
-      });
+      alert("Error deleting blog");
     }
   };
 
   return (
     <>
       <MetaData title={blogData.title} />
-      {loading ? (
-        <Loader />
-      ) : (
-        <div id="mainBodyDiv">
-          <div key={blogData.ID} id="leftHalfBlogDiv">
-            <div id="headBlogDiv">
-              <div id="profileImageBlogDiv">
-                <img
-                  src={`data:image/jpeg;base64,${blogData.authorimage}`}
-                  alt=""
-                />
-              </div>
-              <div id="subHeadBlogDiv">
-                <div id="titleBlogDiv">{blogData.title}</div>
-                <div id="subTitleBlogDiv">
-                  <div id="userDetailsBlogDiv">
-                    <div id="usernameBlogDiv">{blogData.authorname}</div>
-                    <div id="uploadedDayBlogDiv">
-                      {getDaysAgo(blogData.timestamp)}
+      <div id="mainBodyDiv">
+        <div key={blogData.ID} id="leftHalfBlogDiv">
+          <div id="headBlogDiv">
+            <div id="profileImageBlogDiv">
+              <img
+                src={`data:image/jpeg;base64,${blogData.authorimage}`}
+                alt=""
+              />
+            </div>
+            <div id="subHeadBlogDiv">
+              <div id="titleBlogDiv">{blogData.title}</div>
+              <div id="subTitleBlogDiv">
+                <div id="userDetailsBlogDiv">
+                  <div id="rowUsername">
+                    <div id="usernameBlogDiv" style={{ marginRight: "5vw" }}>
+                      {blogData.authorname}
                     </div>
-                    {editable && (
-                      <div>
-                        <button onClick={handleDelete}>Delete</button>
+                    <div
+                      id="votesNCommentsBlogDiv"
+                      style={{ marginLeft: "4vw" }}
+                    >
+                      <div id="upVotesBlogDiv">
+                        <button id="upVoteButton" onClick={handleUpvote}>
+                          {upvoted ? (
+                            <FavoriteIcon sx={{ color: "#e2921b" }} />
+                          ) : (
+                            <FavoriteBorderIcon sx={{ color: "black" }} />
+                          )}
+                        </button>
+                        {likes}
                       </div>
-                    )}
+                      <div id="downVotes">
+                        <button id="downVoteButton" onClick={handleDownvote}>
+                          {downvoted ? (
+                            <HeartBrokenIcon sx={{ color: "black" }} />
+                          ) : (
+                            <HeartBrokenOutlinedIcon sx={{ color: "black" }} />
+                          )}
+                        </button>
+                      </div>
+                      <div
+                        id="comments"
+                        style={{
+                          fontFamily: "Arial, sans-serif",
+                          fontSize: "1.2em",
+                          color: "#333",
+                        }}
+                      >
+                        Comments:{" "}
+                        {blogData.comments != null && blogData.comments.length}
+                      </div>
+                      {editable && (
+                        <div>
+                        <button
+                          onClick={handleDelete}
+                          style={{ cursor: "pointer" }}
+                        >
+                          <DeleteForeverOutlinedIcon sx={{ color: "black" }} />
+                        </button>
+                      </div>
+                      )}
+                    </div>
                   </div>
-                  <div id="votesNCommentsBlogDiv">
-                    <div id="upVotesBlogDiv">
-                      <button
-                        id="upVoteButton"
-                        onClick={handleUpvote}
-                        style={{ color: upvoted ? "#e2921b" : "black" }}
-                      >
-                        &#x21e7;
-                      </button>
-                      {likes}
-                    </div>
-                    <div id="downVotes">
-                      <button
-                        id="downVoteButton"
-                        onClick={handleDownvote}
-                        style={{ color: downvoted ? "red" : "black" }}
-                      >
-                        &#x21e9;
-                      </button>
-                    </div>
-                    <div id="comments">
-                      Comments:{" "}
-                      {blogData.comments != null && blogData.comments.length}
-                    </div>
+                  <div id="uploadedDayBlogDiv">
+                    {getDaysAgo(blogData.timestamp)}
                   </div>
                 </div>
               </div>
             </div>
-            <div id="imagesBlogDiv">
-              <img src={`data:image/jpeg;base64,${blogData.image}`} alt="" />
-            </div>
-            <div id="contentBlogDiv">{blogData.content}</div>
           </div>
 
-          <div id="rightHalfCommentsDiv">
-            <div id="headingCommentsDiv">Comments:</div>
-            <div id="commentsListDiv">
-              {blogData.comments != null &&
-                blogData.comments.map((comment, index) => (
-                  <div key={index} className="commentX">
-                    <div className="commentHeadingDiv">
-                      <div className="commentProfilePhoto">
-                        <img
-                          src={`data:image/jpeg;base64,${comment.commenterphoto}`}
-                          alt=""
-                        />
-                      </div>
-                      <div className="commentTitle">{comment.commenter}</div>
-                    </div>
-                    <div className="commentContent">{comment.commenttext}</div>
-                  </div>
-                ))}
-            </div>
-            <div id="addCommentsDiv">
-              <input
-                type="text"
-                id="search"
-                placeholder="Add a comment"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-              />
-              <button onClick={handleComment}>Submit</button>
-            </div>
+          <div id="contentBlogDiv" style={{ marginTop: "12vh" }}>
+            <hr className="solid" />
+            {blogData.content}
+          </div>
+          <div id="imagesBlogDiv">
+            <img src={`data:image/jpeg;base64,${blogData.image}`} alt="" />
           </div>
         </div>
-      )}
+
+        <div id="rightHalfCommentsDiv">
+          <div id="headingCommentsDiv">Comments</div>
+          <div id="commentsListDiv">
+            {blogData.comments != null &&
+              blogData.comments.map((comment, index) => (
+                <div key={index} className="commentX">
+                  <div className="commentHeadingDiv">
+                    <div className="commentProfilePhoto">
+                      <img
+                        src={`data:image/jpeg;base64,${comment.commenterphoto}`}
+                        alt=""
+                      />
+                    </div>
+                    <div className="commentTitle">{comment.commenter}</div>
+                  </div>
+                  <div className="commentContent">{comment.commenttext}</div>
+                </div>
+              ))}
+          </div>
+          <div id="addCommentsDiv">
+            <input
+              type="text"
+              id="search"
+              placeholder="Add a comment"
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+            />
+            <button onClick={handleComment}>Submit</button>
+          </div>
+        </div>
+      </div>
     </>
   );
 };

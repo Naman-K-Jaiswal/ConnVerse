@@ -25,12 +25,11 @@ type Credential struct {
 }
 
 type Project struct {
-	Name           string   `json:"name"`
-	InstructorName string   `json:"instructorname"`
-	Skills         []string `json:"skills"`
-	Description    string   `json:"description"`
-	From           string   `json:"from"`
-	To             string   `json:"to"`
+	Name           string `json:"name"`
+	InstructorName string `json:"instructorname"`
+	Description    string `json:"description"`
+	From           string `json:"from"`
+	To             string `json:"to"`
 }
 
 type Course struct {

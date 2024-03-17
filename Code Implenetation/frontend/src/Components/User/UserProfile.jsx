@@ -783,6 +783,7 @@ const UserProfile = () => {
               <>
                 <textarea
                   style={{
+                    fontsize: "400px",
                     width: "58vw",
                     marginTop: "0vh",
                     minHeight: "17.7vh",
@@ -796,6 +797,7 @@ const UserProfile = () => {
                 <DoneIcon
                   onClick={handleSaveClickProfileDescription}
                   style={{
+                    fontSize: "30px",
                     position: "absolute",
                     left: "58.5vw",
                     cursor: "pointer",
@@ -826,7 +828,7 @@ const UserProfile = () => {
               contentEditable={isNicknameEditable === true}
               style={{ 
               fontSize: "2em", 
-              display: "inline-block",
+              display: "inline",
             }}
             >
             {nickname}
@@ -838,7 +840,7 @@ const UserProfile = () => {
                     setIsNicknameEditable(true);
                   }}
                   style={{
-                    display: "inline-block",
+                    display: "inline",
                     cursor: "pointer",
                   }}
                 />
@@ -849,7 +851,8 @@ const UserProfile = () => {
                 <DoneIcon
                   onClick={(event) => handleChangeNickname(event)}
                   style={{
-                    fontSize: "20px",
+                    display: "inline",
+                    fontSize: "25px",
                     color: "black",
                     marginRight: "5px",
                   }}

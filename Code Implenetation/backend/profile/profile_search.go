@@ -7,23 +7,19 @@ import (
 
 func SearchUserProfile() gin.HandlerFunc {
 	return func(c *gin.Context) {
-		var search_query SearchQuery
+		var search_query SearchQuery	
 		if err := c.ShouldBindJSON(&search_query); err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 			return
 		}
 
 		var users []User
-		tmp, err := GetUserByID(search_query.UserID)
-		if err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to search user profile"})
-			return
-		}
-		if tmp != nil {
-			users = append(users, *tmp)
+		temp := GetUserByIDs(search_query.UserID)
+		if temp != nil {
+			users = append(users, temp...)
 		}
 
-		temp := GetUsersByNameAndDegreeAndSkillsAndOrganizationAndCourses(search_query.Name, search_query.Degree, search_query.Skills, search_query.Organization, search_query.Courses)
+		temp = GetUsersByNameAndDegreeAndSkillsAndOrganizationAndCourses(search_query.Name, search_query.Degree, search_query.Skills, search_query.Organization, search_query.Courses)
 		if temp != nil {
 			users = append(users, temp...)
 		}

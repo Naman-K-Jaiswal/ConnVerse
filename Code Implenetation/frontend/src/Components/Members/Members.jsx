@@ -3,57 +3,18 @@ import styles from "./Members.module.css";
 import profileImg from "./pp.jpeg";
 import searchb from "./image.png";
 import filter from "./filter.png";
+import { useNavigate } from "react-router-dom";
 
 //Branches = { "CSE", "EE", "ME", "CE", "MSE", "AE", "MTH", "PHY", "ECO", "CHE", "MBA","ES","BSBE","ES"}
 
 const Members = () => {
+  const navigate = useNavigate();
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const filterPopupRef = useRef(null);
   const [search, setSearch] = useState("");
-  const memberData = [
-    {
-      id: 1,
-      degree: "BT CSE'26",
-      username: "User123",
-      tags: ["#Leadership", "#Management", "#Business"],
-      about:
-        "A leader not by imposition, but by example, fostering an environment where collective success was celebrated as much as individual achievement.Driven by a passion for both AI and game development, I explore the realms where technology and creativity converge. Aspiring to contribute innovative solutions to .....",
-      profileImageSrc: profileImg,
-    },
-    {
-      id: 2,
-      degree: "BT CSE'26",
-      username: "User123",
-      tags: ["#Leadership", "#Management", "#Business", "Randomized"],
-      about: "I am the best",
 
-      profileImageSrc: profileImg,
-    },
-    {
-      id: 3,
-      degree: "BT CSE'26",
-      username: "User123",
-      tags: ["#Leadership", "#Management", "#Business"],
-      about: "I am the best",
-      profileImageSrc: profileImg,
-    },
-    {
-      id: 4,
-      degree: "BT CSE'26",
-      username: "User123",
-      tags: ["#Leadership", "#Management", "#Business"],
-      about: "I am the best",
-      profileImageSrc: profileImg,
-    },
-    {
-      id: 5,
-      degree: "BT CSE'26",
-      username: "User123",
-      tags: ["#Leadership", "#Management", "#Business"],
-      about: "I am the best",
-      profileImageSrc: profileImg,
-    },
-  ];
+  const [memberData, setMemberData] = useState([]);
+
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (
@@ -77,6 +38,7 @@ const Members = () => {
 
   const [filters, setFilters] = useState({
     name : "",
+    userid: "",
     degree: "",
     skills: [],
     organisation: "",
@@ -86,14 +48,15 @@ const Members = () => {
     event.preventDefault();
     const formData = new FormData(event.target);
     const newFilters = {
+      name: filters.name,
+      userid: filters.userid,
       degree: formData.get("programme") + " " + formData.get("branch"),
       skills: [formData.get("skill1"), formData.get("skill2"), formData.get("skill3"),formData.get("skill4")],
       organisation: formData.get("Organisation"),
       courses: [formData.get("course1"), formData.get("course2"),formData.get("course3"), formData.get("course4")],
     };
 
-    console.log(newFilters);
-    setFilters({...filter ,newFilters});
+    setFilters(newFilters);
     setShowFilterPopup(false);
   };
   const handleSearchSubmit = (event) => {
@@ -104,9 +67,25 @@ const Members = () => {
     }
 
     if(containsOnlyNumbers(search)){
-      setFilters({...filters, userid: search, name:""});
+      const newFilters = {
+        userid: search,
+        name: "",
+        degree: filters.degree,
+        skills: filters.skills,
+        organisation: filters.organisation,
+        courses: filters.courses,
+      }
+      setFilters(newFilters);
     } else {
-      setFilters({...filters, name: search, userid:""})
+      const newFilters = {
+        userid: "",
+        name: search,
+        degree: filters.degree,
+        skills: filters.skills,
+        organisation: filters.organisation,
+        courses: filters.courses,
+      }
+      setFilters(newFilters);
     }
   };
 
@@ -125,9 +104,25 @@ const Members = () => {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-
+            userid: filters.userid,
+            name: filters.name,
+            degree: filters.degree,
+            skills: filters.skills,
+            organisation: filters.organisation,
+            courses: filters.courses,
           })
         })
+
+        if(res.ok){
+          const data = await res.json();
+          console.log(data);
+
+          if(data.users != null){
+            setMemberData(data.users);
+          } else {
+            setMemberData([]);
+          }
+        }
       } catch(error) {
 
       }
@@ -135,6 +130,7 @@ const Members = () => {
 
     func();
   }, [filters]);
+
   return (
     <div style={{ backgroundColor: "#f4f4f4" }}>
       <div className={styles.mainBody}>
@@ -161,13 +157,13 @@ const Members = () => {
         </div>
         <div id={styles.memberLists}>
           {memberData.map((member) => (
-            <div key={member.id} className={styles.memberX}>
+            <div key={member.ID} className={styles.memberX} onClick={() => navigate(`/userprofile/${member.userid}`)}>
               <div className={styles.memberLeftHalfDiv}>
                 <div className={styles.memberHeading}>
                   <div className={styles.memberProfileImageDiv}>
-                    <img src={member.profileImageSrc} alt="Profile Photo" />
+                    <img src={`data:image/jpeg;base64,${member.profilephoto}`} alt="Profile Photo" />
                   </div>
-                  <div className={styles.memberUsername}>{member.username}</div>
+                  <div className={styles.memberUsername}>{member.name}</div>
                 </div>
               </div>
 
@@ -178,7 +174,7 @@ const Members = () => {
                   </div>
                   <div className={styles.memberheadingRight}>
                     <div className={styles.memberTags}>
-                      {member.tags.map((tag, index) => (
+                      {member.skills.slice(0,5).map((tag, index) => (
                         <div key={index} className={styles.memberTagX}>
                           {tag}
                         </div>

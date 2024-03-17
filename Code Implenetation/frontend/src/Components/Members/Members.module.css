@@ -82,6 +82,7 @@
     transform: scale(1.01);
     box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.3);
     transition: all 0.2s linear;
+    cursor: pointer;
 }
 
 .memberLeftHalfDiv{

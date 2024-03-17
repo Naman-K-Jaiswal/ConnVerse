@@ -4,6 +4,7 @@ import (
 	"backend/database"
 	"backend/feed"
 	"context"
+	"errors"
 	"fmt"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -107,12 +108,22 @@ func AddUserToDB(new_user User) (string, error) {
 	return id, nil
 }
 
-func UpdateUserInDB(updated_user UserUpdate) error {
+func UpdateUserInDB(updated_user UserUpdate, email string) error {
 	collection := database.DB.Collection("Users")
 	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
-	_, err := collection.UpdateOne(ctx, bson.M{"userid": updated_user.UserID}, bson.M{"$set": updated_user})
+	var user User
+	err := collection.FindOne(ctx, bson.M{"email": email}).Decode(&user)
+	if err != nil {
+		return err
+	}
+
+	if user.UserID != updated_user.UserID {
+		return errors.New("unauthorized")
+	}
+
+	_, err = collection.UpdateOne(ctx, bson.M{"userid": updated_user.UserID}, bson.M{"$set": updated_user})
 	if err != nil {
 		return err
 	}
@@ -293,22 +304,27 @@ func GetUsersByCourses(courses []string) []User {
 	return users
 }
 
-func GetUserByID(userID string) (*User, error) {
+func GetUserByIDs(userID string) []User {
 	if userID == "" {
-		return nil, nil
+		return nil
 	}
 	collection := database.DB.Collection("Users")
 	ctx, cancel := context.WithTimeout(context.Background(), 7*time.Second)
 	defer cancel()
 
 	filter := bson.M{"userid": bson.M{"$regex": primitive.Regex{Pattern: userID, Options: "i"}}}
-	var user User
-	err := collection.FindOne(ctx, filter).Decode(&user)
+	var user []User
+	cursor, err := collection.Find(ctx, filter)
 	if err != nil {
-		return nil, err
+		return nil
 	}
 
-	return &user, nil
+	err = cursor.All(ctx, &user)
+	if err != nil {
+		return nil
+	}
+
+	return user
 }
 
 func GetUsersByNameAndSkills(name string, skills []string) []User {
