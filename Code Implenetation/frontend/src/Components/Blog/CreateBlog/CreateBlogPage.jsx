@@ -41,10 +41,17 @@ const CreateBlogPage = () => {
         credentials: "include",
         body: JSON.stringify({ authorid: us.userId }),
       });
-
+      setLoading(false);
       if (response.ok) {
         const data = await response.json();
         const updatedPosts = data.posts;
+        if (data.posts == null) {
+          setLoading(false)
+        } else {
+          if (data.posts.length === 0) {
+            setLoading(false)
+          }
+        }
 
         if (updatedPosts != null) {
           setPosts(updatedPosts);
@@ -132,7 +139,6 @@ const CreateBlogPage = () => {
   };
 
   const handleSubmit = async (e) => {
-    setLoading(true);
     e.preventDefault();
 
     try {
@@ -178,7 +184,6 @@ const CreateBlogPage = () => {
           authorID: us.userId,
           tags: [],
         });
-        setLoading(false);
       } else {
         console.error("Failed to create blog post");
         toast({
@@ -189,7 +194,6 @@ const CreateBlogPage = () => {
             isClosable: true,
             position: "bottom",
         });
-        setLoading(false);
       }
     } catch (error) {
       console.error("Error:", error);
@@ -201,9 +205,7 @@ const CreateBlogPage = () => {
             isClosable: true,
             position: "bottom",
         });
-      setLoading(false);
     }
-    setLoading(false);
   };
 
   const handleRedirect = (id) => {
@@ -232,7 +234,7 @@ const CreateBlogPage = () => {
                   <button id={styles.searchButton}>Search</button>
                 </div>
                 <div id={styles.blogsList}>
-                  {posts!=null && posts.length === 0 && <Loader1/>}
+                  {/* {posts!=null && posts.length === 0 && <Loader1/>} */}
                   {posts!=null && posts.length > 0 &&
                     posts.map((blog, index) => (
                       <div
