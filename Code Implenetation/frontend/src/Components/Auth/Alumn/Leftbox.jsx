@@ -7,14 +7,19 @@ import HowToRegIcon from '@mui/icons-material/HowToReg';
 import EmailIcon from '@mui/icons-material/Email';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import emailjs from '@emailjs/browser';
+import Loader from '../../Loader/Loader';
+import { useToast } from "@chakra-ui/toast";
 
 const Leftbox = () => {
+    const toast = useToast();
     const [alumnEmail, setAlumnEmail] = useState('');
     const [alumnName, setAlumnName] = useState('');
     const [alumnBatch, setAlumnBatch] = useState('');
     const navigate = useNavigate();
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = (e) => {
+        setLoading(true);
         e.preventDefault();
         emailjs
             .send(
@@ -31,16 +36,34 @@ const Leftbox = () => {
             )
             .then(
             () => {
-                alert('Thank you. We will get back to you as soon as possible.');
-                navigate("/login");
+                    toast({
+                        title: "Thank You!",
+                        description: "We will get back to you as soon as possible.",
+                        status: "success",
+                        duration: 5000,
+                        isClosable: true,
+                        position: "bottom",
+                    });
+                    navigate("/login");
+                    setLoading(false);
             },
             (error) => {
                 console.log(error);
-                alert('Something went wrong. Please try again.');
+                toast({
+                        title: "Something went wrong!",
+                        description: "Please try again.",
+                        status: "error",
+                        duration: 5000,
+                        isClosable: true,
+                        position: "bottom",
+                    });
+                setLoading(false);
             }
         );
     };
     return (
+        <>
+        { loading ?<Loader/> :
         <div className='everything'>
             <div className="container1">
                 <div className='Conn1'>Conn</div>
@@ -96,7 +119,9 @@ const Leftbox = () => {
             </form>
             <img className='iitklogo1' src={IITKlogo} alt="IITK Logo" />
             {/* <p className='copyright1'>&copy; 2024 MahaDevs. All rights reserved.</p> */}
-        </div>
+                </div>
+            }
+        </>
     );
 };
 

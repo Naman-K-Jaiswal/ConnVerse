@@ -1,0 +1,36 @@
+.loading{
+    height: 100vh;
+    width: 100vw;
+    background: rgba(255, 255, 255);
+    display: grid;
+    place-items: center;
+    max-width: 100%;
+}
+.loading > div {
+    width: 10vmax;
+    height: 10vmax;
+    border-bottom: 5px solid #f2b65d;
+    border-radius: 50%;
+    animation: loadingRotate 800ms linear infinite;
+}
+.loading1 {
+    height: 100vh;
+    width: 100vw;
+    background: transparent;
+    display: grid;
+    place-items: center;
+    max-width: 100%;
+}
+.loading1>div {
+    width: 10vmax;
+    height: 10vmax;
+    border-bottom: 5px solid black;
+    border-radius: 50%;
+    animation: loadingRotate 800ms linear infinite;
+}
+
+@keyframes loadingRotate {
+    to{
+        transform: rotateZ(-360deg);
+    }
+}

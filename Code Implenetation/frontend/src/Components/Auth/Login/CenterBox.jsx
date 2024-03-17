@@ -9,13 +9,15 @@ import MetaData from '../../../MetaData.jsx';
 import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Loader from '../../Loader/Loader.jsx';
 
 const CenterBox = ({setSignIn}) => {
   const navigate = useNavigate();
   const [loginEmail, setLoginEmail] = useState("");
   const [loginPassword, setLoginPassword] = useState("");
-
+  const [loading, setLoading] = useState(false);
   const handleLogin = async (e) => {
+    setLoading(true);
     e.preventDefault();
     const hashedPassword = CryptoJS.SHA256(loginPassword).toString(CryptoJS.enc.Hex);
 
@@ -49,85 +51,95 @@ const CenterBox = ({setSignIn}) => {
                       userName: responseData.name,
                       userImage: responseData.img
                   }));
-                  setSignIn(true);
-                  navigate("/home")
+                setSignIn(true);
+                setLoading(false);
+                navigate("/home")
               } catch (error) {
-                  alert("an error occurred, please try again");
+                alert("Please Try Again, Don't Forget To Verify Your Details");
+                setLoading(false);
               }
           } else {
-              alert(response["error"] || "an error occurred, please try again");
+            alert(response["error"] || "Please Try Again, Don't Forget To Verify Your Details");
+            setLoading(false);
           }
       } catch (error) {
-          alert("an error occurred, please try again");
+        alert("Please Try Again, Don't Forget To Verify Your Details");
+        setLoading(false);
       }
   }
 
   return (
     <>
-      <MetaData title='Login' />
-      <div className="center-box">
+      {loading ? <Loader /> :
+        <div>
+          <MetaData title='Login' />
+          <div className="center-box">
         
-        <div className="upperHalfDiv">          
-          <div className="leftHalfDiv">
-            <div className="container">
-              <p className='Conn'>Conn</p>
-              <p className='Verse'>Verse</p>
-            </div>
-            <img className='loginPageImage' src={registerImg} alt="Your GIF" style={{height: '33.33vh', float: 'left', top:'18vmax' }} />
-          </div>
-
-          <div className="rightHalfDiv" >
-              
-              <div className="subHeading">
-                <p style={{fontSize:'20px', font:'Roboto'}}>Welcome To</p>
+            <div className="upperHalfDiv">
+              <div className="leftHalfDiv">
+                <div className="container">
+                  <p className='Conn'>Conn</p>
+                  <p className='Verse'>Verse</p>
+                </div>
+                <img className='loginPageImage' src={registerImg} alt="Your GIF" style={{ height: '33.33vh', float: 'left', top: '18vmax' }} />
               </div>
-              <div className="subHeading">
-                <p className='Conn' style={{fontSize:'30px'}}>Conn</p>
-                <p className='Verse' style={{fontSize:'30px'}}>Verse</p>
-              </div>        
-              <form className='loginForm' onSubmit={handleLogin}>
-                <div className='loginEmail'>
-                    <EmailIcon/>
-                    <input 
-                    type='email'
-                    placeholder='Email'
-                    required
-                    value={loginEmail}
-                    onChange={(e)=>setLoginEmail(e.target.value)}
-                    />
+
+          
+              <div className="rightHalfDiv" >
+              
+                <div className="subHeading">
+                  <p style={{ fontSize: '20px', font: 'Roboto' }}>Welcome To</p>
                 </div>
-                <div className='loginPassword'>
-                    <KeyIcon/>
+                <div className="subHeading">
+                  <p className='Conn' style={{ fontSize: '30px' }}>Conn</p>
+                  <p className='Verse' style={{ fontSize: '30px' }}>Verse</p>
+                </div>
+                <form className='loginForm' onSubmit={handleLogin}>
+                  <div className='loginEmail'>
+                    <EmailIcon />
                     <input
-                    type={'password'}
-                    placeholder='Password'
-                    required
-                    value={loginPassword}
-                    onChange={(e)=>setLoginPassword(e.target.value)}
+                      type='email'
+                      placeholder='Email'
+                      required
+                      value={loginEmail}
+                      onChange={(e) => setLoginEmail(e.target.value)}
                     />
-                </div>
-                <Link to='/forgot'>Forgot Password ?</Link>
-                <input
+                  </div>
+                  <div className='loginPassword'>
+                    <KeyIcon />
+                    <input
+                      type={'password'}
+                      placeholder='Password'
+                      required
+                      value={loginPassword}
+                      onChange={(e) => setLoginPassword(e.target.value)}
+                    />
+                  </div>
+                  <Link to='/forgot'>Forgot Password ?</Link>
+                  <input
                     type='submit'
-                    value= 'Login'
+                    value='Login'
                     className='loginBtn'
                   />
-                <p>Don't have an account ? <Link to='/signup'>Register</Link></p>
-            </form>
-          </div>
-        </div>
+                  <p>Don't have an account ? <Link to='/signup'>Register</Link></p>
+                </form>
+              </div>
+            </div>
 
-        <div className="developerDetailsDiv">
-          <div className="about-us-head">
-            <p>About Us</p>
+            <div className="developerDetailsDiv">
+              <div className="about-us-head">
+                <p>About Us</p>
+              </div>
+              <div className="about-us">Welcome to ConnVerse – Your Gateway to Connection and Knowledge!
+                At ConnVerse, we believe in the power of shared experiences and the strength of community.
+                Founded with the mission to bridge the gap between present students and esteemed Alumni of the
+                Indian Institute of Technology, Kanpur, ConnVerse serves as a dynamic platform for meaningful connections, insights,
+                and knowledge exchange.</div>
+            </div>
           </div>
-          <div className="about-us">Welcome to ConnVerse – Your Gateway to Connection and Knowledge!
-          At ConnVerse, we believe in the power of shared experiences and the strength of community.
-          Founded with the mission to bridge the gap between present students and esteemed Alumni of the
-          Indian Institute of Technology, Kanpur, ConnVerse serves as a dynamic platform for meaningful connections, insights, 
-          and knowledge exchange.</div>
-        </div>  
-      </div>
+          
+        </div>
+      }
     </>
   );
 };

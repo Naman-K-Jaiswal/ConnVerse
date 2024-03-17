@@ -11,6 +11,7 @@ import LockIcon from '@mui/icons-material/Lock';
 import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import Loader from '../../Loader/Loader.jsx';
 
 const CenterBox = ({setSignIn}) => {
   const navigate = useNavigate();
@@ -19,8 +20,10 @@ const CenterBox = ({setSignIn}) => {
   const [validationCode, setValidationCode] = useState('');
   const [signUpPassword, setSignUpPassword] = useState('');
   const [signUpConfirmPassword, setSignUpConfirmPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmitFirstForm = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     try {
@@ -40,6 +43,7 @@ const CenterBox = ({setSignIn}) => {
     } catch (error) {
       alert('Please enter valid IITK Email');
     }
+    setLoading(false);
   }
 
   const base64ToBlob = (base64String, format) => {
@@ -109,9 +113,11 @@ const CenterBox = ({setSignIn}) => {
 
 
   const handleSignUp = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (signUpPassword !== signUpConfirmPassword) {
       alert("Passwords do not match");
+      setLoading(false);
       return;
     }
 
@@ -143,16 +149,21 @@ const CenterBox = ({setSignIn}) => {
             userImage: responseData.img
         }))
         await postDetails(responseData.img, responseData.name, hashedPassword)
+        setLoading(false);
       } else {
         alert(response["error"]);
+        setLoading(false);
       }
     } catch (err) {
       alert("Invalid OTP or User Already Exists");
+      navigate("/login");
+      setLoading(false);
     }
   };
   return (
     <>
       <MetaData title='Login' />
+      {loading ? <Loader /> :
       <div className="center-box">
         <div className="upperHalfDiv">          
           <div className="leftHalfDiv">
@@ -251,7 +262,8 @@ const CenterBox = ({setSignIn}) => {
           and knowledge exchange.</div>
         </div>  
       
-      </div>
+        </div>
+      }
     </>
   );
 };

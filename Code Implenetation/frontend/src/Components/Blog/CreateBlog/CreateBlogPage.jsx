@@ -3,9 +3,12 @@ import styles from "./style.module.css";
 import { formatDistanceToNow } from "date-fns";
 import { useNavigate } from "react-router-dom";
 import MetaData from "../../../MetaData";
+import Loader1 from '../../Loader/Loader1';
+import Loader from "../../Loader/Loader";
 
 const CreateBlogPage = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
   const [postData, setPostData] = useState({
     title: "",
     content: "",
@@ -112,6 +115,7 @@ const CreateBlogPage = () => {
   };
 
   const handleSubmit = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     try {
@@ -151,14 +155,18 @@ const CreateBlogPage = () => {
           authorID: us.userId,
           tags: [],
         });
+        setLoading(false);
       } else {
         console.error("Failed to create blog post");
         alert("Failed to create blog post");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Error:", error);
       alert("Failed to create blog post");
+      setLoading(false);
     }
+    setLoading(false);
   };
 
   const handleRedirect = (id) => {
@@ -168,7 +176,8 @@ const CreateBlogPage = () => {
   return (
     <>
       <MetaData title="Create Blog" />
-      <div id={styles.mainBody}>
+      {loading ? <Loader/> : 
+        <div id={styles.mainBody}>
         {/* Main Body */}
         <div id={styles.mainBody}>
           {/* Upper Half */}
@@ -186,7 +195,7 @@ const CreateBlogPage = () => {
                   <button id={styles.searchButton}>Search</button>
                 </div>
                 <div id={styles.blogsList}>
-                  {posts!=null && posts.length === 0 && <div>No blog to show</div>}
+                  {posts!=null && posts.length === 0 && <Loader1/>}
                   {posts!=null && posts.length > 0 &&
                     posts.map((blog, index) => (
                       <div
@@ -357,6 +366,7 @@ const CreateBlogPage = () => {
           </div>
         </div>
       </div>
+      }
     </>
   );
 };

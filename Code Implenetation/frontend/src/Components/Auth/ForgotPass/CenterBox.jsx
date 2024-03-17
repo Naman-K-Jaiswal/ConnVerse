@@ -11,16 +11,20 @@ import LockIcon from '@mui/icons-material/Lock';
 import CryptoJS from 'crypto-js';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { useToast } from "@chakra-ui/toast";
+import Loader from '../../Loader/Loader.jsx';
 
-const CenterBox = ({setSignIn}) => {
+const CenterBox = ({ setSignIn }) => {
+    const toast = useToast();
   const navigate = useNavigate();
   const [showFirstForm, setShowFirstForm] = useState(true);
   const [signUpEmail, setSignUpEmail] = useState('');
   const [validationCode, setValidationCode] = useState('');
   const [signUpPassword, setSignUpPassword] = useState('');
   const [signUpConfirmPassword, setSignUpConfirmPassword] = useState('');
-
+  const [loading, setLoading] = useState(false);
   const handleSubmitFirstForm = async (e) => {
+    setLoading(true);
     e.preventDefault();
 
     try {
@@ -35,11 +39,24 @@ const CenterBox = ({setSignIn}) => {
       if (response.status === 200){
         setShowFirstForm(false);
       } else {
-        alert('Please enter valid IITK Email')
+        toast({
+            description: "Please enter valid IITK Email",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+        });
       }
     } catch (error) {
-      alert('Please enter valid IITK Email');
+      toast({
+          description: "Please enter valid IITK Email",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
     }
+    setLoading(false);
   }
 
   const base64ToBlob = (base64String, format) => {
@@ -99,7 +116,14 @@ const CenterBox = ({setSignIn}) => {
         setSignIn(true)
         navigate("/home");
       } catch (error) {
-        alert("an error occurred, please try again");
+        alert("");
+        toast({
+          description: "An error occurred, Please Try Again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
       }
 
     } catch (err) {
@@ -109,6 +133,7 @@ const CenterBox = ({setSignIn}) => {
 
 
   const handleSignUp = async (e) => {
+    setLoading(true);
     e.preventDefault();
     if (signUpPassword !== signUpConfirmPassword) {
       alert("Passwords do not match");
@@ -149,9 +174,11 @@ const CenterBox = ({setSignIn}) => {
     } catch (err) {
       alert("Invalid OTP or User Already Exists");
     }
+    setLoading(false);
   };
   return (
     <>
+      {loading ? <Loader/>:
       <div className="center-box">
         <div className="upperHalfDiv">          
           <div className="leftHalfDiv">
@@ -251,7 +278,7 @@ const CenterBox = ({setSignIn}) => {
         </div>  
       
       </div>
-
+      }
     </>
   );
 };

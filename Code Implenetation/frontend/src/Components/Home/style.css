@@ -10,8 +10,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px;
-    margin-top: 70px; /* Adjust for navbar height */
+    padding: 20px; /* Adjust for navbar height */
 }
 
 #searchBoxDiv {

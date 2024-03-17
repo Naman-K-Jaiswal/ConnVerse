@@ -5,12 +5,14 @@ import { formatDistanceToNow } from "date-fns";
 import { useInView } from "react-intersection-observer";
 import axios from "axios";
 import MetaData from "../../MetaData";
+import Loader from '../Loader/Loader';
 
 const Home = () => {
   const navigate = useNavigate();
   const [blogData, setBlogData] = useState([]);
   const [search, setSearch] = useState("");
   const [num, setNum] = useState(1);
+  const [loading, setLoading] = useState(false);
 
   const getDaysAgo = (timestamp) => {
     const postDate = new Date(timestamp);
@@ -19,6 +21,7 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setLoading(true);
       try {
         const us = JSON.parse(localStorage.getItem("user"));
         const response = await fetch(
@@ -56,6 +59,7 @@ const Home = () => {
       }
     };
     fetchData();
+    setLoading(false);
   }, []);
 
   const appendBlogOnScroll = async () => {
@@ -162,7 +166,7 @@ const Home = () => {
             </button>
           </div>
           <div id="blogLists">
-            {blogData!=null && blogData.length === 0 && <div>No blogs to show</div>}
+            {blogData!=null && blogData.length === 0 && <Loader/>}
             {blogData!=null && blogData.length > 0 &&
               blogData.map((blog) => (
                 <div
