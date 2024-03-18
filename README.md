@@ -74,3 +74,5 @@ MONGO_URI=<YOUR_MONGODB_URI>
 - One must initialize the database.
 - Make sure that backend and chat_service are working at same time to work app properly.
 - If you change the backend(also chat_service) port or url, do not forget to change the API requests in the frontend.
+
+- MahaDevS
