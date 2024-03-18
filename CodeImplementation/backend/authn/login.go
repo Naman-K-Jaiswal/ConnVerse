@@ -16,9 +16,6 @@ func Login() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var login_details LoginDetails
 
-		c.Header("Access-Control-Allow-Origin", "http://localhost:3000")
-		c.Header("Access-Control-Allow-Credentials", "true")
-
 		err := c.ShouldBindJSON(&login_details)
 		if err != nil {
 			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})

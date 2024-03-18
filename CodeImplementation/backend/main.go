@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/Naman-K-Jaiswal/ConnVerse/mail"
 	"github.com/Naman-K-Jaiswal/ConnVerse/routes"
@@ -21,19 +20,19 @@ func main() {
 	port := os.Getenv("PORT")
 
 	if port == "" {
-		fmt.Println("PORT environment variable not set")
-		return
+		port = "8080"
 	}
 
 	database.InitDB()
 	mail.InitMailSMTP()
 
-	router := gin.New()
-	router.Use(gin.Logger())
-	config := cors.DefaultConfig()
-	config.AllowOrigins = []string{os.Getenv("FRONTEND_URL")}
-	config.AllowCredentials = true
-	router.Use(cors.New(config))
+	router := gin.Default()
+	router.Use(cors.New(cors.Config{
+		AllowOriginFunc:  func(origin string) bool { return true },
+        AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+        AllowHeaders:     []string{"Content-Type"},
+        AllowCredentials: true,
+    }))
 
 	routes.ProfilesRoutes(router)
 	routes.BlogRoutes(router)

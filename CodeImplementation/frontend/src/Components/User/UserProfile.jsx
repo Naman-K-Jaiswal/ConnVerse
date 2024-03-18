@@ -545,6 +545,7 @@ const UserProfile = () => {
         });
 
         if (res.ok) {
+          console.log("bilkul bhai")
           const data = await res.json();
           if (data.user != null) {
             setName(data.user.name);
@@ -1358,7 +1359,6 @@ const UserProfile = () => {
                       style={{
                         fontSize: "1em",
                         borderRadius: "8px",
-                        backgroundColor: "#e2921b",
                       }}  
                     >
                       {course.description.split(" ").slice(0, 50).join(" ")}
@@ -1372,6 +1372,7 @@ const UserProfile = () => {
                         fontSize: "1em",
                         borderRadius: "8px",
                         backgroundColor: "#e2921b",
+                        display: "inline",
                       }}
                     >
                       {course.year}
