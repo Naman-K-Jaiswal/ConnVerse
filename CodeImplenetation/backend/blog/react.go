@@ -1,8 +1,8 @@
 package blog
 
 import (
-	"backend/database"
 	"context"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -78,18 +78,18 @@ func AddUserToLikedBy(postID string, userID string) (error, int) {
 	if err != nil {
 		return err, 0
 	}
-	disliked,err := HasUserDislikedPost(existingPost, userID)
-	if err!=nil{
-		return err,-1
+	disliked, err := HasUserDislikedPost(existingPost, userID)
+	if err != nil {
+		return err, -1
 	}
 	if disliked {
-		existingPost.DislikedBy= removeUserFromArray(existingPost.DislikedBy, userID)
+		existingPost.DislikedBy = removeUserFromArray(existingPost.DislikedBy, userID)
 		existingPost.Dislikes--
 		UpdateBlogDisLike(existingPost)
 	}
-	already,erro := HasUserLikedPost(existingPost, userID)
-	if erro!=nil{
-		return erro,-2
+	already, erro := HasUserLikedPost(existingPost, userID)
+	if erro != nil {
+		return erro, -2
 	}
 	if !already {
 		existingPost.Likes++
@@ -127,12 +127,12 @@ func AddUserToDislikedBy(postID string, userID string) (error, int) {
 	if err != nil {
 		return err, 0
 	}
-	liked,err := HasUserLikedPost(existingPost, userID)
-	if err!=nil{
-		return err,0
+	liked, err := HasUserLikedPost(existingPost, userID)
+	if err != nil {
+		return err, 0
 	}
 	if liked {
-		existingPost.LikedBy= removeUserFromArray(existingPost.LikedBy, userID)
+		existingPost.LikedBy = removeUserFromArray(existingPost.LikedBy, userID)
 		existingPost.Likes--
 		UpdateBlogLike(existingPost)
 	}

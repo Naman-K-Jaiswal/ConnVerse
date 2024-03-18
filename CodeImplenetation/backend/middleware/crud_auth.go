@@ -1,11 +1,11 @@
 package middleware
 
 import (
-	"backend/database"
-	"backend/profile"
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
+	"github.com/Naman-K-Jaiswal/ConnVerse/profile"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"go.mongodb.org/mongo-driver/bson"

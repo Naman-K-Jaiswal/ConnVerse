@@ -1,11 +1,11 @@
 package feed
 
 import (
-	"backend/blog"
-	"backend/database"
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Naman-K-Jaiswal/ConnVerse/blog"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"

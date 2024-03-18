@@ -1,8 +1,8 @@
 package blog
 
 import (
-	"backend/database"
 	"context"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"log"

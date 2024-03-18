@@ -1,4 +1,4 @@
-module backend
+module github.com/Naman-K-Jaiswal/ConnVerse
 
 go 1.21.6
 

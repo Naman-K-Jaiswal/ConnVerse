@@ -1,11 +1,11 @@
 package profile
 
 import (
-	"backend/database"
-	"backend/feed"
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
+	"github.com/Naman-K-Jaiswal/ConnVerse/feed"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"io"

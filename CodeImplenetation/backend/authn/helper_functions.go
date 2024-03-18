@@ -1,10 +1,10 @@
 package authn
 
 import (
-	"backend/database"
-	"backend/profile"
 	"context"
 	"errors"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
+	"github.com/Naman-K-Jaiswal/ConnVerse/profile"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"

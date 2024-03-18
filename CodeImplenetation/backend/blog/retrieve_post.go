@@ -1,8 +1,8 @@
 package blog
 
 import (
-	"backend/database"
 	"context"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/gin-gonic/gin"
 	"log"
 

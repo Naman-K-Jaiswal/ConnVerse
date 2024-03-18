@@ -1,7 +1,7 @@
 package routes
 
 import (
-	"backend/authn"
+	"github.com/Naman-K-Jaiswal/ConnVerse/authn"
 	"github.com/gin-gonic/gin"
 )
 

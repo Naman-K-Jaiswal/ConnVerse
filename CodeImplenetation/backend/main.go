@@ -1,10 +1,10 @@
 package main
 
 import (
-	"backend/database"
-	"backend/mail"
-	"backend/routes"
 	"fmt"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
+	"github.com/Naman-K-Jaiswal/ConnVerse/mail"
+	"github.com/Naman-K-Jaiswal/ConnVerse/routes"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"

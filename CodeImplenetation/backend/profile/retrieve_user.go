@@ -1,8 +1,8 @@
 package profile
 
 import (
-	"backend/database"
 	"context"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
 	"net/http"

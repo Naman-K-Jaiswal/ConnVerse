@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"backend/middleware"
-	"backend/profile"
+	"github.com/Naman-K-Jaiswal/ConnVerse/middleware"
+	"github.com/Naman-K-Jaiswal/ConnVerse/profile"
 	"github.com/gin-gonic/gin"
 )
 
