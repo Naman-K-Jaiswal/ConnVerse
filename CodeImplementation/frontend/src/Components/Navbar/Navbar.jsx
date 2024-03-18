@@ -1,24 +1,26 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, Fragment} from 'react';
 import HomeIcon from '@mui/icons-material/Home';
 import GroupIcon from '@mui/icons-material/People';
 import CreateIcon from '@mui/icons-material/Create';
 import ChatIcon from '@mui/icons-material/Chat';
 import { useToast } from "@chakra-ui/toast";
-
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
+import PersonIcon from '@mui/icons-material/Person';
+import { Backdrop } from '@material-ui/core'
+import {SpeedDial, SpeedDialAction} from '@material-ui/lab'
 import './style.css';
 import profileImg from './profile_pic.JPG';
 import { Link, useNavigate } from 'react-router-dom';
 
-
 const Navbar = ({ setSignIn }) => {
   const toast = useToast();
   const navigate = useNavigate()
-  const [isOpen, setIsOpen] = useState(false);
+  const [open, setOpen] = useState(false);
   const user = JSON.parse(localStorage.getItem("user"));
 
-  const handleLogout = async () => {
+  async function handleLogout(){
     try {
-      const response = await fetch(`http://localhost:8080/logout`, {
+      const response = await fetch(`https://connverse-hcgzo.ondigitalocean.app/logout`, {
         method: 'POST',
         credentials: 'include',
         headers: {
@@ -52,13 +54,22 @@ const Navbar = ({ setSignIn }) => {
     }
   };
 
+  function profile(){
+    navigate(`/userprofile/${user.userId}`);
+  }
+
+  const options = [
+        {icon: <PersonIcon/>, name: "Profile", func: profile,},
+        {icon: <ExitToAppIcon/>, name: "Logout", func: handleLogout,}
+    ]
+
   return (
     <nav className="navbar">
       <div className='connversehead'>
       <p id='Conn1'>ConnVerse</p>
       </div>
       
-      <ul className="nav-items">
+      <ul className="nav-items" style={{zIndex:'11'}}>
         <li className="nav-item">
           <Link to="/home" className="nav-link">
             <HomeIcon />
@@ -85,22 +96,42 @@ const Navbar = ({ setSignIn }) => {
         </li>
       </ul>
       <div className="profile">
-        <img src={user.userImage ? `data:image/jpeg;base64,${user.userImage}` : profileImg} alt="Profile Photo" className="profile-photo"/>
+              
+      <Fragment>
+        <Backdrop open={open} style={{zIndex: "10"}} />
+        <SpeedDial
+            ariaLabel='SpeedDial tooltip example'
+            onClose={()=> setOpen(false)}
+            onOpen={()=> setOpen(true)}
+            open={open}
+            style={{zIndex : "11", marginRight:'2vmax'}}
+            direction='down'
+            className='profile-photo'
+            icon={<img 
+                className='speedDialIcon'
+                src={user.userImage ? `data:image/jpeg;base64,${user.userImage}` : profileImg}
+                alt='Profile'
+                />}
+            >
+              {options.map((item)=>(
+              <SpeedDialAction 
+                  key={item.name} 
+                  icon = {item.icon} 
+                  tooltipTitle={item.name} 
+                  onClick={item.func} 
+                  tooltipOpen={window.innerWidth <= 600 ? true : false}
+              />
+              ))}
+          </SpeedDial>
+        </Fragment> 
         <div className="dropdown">
           <span className="username">{user.userName}</span>
-          <button className="dropbtn" onClick={() => setIsOpen(!isOpen)}>&#x25BC;</button>
-          {isOpen && (
-            <div className="dropdown-content">
-              <Link to={`/userprofile/${user.userId}`}>My Profile</Link>
-              <Link to="/" onClick={handleLogout}>Log Out</Link>
-            </div>
-          )}
         </div>
       </div>
-
-
     </nav>
   );
 }
 
 export default Navbar;
+
+

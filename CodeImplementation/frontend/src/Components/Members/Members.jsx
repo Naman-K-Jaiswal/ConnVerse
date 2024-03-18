@@ -97,7 +97,7 @@ const Members = () => {
   useEffect(() => {
     const func = async () => {
       try{
-        const res = await fetch(`http://localhost:8080/profile/search`,{
+        const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/profile/search`,{
           method: 'POST',
           credentials: 'include',
           headers: {

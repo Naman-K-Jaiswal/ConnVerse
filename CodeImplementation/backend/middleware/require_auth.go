@@ -4,20 +4,23 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"net/http"
+	"os"
+	"time"
+
 	"github.com/Naman-K-Jaiswal/ConnVerse/authn"
 	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/gin-gonic/gin"
 	"github.com/golang-jwt/jwt/v5"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
-	"net/http"
-	"os"
-	"time"
 )
 
 func RequireAuth(c *gin.Context) {
 	tokenStr, err := c.Cookie("Authorization")
+	fmt.Println(tokenStr)
 	if err != nil {
+		fmt.Println(err)
 		c.AbortWithStatus(http.StatusUnauthorized)
 	}
 
@@ -27,6 +30,7 @@ func RequireAuth(c *gin.Context) {
 		}
 		return []byte(os.Getenv("SECRET")), nil
 	})
+	fmt.Println(token, err, "yaha pe")
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		if claims["exp"].(float64) < float64(time.Now().Unix()) {

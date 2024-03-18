@@ -12,10 +12,7 @@ import (
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		return
-	}
+	_ = godotenv.Load()
 
 	port := os.Getenv("PORT")
 
@@ -39,7 +36,7 @@ func main() {
 	routes.AuthRoutes(router)
 	routes.FeedRoutes(router)
 
-	err = router.Run(":" + port)
+	err := router.Run(":" + port)
 	if err != nil {
 		log.Fatal(err)
 	}

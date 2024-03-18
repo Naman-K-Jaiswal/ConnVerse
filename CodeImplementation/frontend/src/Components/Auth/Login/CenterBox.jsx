@@ -25,7 +25,7 @@ const CenterBox = ({ setSignIn }) => {
 
       try {
         console.log(process.env.BACKEND_URL)
-          const response = await fetch(`http://localhost:8080/login`, {
+          const response = await fetch(`https://connverse-hcgzo.ondigitalocean.app/login`, {
               method: 'POST',
               credentials: 'include',
               headers: {
@@ -36,6 +36,7 @@ const CenterBox = ({ setSignIn }) => {
 
           if (response.ok) {
               const responseData = await response.json();
+              console.log("ek kam to ho gaya");
               try {
                   const config = {
                       headers: {

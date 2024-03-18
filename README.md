@@ -4,6 +4,10 @@ This is the official repository for CS253 Course Project - ConnVerse from Team M
 
 Addressing the prevalent networking challenges in our college, our team introduces "ConnVerse - Connect and Converse" – a one-stop solution for all our connection problems. Students can create profiles with details like department, year, responsibilities, and courses taken. For instance, someone seeking advice on a course can search ConnVerse for individuals who have taken it and connect with them. Privacy is our top priority, and we will facilitate direct messaging as well. Alumni, verified by our team, can share motivational content and job/internship opportunities through posts and blogs. Our vision is to build a LinkedIn-like platform, creating a "bridge" between all the current students and alums, ensuring seamless use and privacy protection.
 
+# Deployed Website
+
+- https://conn-verse.vercel.app/
+
 # Installation
 
 - clone the repository using : `git clone <repository_link>` OR Download the ZIP file for the same.

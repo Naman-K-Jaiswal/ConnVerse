@@ -11,8 +11,10 @@ import profileImageFile from "./userProfileImage.JPG";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useToast } from "@chakra-ui/toast";
 import { useParams, useNavigate } from "react-router-dom";
+import Loader from '../Loader/Loader';
 
 const UserProfile = () => {
+  const [loading, setLoading] = useState(false);
   const toast = useToast();
   const { id } = useParams();
   const navigate = useNavigate();
@@ -535,8 +537,9 @@ const UserProfile = () => {
 
   useEffect(() => {
     const func = async () => {
+      setLoading(true);
       try {
-        const res = await fetch(`http://localhost:8080/profile/${id}`, {
+        const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/profile/${id}`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -630,16 +633,18 @@ const UserProfile = () => {
           position: "bottom",
         });
       }
+      setLoading(false);
     };
 
     func();
   }, []);
 
   useEffect(() => {
+    setLoading(true);
     if (ok > 0) {
         const func = async () => {
           try {
-            const res = await fetch(`http://localhost:8080/profile/update`, {
+            const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/profile/update`, {
               method: "POST",
               credentials: "include",
               headers: {
@@ -693,6 +698,7 @@ const UserProfile = () => {
           }
         };
         func();
+        setLoading(false);
     }
   }, [
     ok,
@@ -709,6 +715,8 @@ const UserProfile = () => {
 
   return (
     <>
+      {loading?<Loader/>:
+      <div>
       <div
         id="personalProfileMainDiv"
         className={
@@ -969,6 +977,7 @@ const UserProfile = () => {
                       key={index}
                       id="topPostItemX"
                       onClick={() => {
+                        setLoading(false);
                         navigate(`/blog/${blogpost}`);
                       }}
                     >
@@ -1622,7 +1631,10 @@ const UserProfile = () => {
             <div id="closeBtn">Cancel</div>
           </button>
         </div>
-      )}
+        )}
+        
+      </div>
+      }
     </>
   );
 };

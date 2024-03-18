@@ -5,6 +5,12 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"log"
+	"net/http"
+	"net/smtp"
+	"os"
+	"time"
+
 	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/Naman-K-Jaiswal/ConnVerse/mail"
 	"github.com/Naman-K-Jaiswal/ConnVerse/profile"
@@ -12,11 +18,6 @@ import (
 	"github.com/golang-jwt/jwt/v5"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
-	"log"
-	"net/http"
-	"net/smtp"
-	"os"
-	"time"
 )
 
 func SendOTP() gin.HandlerFunc {
@@ -126,7 +127,7 @@ func SignUp() gin.HandlerFunc {
 		}
 
 		c.SetSameSite(http.SameSiteLaxMode)
-		c.SetCookie("Authorization", tokenString, 3600*24, "/", "localhost", false, false)
+		c.SetCookie("Authorization", tokenString, 3600*24, "", "", false, false)
 
 		c.JSON(http.StatusOK, gin.H{"message": "Sign Up Successful!", "img": response, "name": res["n"].(string), "id": res["i"].(string)})
 	}

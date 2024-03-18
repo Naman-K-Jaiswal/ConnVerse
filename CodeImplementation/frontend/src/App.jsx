@@ -38,27 +38,27 @@ const App = () => {
     if (parts.length === 2) return parts.pop().split(';').shift();
   };
 
-  useEffect(() => {
-    const checkAuthentication = () => {
-      const tokenString = getCookie('Authorization');
-      console.log(tokenString);
-      const isAuthenticated = !!tokenString;
+  // useEffect(() => {
+  //   const checkAuthentication = () => {
+  //     const tokenString = getCookie('Authorization');
+  //     console.log(tokenString);
+  //     const isAuthenticated = !!tokenString;
 
-      setSignIn(isAuthenticated);
-    };
+  //     setSignIn(isAuthenticated);
+  //   };
 
-    checkAuthentication();
+  //   checkAuthentication();
 
-    const handleCookieChange = () => {
-      checkAuthentication();
-    };
+  //   const handleCookieChange = () => {
+  //     checkAuthentication();
+  //   };
 
-    window.addEventListener('storage', handleCookieChange);
+  //   window.addEventListener('storage', handleCookieChange);
 
-    return () => {
-      window.removeEventListener('storage', handleCookieChange);
-    };
-  }, []);
+  //   return () => {
+  //     window.removeEventListener('storage', handleCookieChange);
+  //   };
+  // }, []);
 
   return (
       <Routes>

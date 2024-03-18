@@ -49,7 +49,7 @@ const BlogTemplate = () => {
   const handleUpvote = async () => {
     console.log(id);
     try {
-      const res = await fetch(`http://localhost:8080/blog/react/${id}`, {
+      const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/blog/react/${id}`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -75,7 +75,7 @@ const BlogTemplate = () => {
 
   const handleDownvote = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/blog/react/${id}`, {
+      const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/blog/react/${id}`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -105,7 +105,7 @@ const BlogTemplate = () => {
   useEffect(() => {
     const func = async () => {
       try {
-        const res = await fetch(`http://localhost:8080/blog/${id}`, {
+        const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/blog/${id}`, {
           method: "GET",
           credentials: "include",
           headers: {
@@ -120,7 +120,7 @@ const BlogTemplate = () => {
           if (data.blog.authorid == user.userId) {
             isEditable(true);
           }
-          const response = await fetch(`http://localhost:8080/feed/add/tags`, {
+          const response = await fetch(`https://connverse-hcgzo.ondigitalocean.app/feed/add/tags`, {
             method: "POST",
             credentials: "include",
             headers: {
@@ -153,7 +153,7 @@ const BlogTemplate = () => {
 
   const handleComment = async () => {
     try {
-      const res = await fetch(`http://localhost:8080/blog/comment/${id}`, {
+      const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/blog/comment/${id}`, {
         method: "POST",
         credentials: "include",
         headers: {
@@ -193,7 +193,7 @@ const BlogTemplate = () => {
   const handleDelete = async () => {
     try {
       const res = await fetch(
-        `http://localhost:8080/blog/compose/delete/${id}`,
+        `https://connverse-hcgzo.ondigitalocean.app/blog/compose/delete/${id}`,
         {
           method: "POST",
           credentials: "include",

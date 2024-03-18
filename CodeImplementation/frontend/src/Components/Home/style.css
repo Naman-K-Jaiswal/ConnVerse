@@ -19,7 +19,7 @@ body {
     left: 50%;
     margin-top: 1vh;
     transform: translateX(-50%);
-    z-index: 999; /* Ensure it's above other content */
+    z-index: 10; /* Ensure it's above other content */
     width: 80%;
     display: flex;
     align-items: center;

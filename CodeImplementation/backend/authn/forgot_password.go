@@ -1,11 +1,12 @@
 package authn
 
 import (
-	"github.com/gin-gonic/gin"
-	"github.com/golang-jwt/jwt/v5"
 	"net/http"
 	"os"
 	"time"
+
+	"github.com/gin-gonic/gin"
+	"github.com/golang-jwt/jwt/v5"
 )
 
 func ForgotPassword() gin.HandlerFunc {
@@ -47,7 +48,7 @@ func ForgotPassword() gin.HandlerFunc {
 		}
 
 		c.SetSameSite(http.SameSiteLaxMode)
-		c.SetCookie("Authorization", tokenString, 3600*24, "/", "localhost", false, false)
+		c.SetCookie("Authorization", tokenString, 3600*24, "", "", false, false)
 
 		c.JSON(http.StatusOK, gin.H{"message": "Sign Up Successful!", "img": user.ProfilePhoto, "name": user.Name, "id": user.UserID})
 	}
