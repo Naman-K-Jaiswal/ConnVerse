@@ -92,6 +92,7 @@ const BlogTemplate = () => {
         if (!downvoted) {
           setDownvoted(true);
           setUpvoted(false);
+          setLikes(Math.max(likes - 1, 0));
         } else {
           setDownvoted(false);
         }
