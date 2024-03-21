@@ -577,10 +577,12 @@ const UserProfile = () => {
             } else {
               setAchievements([]);
             }
-            if (data.user.blogposts != null) {
+            if (data.user.blogposts != null && data.blogs != null) {
               setBlogpostsBlogPosts(data.user.blogposts);
+              setBlogposts(data.blogs);
             } else {
               setBlogpostsBlogPosts([]);
+              setBlogposts([]);
             }
             if (data.user.credentials != null) {
               setCredentials(data.user.credentials);

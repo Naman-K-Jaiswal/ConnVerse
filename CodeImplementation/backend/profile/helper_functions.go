@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/Naman-K-Jaiswal/ConnVerse/blog"
 	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/Naman-K-Jaiswal/ConnVerse/feed"
 	"go.mongodb.org/mongo-driver/bson"
@@ -788,4 +789,40 @@ func GetUsersByNicknameAndDegreeAndSkillsAndOrganizationAndCourses(nickname stri
 	}
 
 	return users
+}
+
+func GetBlogs(id string) ([]string, []string) {
+	collection := database.DB.Collection("BlogPosts")
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	pipeline := bson.A{
+		bson.M{"$match": bson.M{"authorid": id}},
+		bson.M{"$project": bson.M{
+			"doc":              "$$ROOT",
+			"netLikesDislikes": bson.M{"$subtract": []interface{}{"$likes", "$dislikes"}},
+		}},
+		bson.M{"$sort": bson.M{"netLikesDislikes": -1}},
+		bson.M{"$limit": 3},
+	}
+
+	cursor, err := collection.Aggregate(ctx, pipeline)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	var results []blog.BlogPost
+	if err := cursor.All(context.Background(), &results); err != nil {
+		log.Fatal(err)
+	}
+
+	var blogIDs []string
+	var blogTitles []string
+
+	for _, result := range results {
+		blogIDs = append(blogIDs, result.ID.Hex())
+		blogTitles = append(blogTitles, result.Title)
+	}
+
+	return blogIDs, blogTitles
 }

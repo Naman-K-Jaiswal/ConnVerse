@@ -30,6 +30,9 @@ func RetrieveUserProfile() gin.HandlerFunc {
 			return
 		}
 
-		c.JSON(http.StatusOK, gin.H{"user": userProfile})
+		blogposts, blogs := GetBlogs(userProfile.UserID)
+		userProfile.BlogPosts = blogposts
+
+		c.JSON(http.StatusOK, gin.H{"user": userProfile, "blogs": blogs})
 	}
 }
