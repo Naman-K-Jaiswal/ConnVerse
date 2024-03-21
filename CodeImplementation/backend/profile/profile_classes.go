@@ -47,7 +47,6 @@ type UserUpdate struct {
 	BannerPhoto  []byte       `json:"bannerphoto"`
 	About        string       `json:"about"`
 	Skills       []string     `json:"skills"`
-	BlogPosts    []string     `json:"blogposts"`
 	Credentials  []Credential `json:"credentials"`
 	Achievements []string     `json:"achievements"`
 	Projects     []Project    `json:"projects"`
