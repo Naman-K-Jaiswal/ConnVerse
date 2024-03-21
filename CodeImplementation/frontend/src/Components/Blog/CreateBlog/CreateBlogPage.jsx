@@ -31,6 +31,7 @@ const CreateBlogPage = () => {
   });
 
   const getPosts = async () => {
+    setLoading(true);
     try {
       const us = JSON.parse(localStorage.getItem("user"));
       const response = await fetch(`https://connverse-hcgzo.ondigitalocean.app/blog/retrieve`, {
