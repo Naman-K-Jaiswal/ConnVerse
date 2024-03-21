@@ -148,6 +148,7 @@ const CenterBox = ({ setSignIn }) => {
           isClosable: true,
           position: "bottom",
       });
+      setLoading(false);
       return;
     }
 
