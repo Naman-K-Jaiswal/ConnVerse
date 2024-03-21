@@ -8,12 +8,16 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import HeartBrokenIcon from "@mui/icons-material/HeartBroken";
 import HeartBrokenOutlinedIcon from "@mui/icons-material/HeartBrokenOutlined";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
+import Loader from "../../Loader/Loader";
+import { useToast } from "@chakra-ui/toast";
 
 const BlogTemplate = () => {
   const { id } = useParams();
+  const toast = useToast();
 
   const navigate = useNavigate();
-
+  
+  const [loading, setLoading] = useState(false);
   const [comment, setComment] = useState("");
 
   const [upvoted, setUpvoted] = useState(false);
@@ -104,6 +108,7 @@ const BlogTemplate = () => {
 
   useEffect(() => {
     const func = async () => {
+      setLoading(true);
       try {
         const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/blog/${id}`, {
           method: "GET",
@@ -143,9 +148,17 @@ const BlogTemplate = () => {
             setDownvoted(true);
           }
         } else {
-          alert("Error fetching blog. Please reload the page");
+          toast({
+            title: "Error Fetching Blog!",
+            description: "Please reload the page",
+            status: "error",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+          });
         }
       } catch (error) {}
+      setLoading(false);
     };
 
     func();
@@ -183,10 +196,24 @@ const BlogTemplate = () => {
         setBlogData(updatedBlogData);
         setComment("");
       } else {
-        alert("Error adding comment. Please try again");
+        toast({
+          title: "Error Adding Comment!",
+          description: "Please try again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
       }
     } catch (error) {
-      alert("Error adding comment. Please try again");
+      toast({
+        title: "Error Adding Comment!",
+        description: "Please try again",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
     }
   };
 
@@ -207,16 +234,31 @@ const BlogTemplate = () => {
       if (res.ok) {
         navigate("/createblog");
       } else {
-        alert("Error deleting blog");
+        toast({
+          title: "Error Deleting Blog!",
+          description: "Please try again",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
       }
     } catch (error) {
-      alert("Error deleting blog");
+      toast({
+        title: "Error Deleting Blog!",
+        description: "Please try again",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
     }
   };
 
   return (
     <>
       <MetaData title={blogData.title} />
+      {loading ? <Loader /> :
       <div id="mainBodyDiv">
         <div key={blogData.ID} id="leftHalfBlogDiv">
           <div id="headBlogDiv">
@@ -327,7 +369,8 @@ const BlogTemplate = () => {
             <button onClick={handleComment}>Submit</button>
           </div>
         </div>
-      </div>
+        </div>
+      }
     </>
   );
 };
