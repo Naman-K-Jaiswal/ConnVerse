@@ -44,7 +44,7 @@ func CRUDAuth(c *gin.Context) {
 		}
 
 		collection := database.DB.Collection("Users")
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
 		var user profile.User

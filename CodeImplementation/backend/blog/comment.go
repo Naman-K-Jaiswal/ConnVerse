@@ -34,7 +34,7 @@ func CreateComment() gin.HandlerFunc {
 		update := bson.M{"$push": bson.M{"comments": new_comment}}
 
 		collection := database.DB.Collection("BlogPosts")
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
 		_, err = collection.UpdateOne(ctx, filter, update)

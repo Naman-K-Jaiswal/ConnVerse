@@ -3,7 +3,6 @@ package feed
 import (
 	"context"
 	"errors"
-	"fmt"
 	"github.com/Naman-K-Jaiswal/ConnVerse/blog"
 	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/gin-gonic/gin"
@@ -20,7 +19,7 @@ func ReloadFeed() gin.HandlerFunc {
 
 		collection := database.DB.Collection("BlogPosts")
 		feedCollection := database.DB.Collection("Feeds")
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
 		cursor, err := collection.Find(ctx, bson.M{})
@@ -33,7 +32,6 @@ func ReloadFeed() gin.HandlerFunc {
 
 		var feed Feed
 		err = feedCollection.FindOne(ctx, bson.M{"userid": id}).Decode(&feed)
-		fmt.Println(id, "here")
 		if err != nil {
 			c.JSON(400, gin.H{"error": "Error retrieving feed"})
 			return
@@ -63,9 +61,9 @@ func ReloadFeed() gin.HandlerFunc {
 			return calcScore(tgs, mp, blogs[i]) > calcScore(tgs, mp, blogs[j])
 		})
 
-		_, err = feedCollection.UpdateOne(ctx, bson.M{"userid": id}, bson.M{"$set": bson.M{"blogids": blogs}})
+		err = UpdateDB(id, blogs)
 		if err != nil {
-			c.JSON(400, gin.H{"error": "Error updating database"})
+			c.JSON(400, gin.H{"error": "Error updating feed"})
 			return
 		}
 

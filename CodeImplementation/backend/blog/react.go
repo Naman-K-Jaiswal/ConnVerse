@@ -169,7 +169,7 @@ func AddUserToDislikedBy(postID string, userID string) (error, int) {
 // UpdateBlogLike updates the blog post in MongoDB
 func UpdateBlogLike(post BlogPost) error {
 	collection := database.DB.Collection("BlogPosts")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	filter := bson.M{"_id": post.ID}
@@ -181,7 +181,7 @@ func UpdateBlogLike(post BlogPost) error {
 
 func UpdateBlogDisLike(post BlogPost) error {
 	collection := database.DB.Collection("BlogPosts")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	filter := bson.M{"_id": post.ID}

@@ -18,7 +18,6 @@ import (
 
 func RequireAuth(c *gin.Context) {
 	tokenStr, err := c.Cookie("Authorization")
-	fmt.Println(tokenStr)
 	if err != nil {
 		fmt.Println(err)
 		c.AbortWithStatus(http.StatusUnauthorized)
@@ -30,7 +29,6 @@ func RequireAuth(c *gin.Context) {
 		}
 		return []byte(os.Getenv("SECRET")), nil
 	})
-	fmt.Println(token, err, "yaha pe")
 
 	if claims, ok := token.Claims.(jwt.MapClaims); ok && token.Valid {
 		if claims["exp"].(float64) < float64(time.Now().Unix()) {
@@ -39,7 +37,7 @@ func RequireAuth(c *gin.Context) {
 
 		var user authn.LoginDetails
 		collection := database.DB.Collection("login_details")
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
 		err := collection.FindOne(ctx, bson.M{"email": claims["sub"]}).Decode(&user)

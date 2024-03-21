@@ -22,7 +22,7 @@ func SearchBlogPosts() gin.HandlerFunc {
 
 		var posts []BlogPost
 		collection := database.DB.Collection("BlogPosts")
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
 		filter := bson.M{}

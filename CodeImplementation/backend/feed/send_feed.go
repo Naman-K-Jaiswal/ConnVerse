@@ -22,8 +22,7 @@ func LoadFeed() gin.HandlerFunc {
 		id := c.Param("id")
 
 		collection := database.DB.Collection("Feeds")
-		blogCollection := database.DB.Collection("BlogPosts")
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
 		var feed Feed
@@ -57,13 +56,11 @@ func LoadFeed() gin.HandlerFunc {
 				c.JSON(400, gin.H{"error": "Error retrieving blog post"})
 				return
 			}
-			var post blog.BlogPost
-			err = blogCollection.FindOne(ctx, bson.M{"_id": id}).Decode(&post)
+			post, err := FindBlog(id)
 			if err != nil {
 				c.JSON(400, gin.H{"error": "Error retrieving blog post"})
 				return
 			}
-
 			blogs = append(blogs, post)
 		}
 

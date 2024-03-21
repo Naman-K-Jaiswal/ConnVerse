@@ -28,7 +28,7 @@ func RetrieveBlogPost() gin.HandlerFunc {
 		// Retrieve the blog post from MongoDB
 		var blogPost BlogPost
 		vari := database.DB.Collection("BlogPosts")
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
 		err = vari.FindOne(ctx, filter).Decode(&blogPost)

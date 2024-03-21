@@ -11,7 +11,7 @@ import (
 
 func AddPostToDB(newPost BlogPost) (string, error) {
 	collection := database.DB.Collection("BlogPosts")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	res, err := collection.InsertOne(ctx, newPost)
@@ -31,7 +31,7 @@ func RetrieveBlogPostByID(postID primitive.ObjectID) (BlogPost, error) {
 	// Retrieve the blog post from MongoDB
 	var blogPost BlogPost
 	collection := database.DB.Collection("BlogPosts")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	err := collection.FindOne(ctx, filter).Decode(&blogPost)
@@ -44,7 +44,7 @@ func RetrieveBlogPostByID(postID primitive.ObjectID) (BlogPost, error) {
 
 func DeleteBlogPostByID(postID primitive.ObjectID) error {
 	collection := database.DB.Collection("BlogPosts")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	_, err := collection.DeleteOne(ctx, bson.M{"_id": postID})
@@ -53,7 +53,7 @@ func DeleteBlogPostByID(postID primitive.ObjectID) error {
 
 func UpdateBlogPost(postID primitive.ObjectID, newPost BlogPost) error {
 	collection := database.DB.Collection("BlogPosts")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	_, err := collection.ReplaceOne(ctx, bson.M{"_id": postID}, newPost)

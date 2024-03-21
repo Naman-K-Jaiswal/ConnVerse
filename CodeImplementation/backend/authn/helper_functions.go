@@ -28,7 +28,7 @@ func GenerateRandomString(length int) string {
 
 func DeleteEntries(email string, ln int) {
 	collection := database.DB.Collection("login_details")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	if ln == 0 {
@@ -66,7 +66,7 @@ func DeleteEntries(email string, ln int) {
 func MatchPass(given_pass string, given_email string) int {
 	var temp LoginDetails
 	collection := database.DB.Collection("login_details")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	cursor, err := collection.Find(ctx, bson.M{"email": given_email})
@@ -108,7 +108,7 @@ func CreatePassword(signup_details SignupDetails) error {
 
 func CheckUserExist(email string) (bson.M, error) {
 	collection := database.DB.Collection("StoredUsers")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	var u string
@@ -136,7 +136,7 @@ func CheckUserExist(email string) (bson.M, error) {
 
 func CheckUserAlreadyExist(email string) (bool, *profile.User) {
 	collection := database.DB.Collection("Users")
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	var user profile.User

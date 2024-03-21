@@ -21,7 +21,7 @@ func RetrieveUserProfile() gin.HandlerFunc {
 		// Retrieve the user profile from MongoDB
 		var userProfile User
 		collection := database.DB.Collection("Users")
-		ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+		ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 		defer cancel()
 
 		err := collection.FindOne(ctx, filter).Decode(&userProfile)
