@@ -26,10 +26,10 @@ func main() {
 	router := gin.Default()
 	router.Use(cors.New(cors.Config{
 		AllowOriginFunc:  func(origin string) bool { return true },
-        AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
-        AllowHeaders:     []string{"Content-Type"},
-        AllowCredentials: true,
-    }))
+		AllowMethods:     []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowHeaders:     []string{"Content-Type", "Authorization", "Origin", "Accept", "X-Requested-With"},
+		AllowCredentials: true,
+	}))
 
 	routes.ProfilesRoutes(router)
 	routes.BlogRoutes(router)

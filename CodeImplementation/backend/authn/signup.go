@@ -126,8 +126,8 @@ func SignUp() gin.HandlerFunc {
 			return
 		}
 
-		c.SetSameSite(http.SameSiteLaxMode)
-		c.SetCookie("Authorization", tokenString, 3600*24, "", "", false, false)
+		c.SetSameSite(http.SameSiteNoneMode)
+		c.SetCookie("Authorization", tokenString, 3600*24, "/", "", true, false)
 
 		c.JSON(http.StatusOK, gin.H{"message": "Sign Up Successful!", "img": response, "name": res["n"].(string), "id": res["i"].(string)})
 	}

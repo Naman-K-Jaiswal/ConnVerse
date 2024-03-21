@@ -39,8 +39,8 @@ func Login() gin.HandlerFunc {
 				return
 			}
 
-			c.SetSameSite(http.SameSiteLaxMode)
-			c.SetCookie("Authorization", tokenString, 3600*24, "", "", false, false)
+			c.SetSameSite(http.SameSiteNoneMode)
+			c.SetCookie("Authorization", tokenString, 3600*24, "/", "", true, false)
 
 			collection := database.DB.Collection("Users")
 			ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
