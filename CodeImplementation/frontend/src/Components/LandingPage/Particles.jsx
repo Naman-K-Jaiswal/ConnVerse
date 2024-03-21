@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
 import TsParticles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
+import Loader from "../Loader/Loader";
 
 export const Particles = () => {
   const [init, setInit] = useState(false);
@@ -98,6 +99,11 @@ export const Particles = () => {
         style={{zIndex: '100'}}
       />
     );
+  }
+  else {
+    return <>
+      <Loader />
+    </>
   }
 
   return <></>;
