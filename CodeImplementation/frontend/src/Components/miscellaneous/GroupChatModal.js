@@ -58,7 +58,7 @@ const GroupChatModal = ({ children }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`https://connversechat.onrender.com/api/user?search=${search}`, config);
+      const { data } = await axios.get(`https://connverse-chat-6syar.ondigitalocean.app/api/user?search=${search}`, config);
       console.log(data);
       setLoading(false);
       setSearchResult(data);
@@ -97,7 +97,7 @@ const GroupChatModal = ({ children }) => {
         },
       };
       const { data } = await axios.post(
-        `https://connversechat.onrender.com/api/chat/group`,
+        `https://connverse-chat-6syar.ondigitalocean.app/api/chat/group`,
         {
           name: groupChatName,
           users: JSON.stringify(selectedUsers.map((u) => u._id)),

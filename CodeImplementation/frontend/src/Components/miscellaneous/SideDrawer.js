@@ -80,7 +80,7 @@ function SideDrawer() {
         },
       };
 
-      const { data } = await axios.get(`https://connversechat.onrender.com/api/user?search=${search}`, config);
+      const { data } = await axios.get(`https://connverse-chat-6syar.ondigitalocean.app/api/user?search=${search}`, config);
 
       setLoading(false);
       setSearchResult(data);
@@ -107,7 +107,7 @@ function SideDrawer() {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.post(`https://connversechat.onrender.com/api/chat`, { userId }, config);
+      const { data } = await axios.post(`https://connverse-chat-6syar.ondigitalocean.app/api/chat`, { userId }, config);
 
       if (!chats.find((c) => c._id === data._id)) setChats([data, ...chats]);
       setSelectedChat(data);

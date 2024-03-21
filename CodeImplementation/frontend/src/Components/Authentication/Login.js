@@ -41,7 +41,7 @@ const Login = () => {
       };
 
       const { data } = await axios.post(
-        `https://connversechat.onrender.com/api/user/login`,
+        `https://connverse-chat-6syar.ondigitalocean.app/api/user/login`,
         { email, password },
         config
       );

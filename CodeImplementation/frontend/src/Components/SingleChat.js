@@ -15,7 +15,7 @@ import animationData from "../animations/typing.json";
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
-const ENDPOINT = `https://connversechat.onrender.com`;
+const ENDPOINT = `https://connverse-chat-6syar.ondigitalocean.app`;
 var socket, selectedChatCompare;
 
 const SingleChat = ({ fetchAgain, setFetchAgain }) => {
@@ -51,7 +51,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       setLoading(true);
 
       const { data } = await axios.get(
-        `https://connversechat.onrender.com/api/message/${selectedChat._id}`,
+        `https://connverse-chat-6syar.ondigitalocean.app/api/message/${selectedChat._id}`,
         config
       );
       setMessages(data);
@@ -82,7 +82,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         };
         setNewMessage("");
         const { data } = await axios.post(
-          `https://connversechat.onrender.com/api/message`,
+          `https://connverse-chat-6syar.ondigitalocean.app/api/message`,
           {
             content: newMessage,
             chatId: selectedChat,

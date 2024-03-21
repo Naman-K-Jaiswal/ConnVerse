@@ -51,7 +51,7 @@ const Signup = () => {
         },
       };
       const { data } = await axios.post(
-        `https://connversechat.onrender.com/api/user`,
+        `https://connverse-chat-6syar.ondigitalocean.app/api/user`,
         {
           name,
           email,

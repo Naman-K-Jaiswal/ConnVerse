@@ -46,7 +46,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-      const { data } = await axios.get(`https://connversechat.onrender.com/api/user?search=${search}`, config);
+      const { data } = await axios.get(`https://connverse-chat-6syar.ondigitalocean.app/api/user?search=${search}`, config);
       console.log(data);
       setLoading(false);
       setSearchResult(data);
@@ -74,7 +74,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.put(
-        `https://connversechat.onrender.com/api/chat/rename`,
+        `https://connverse-chat-6syar.ondigitalocean.app/api/chat/rename`,
         {
           chatId: selectedChat._id,
           chatName: groupChatName,
@@ -132,7 +132,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.put(
-        `https://connversechat.onrender.com/api/chat/groupadd`,
+        `https://connverse-chat-6syar.ondigitalocean.app/api/chat/groupadd`,
         {
           chatId: selectedChat._id,
           userId: user1._id,
@@ -177,7 +177,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         },
       };
       const { data } = await axios.put(
-        `https://connversechat.onrender.com/api/chat/groupremove`,
+        `https://connverse-chat-6syar.ondigitalocean.app/api/chat/groupremove`,
         {
           chatId: selectedChat._id,
           userId: user1._id,

@@ -104,7 +104,7 @@ const CenterBox = ({ setSignIn }) => {
           },
         };
         const { data } = await axios.post(
-            `https://connversechat.onrender.com/api/user`,
+            `https://connverse-chat-6syar.ondigitalocean.app/api/user`,
             {
               name: name,
               email: signUpEmail,
