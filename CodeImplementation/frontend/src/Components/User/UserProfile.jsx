@@ -840,7 +840,8 @@ const UserProfile = () => {
                 ref={editNicknameRef}
                 contentEditable={isNicknameEditable === true}
                 style={{ 
-                fontSize: "2em", 
+                  fontSize: "2em", 
+                  marginTop: editable ? "0" : "3.5vh",
               }}
               >
               {nickname}

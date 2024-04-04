@@ -7,6 +7,7 @@ import axios from "axios";
 import MetaData from "../../MetaData";
 import Loader from '../Loader/Loader';
 import { useToast } from "@chakra-ui/toast";
+import blogDefaultImage from './1.jpeg';
 
 const Home = () => {
   const toast = useToast();
@@ -267,7 +268,7 @@ const Home = () => {
                   </div>
                   <div className="blogRightHalfDiv">
                     <img
-                      src={`data:image/jpeg;base64,${blog.image}`}
+                      src={blog.image == "" ? blogDefaultImage : `data:image/jpeg;base64,${blog.image}`}
                       alt="title image"
                     />
                   </div>
