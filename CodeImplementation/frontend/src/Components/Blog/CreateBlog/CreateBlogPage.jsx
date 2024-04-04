@@ -141,7 +141,17 @@ const CreateBlogPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    if (postData.title === "" || postData.content === "" || postData.tags.length === 0) {
+      toast({
+          title: "Please Try Again!",
+          description: "Title, Content and Tags are required",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
+      return;
+    }
     try {
       const us = JSON.parse(localStorage.getItem("user"));
       const response = await fetch(`https://connverse-hcgzo.ondigitalocean.app/blog/compose/new`, {

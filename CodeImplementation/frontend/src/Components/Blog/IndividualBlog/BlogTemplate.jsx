@@ -166,6 +166,16 @@ const BlogTemplate = () => {
   }, [id]);
 
   const handleComment = async () => {
+    if (comment === "") {
+      toast({
+        title: "Comment cannot be empty!",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+      return;
+    }
     try {
       const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/blog/comment/${id}`, {
         method: "POST",
@@ -233,6 +243,13 @@ const BlogTemplate = () => {
       );
 
       if (res.ok) {
+        toast({
+          title: "Blog Deleted Successfully!",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
         navigate("/createblog");
       } else {
         toast({

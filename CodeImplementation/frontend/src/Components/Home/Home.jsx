@@ -59,7 +59,7 @@ const Home = () => {
               status: "error",
               duration: 5000,
               isClosable: true,
-              position: "bottom-left",
+              position: "bottom",
             });
           }
         }
@@ -70,7 +70,7 @@ const Home = () => {
           status: "error",
           duration: 5000,
           isClosable: true,
-          position: "bottom-left",
+          position: "bottom",
         });
       }
     };
@@ -153,7 +153,7 @@ const Home = () => {
           status: "error",
           duration: 5000,
           isClosable: true,
-          position: "bottom-left",
+          position: "bottom",
         });
       }
     } catch (error) {
@@ -164,7 +164,7 @@ const Home = () => {
         status: "error",
         duration: 5000,
         isClosable: true,
-        position: "bottom-left",
+        position: "bottom",
       });
     }
 

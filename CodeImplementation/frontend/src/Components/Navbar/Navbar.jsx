@@ -39,7 +39,7 @@ const Navbar = ({ setSignIn }) => {
           status: "error",
           duration: 5000,
           isClosable: true,
-          position: "bottom-left",
+          position: "bottom",
         });
       }
     } catch (error) {
@@ -49,7 +49,7 @@ const Navbar = ({ setSignIn }) => {
           status: "error",
           duration: 5000,
           isClosable: true,
-          position: "bottom-left",
+          position: "bottom",
         });
     }
   };

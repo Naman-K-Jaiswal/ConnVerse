@@ -1,10 +1,8 @@
 import { useEffect, useMemo, useState } from "react";
 import TsParticles, { initParticlesEngine } from "@tsparticles/react";
 import { loadSlim } from "@tsparticles/slim";
-import Loader from "../Loader/Loader";
 
-export const Particles = () => {
-  const [init, setInit] = useState(false);
+export const Particles = ({init, setInit}) => {
 
   useEffect(() => {
     initParticlesEngine(async (engine) => {
@@ -90,21 +88,12 @@ export const Particles = () => {
     [],
   );
 
-  if (init) {
-    return (
-      <TsParticles
-        id="tsparticles"
-        particlesLoaded={particlesLoaded}
-        options={options}
-        style={{zIndex: '100'}}
-      />
-    );
-  }
-  else {
-    return <>
-      <Loader />
-    </>
-  }
-
-  return <></>;
+  return (
+    <TsParticles
+      id="tsparticles"
+      particlesLoaded={particlesLoaded}
+      options={options}
+      style={{zIndex: '100'}}
+    />
+  );
 };

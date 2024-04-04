@@ -4,10 +4,12 @@ import profileImg from "./pp.jpeg";
 import searchb from "./image.png";
 import filter from "./filter.png";
 import { useNavigate } from "react-router-dom";
+import Loader from '../Loader/Loader';
 
 //Branches = { "CSE", "EE", "ME", "CE", "MSE", "AE", "MTH", "PHY", "ECO", "CHE", "MBA","ES","BSBE","ES"}
 
 const Members = () => {
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const [showFilterPopup, setShowFilterPopup] = useState(false);
   const filterPopupRef = useRef(null);
@@ -55,7 +57,7 @@ const Members = () => {
       organisation: formData.get("Organisation"),
       courses: [formData.get("course1"), formData.get("course2"),formData.get("course3"), formData.get("course4")],
     };
-
+    
     setFilters(newFilters);
     setShowFilterPopup(false);
   };
@@ -96,6 +98,7 @@ const Members = () => {
 
   useEffect(() => {
     const func = async () => {
+      setLoading(true);
       try{
         const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/profile/search`,{
           method: 'POST',
@@ -126,196 +129,203 @@ const Members = () => {
       } catch(error) {
 
       }
+      setLoading(false);
     }
-
     func();
   }, [filters]);
 
   return (
-    <div style={{ backgroundColor: "#f4f4f4" }}>
-      <div className={styles.mainBody}>
-        <div className={styles.searchBoxDiv}>
-          <input
-            type="text"
-            className={styles.search}
-            placeholder="Search for members"
-            onChange={handleSearchChange}
-          />
-          <button className={styles.searchbarButton} onClick={handleSearchSubmit}>
-            <div className={styles.searchButtonimage}>
-              <img src={searchb} alt="search" />
-            </div>
-          </button>
-          <button
-            className={styles.searchbarButton}
-            onClick={toggleFilterPopup}
-          >
-            <div className={styles.filterButtonimage}>
-              <img src={filter} alt="search" />
-            </div>
-          </button>
-        </div>
-        <div id={styles.memberLists}>
-          {memberData.map((member) => (
-            <div key={member.ID} className={styles.memberX} onClick={() => navigate(`/userprofile/${member.userid}`)}>
-              <div className={styles.memberLeftHalfDiv}>
-                <div className={styles.memberHeading}>
-                  <div className={styles.memberProfileImageDiv}>
-                    <img src={`data:image/jpeg;base64,${member.profilephoto}`} alt="Profile Photo" />
-                  </div>
-                  <div className={styles.memberUsername}>{member.name}</div>
-                </div>
+    <>
+      {
+      loading ? <Loader/> : (
+        <>
+          <div style={{ backgroundColor: "#f4f4f4" }}>
+        <div className={styles.mainBody}>
+          <div className={styles.searchBoxDiv}>
+            <input
+              type="text"
+              className={styles.search}
+              placeholder="Search for members"
+              onChange={handleSearchChange}
+            />
+            <button className={styles.searchbarButton} onClick={handleSearchSubmit}>
+              <div className={styles.searchButtonimage}>
+                <img src={searchb} alt="search" />
               </div>
-
-              <div className={styles.memberRightHalfDiv}>
-                <div className={styles.memberhead}>
-                  <div className={styles.memberheadingLeft}>
-                    <div className={styles.memberDegree}>{member.degree}</div>
+            </button>
+            <button
+              className={styles.searchbarButton}
+              onClick={toggleFilterPopup}
+            >
+              <div className={styles.filterButtonimage}>
+                <img src={filter} alt="search" />
+              </div>
+            </button>
+          </div>
+          <div id={styles.memberLists}>
+            {memberData.map((member) => (
+              <div key={member.ID} className={styles.memberX} onClick={() => navigate(`/userprofile/${member.userid}`)}>
+                <div className={styles.memberLeftHalfDiv}>
+                  <div className={styles.memberHeading}>
+                    <div className={styles.memberProfileImageDiv}>
+                      <img src={`data:image/jpeg;base64,${member.profilephoto}`} alt="Profile Photo" />
+                    </div>
+                    <div className={styles.memberUsername}>{member.name}</div>
                   </div>
-                  <div className={styles.memberheadingRight}>
-                    <div className={styles.memberTags}>
-                      {member.skills.slice(0,5).map((tag, index) => (
-                        <div key={index} className={styles.memberTagX}>
-                          {tag}
-                        </div>
-                      ))}
+                </div>
+
+                <div className={styles.memberRightHalfDiv}>
+                  <div className={styles.memberhead}>
+                    <div className={styles.memberheadingLeft}>
+                      <div className={styles.memberDegree}>{member.degree}</div>
+                    </div>
+                    <div className={styles.memberheadingRight}>
+                      <div className={styles.memberTags}>
+                        {member.skills.slice(0,5).map((tag, index) => (
+                          <div key={index} className={styles.memberTagX}>
+                            {tag}
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
-                </div>
-                <div className={styles.memberAbout}>
-                  <p>{member.about}</p>
+                  <div className={styles.memberAbout}>
+                    <p>{member.about}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-      {showFilterPopup && (
-        // Inside the filterPopup div in the JSX
-        <div className={styles.filterPopup}>
-          <h2>Filter Results</h2>
-          <form className={styles.filterForm} onSubmit={handleFilterSubmit}>
-            <div>
-              <label htmlFor="skills">Skills:</label>
-              <div className={styles.skillInputs}>
-                {[...Array(4)].map((_, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    className={styles.skillInput}
-                    name={`skill${index + 1}`}
-                    placeholder={`Skill ${index + 1}`}
-                  />
-                ))}
+        {showFilterPopup && (
+          // Inside the filterPopup div in the JSX
+          <div className={styles.filterPopup}>
+            <h2>Filter Results</h2>
+            <form className={styles.filterForm} onSubmit={handleFilterSubmit}>
+              <div>
+                <label htmlFor="skills">Skills:</label>
+                <div className={styles.skillInputs}>
+                  {[...Array(4)].map((_, index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      className={styles.skillInput}
+                      name={`skill${index + 1}`}
+                      placeholder={`Skill ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-            <div className={styles.filterRow}>
-              <div className={styles.programme}>
-                <label htmlFor="programme">Programme :</label>
-                <select name="programme" id={styles.programme}>
-                  <option value="BS">BS</option>
-                  <option value="BTech">BTech</option>
-                  <option value="MS">MS</option>
-                  <option value="MTech">MTech</option>
-                  <option value="PhD">PhD</option>
-                  {/* Add more options as needed */}
-                </select>
+              <div className={styles.filterRow}>
+                <div className={styles.programme}>
+                  <label htmlFor="programme">Programme :</label>
+                  <select name="programme" id={styles.programme}>
+                    <option value="BS">BS</option>
+                    <option value="BTech">BTech</option>
+                    <option value="MS">MS</option>
+                    <option value="MTech">MTech</option>
+                    <option value="PhD">PhD</option>
+                    {/* Add more options as needed */}
+                  </select>
+                </div>
+                <div className={styles.branch}>
+                  <label htmlFor="branch">Branch :</label>
+                  <select name="branch" id={styles.branch}>
+                    <option value="Computer Science and Engineering">CSE</option>
+                    <option value="Electrical Engineering">EE</option>
+                    <option value="Mechanical Engineering">ME</option>
+                    <option value="Civil Engineering">CE</option>
+                    <option value="Materials Science and Engineering">MSE</option>
+                    <option value="Aerospace Engineering">AE</option>
+                    <option value="Mathematics and Scientific Computing">
+                      MTH
+                    </option>
+                    <option value="Physics">PHY</option>
+                    <option value="Economics">ECO</option>
+                    <option value="Chemical Engineering">CHE</option>
+                    <option value="Earth Science">ES</option>
+                    <option value="Biological Sciences and Engineering">
+                      BSBE
+                    </option>
+                  </select>
+                </div>
               </div>
-              <div className={styles.branch}>
-                <label htmlFor="branch">Branch :</label>
-                <select name="branch" id={styles.branch}>
-                  <option value="Computer Science and Engineering">CSE</option>
-                  <option value="Electrical Engineering">EE</option>
-                  <option value="Mechanical Engineering">ME</option>
-                  <option value="Civil Engineering">CE</option>
-                  <option value="Materials Science and Engineering">MSE</option>
-                  <option value="Aerospace Engineering">AE</option>
-                  <option value="Mathematics and Scientific Computing">
-                    MTH
-                  </option>
-                  <option value="Physics">PHY</option>
-                  <option value="Economics">ECO</option>
-                  <option value="Chemical Engineering">CHE</option>
-                  <option value="Earth Science">ES</option>
-                  <option value="Biological Sciences and Engineering">
-                    BSBE
-                  </option>
-                </select>
+              <div>
+                <label htmlFor="courses">Courses Taken :</label>
+                <div className={styles.skillInputs}>
+                  {[...Array(4)].map((_, index) => (
+                    <input
+                      key={index}
+                      type="text"
+                      className={styles.skillInput}
+                      name={`course${index + 1}`}
+                      placeholder={`Course ${index + 1}`}
+                    />
+                  ))}
+                </div>
               </div>
-            </div>
-            <div>
-              <label htmlFor="courses">Courses Taken :</label>
-              <div className={styles.skillInputs}>
-                {[...Array(4)].map((_, index) => (
-                  <input
-                    key={index}
-                    type="text"
-                    className={styles.skillInput}
-                    name={`course${index + 1}`}
-                    placeholder={`Course ${index + 1}`}
-                  />
-                ))}
+              <div>
+                <label htmlFor="Organisation">Organisation</label>
+                <div className={styles.branch}>
+                  <select name="Organisation" id={styles.branch}>
+                    <option value="Programming Club"> Programming club</option>
+                    <option value="Electronics Club"> Electronics Club</option>
+                    <option value="IITK Consulting Group">
+                      {" "}
+                      IITK Consulting Group
+                    </option>
+                    <option value="IITK Motorsports"> IITK Motorsports</option>
+                    <option value="Robotics Club"> Robotics Club</option>
+                    <option value="AUV"> AUV</option>
+                    <option value="Aero Club"> Aeromodelling Club</option>
+                    <option value="Astro Club"> Astro Club</option>
+                    <option value="Dance Club"> Dance Club</option>
+                    <option value="Music Club"> Music Club</option>
+                    <option value="Fine Arts Club"> Fine Arts Club</option>
+                    <option value="Comedy"> Humour House </option>
+                    <option value="Dramatics Club"> Dramatics Club</option>
+                    <option value="Literary Club">
+                      {" "}
+                      English Literary Society
+                    </option>
+                    <option value="Hindi Sahitya Sabha">
+                      {" "}
+                      Hindi Sahitya Sabha
+                    </option>
+                    <option value="Quiz Club"> Quiz Club</option>
+                    <option value="Debating Club"> Debating Society</option>
+                    <option value="Photography Club"> Photography Club</option>
+                    <option value="Chess Club"> Chess Club</option>
+                    <option value="Badminton Club"> Badminton Team</option>
+                    <option value="Table Tennis team"> Table Tennis Team</option>
+                    <option value="Basketball Team"> Basketball Team</option>
+                    <option value="RaSet"> RaSet</option>
+                    <option value="Gymkhana"> President Gymkhana's Office</option>
+                    <option value="Counselling Service">
+                      {" "}
+                      Counselling Service
+                    </option>
+                    <option value="NCC"> NCC</option>
+                    <option value="NSS"> NSS</option>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div>
-              <label htmlFor="Organisation">Organisation</label>
-              <div className={styles.branch}>
-                <select name="Organisation" id={styles.branch}>
-                  <option value="Programming Club"> Programming club</option>
-                  <option value="Electronics Club"> Electronics Club</option>
-                  <option value="IITK Consulting Group">
-                    {" "}
-                    IITK Consulting Group
-                  </option>
-                  <option value="IITK Motorsports"> IITK Motorsports</option>
-                  <option value="Robotics Club"> Robotics Club</option>
-                  <option value="AUV"> AUV</option>
-                  <option value="Aero Club"> Aeromodelling Club</option>
-                  <option value="Astro Club"> Astro Club</option>
-                  <option value="Dance Club"> Dance Club</option>
-                  <option value="Music Club"> Music Club</option>
-                  <option value="Fine Arts Club"> Fine Arts Club</option>
-                  <option value="Comedy"> Humour House </option>
-                  <option value="Dramatics Club"> Dramatics Club</option>
-                  <option value="Literary Club">
-                    {" "}
-                    English Literary Society
-                  </option>
-                  <option value="Hindi Sahitya Sabha">
-                    {" "}
-                    Hindi Sahitya Sabha
-                  </option>
-                  <option value="Quiz Club"> Quiz Club</option>
-                  <option value="Debating Club"> Debating Society</option>
-                  <option value="Photography Club"> Photography Club</option>
-                  <option value="Chess Club"> Chess Club</option>
-                  <option value="Badminton Club"> Badminton Team</option>
-                  <option value="Table Tennis team"> Table Tennis Team</option>
-                  <option value="Basketball Team"> Basketball Team</option>
-                  <option value="RaSet"> RaSet</option>
-                  <option value="Gymkhana"> President Gymkhana's Office</option>
-                  <option value="Counselling Service">
-                    {" "}
-                    Counselling Service
-                  </option>
-                  <option value="NCC"> NCC</option>
-                  <option value="NSS"> NSS</option>
-                </select>
+              <div>
+                <input
+                  type="submit"
+                  value="ApplyFilters"
+                  className={styles.ApplyButton}
+                />
               </div>
-            </div>
-            <div>
-              <input
-                type="submit"
-                value="ApplyFilters"
-                className={styles.ApplyButton}
-              />
-            </div>
-          </form>
+            </form>
 
-          {/* Add more filters here if needed */}
-        </div>
-      )}
-    </div>
+            {/* Add more filters here if needed */}
+          </div>
+        )}
+      </div>
+          </>
+        )}
+    </>
   );
 };
 

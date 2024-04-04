@@ -6,8 +6,8 @@ import DoneIcon from "@mui/icons-material/Done";
 import ArrowUpwardIcon from "@mui/icons-material/ArrowUpward";
 import ArrowDownwardIcon from "@mui/icons-material/ArrowDownward";
 import DeleteIcon from "@mui/icons-material/Delete";
-import backgroundImageFile from "./backgroundImage.jpg";
-import profileImageFile from "./userProfileImage.JPG";
+import backgroundImageFile from "./backgroundImage.jpeg";
+import profileImageFile from "./userProfileImage.jpeg";
 import AddAPhotoIcon from "@mui/icons-material/AddAPhoto";
 import { useToast } from "@chakra-ui/toast";
 import { useParams, useNavigate } from "react-router-dom";
@@ -639,7 +639,7 @@ const UserProfile = () => {
     };
 
     func();
-  }, []);
+  }, [id]);
 
   useEffect(() => {
     setLoading(true);
