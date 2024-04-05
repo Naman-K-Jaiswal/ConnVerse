@@ -3,8 +3,10 @@ package profile
 import (
 	"context"
 	"github.com/Naman-K-Jaiswal/ConnVerse/database"
+	"github.com/Naman-K-Jaiswal/ConnVerse/blog"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
 	"time"
 )
@@ -29,9 +31,22 @@ func RetrieveUserProfile() gin.HandlerFunc {
 			c.JSON(http.StatusNotFound, gin.H{"error": "User profile not found"})
 			return
 		}
-
-		blogposts, blogs := GetBlogs(userProfile.UserID)
-		userProfile.BlogPosts = blogposts
+		
+		var blogposts, blogs []string
+		ctr := 0
+		for _, blogg := range userProfile.BlogPosts {
+			if ctr > 3 {
+				break
+			}
+			blogposts = append(blogposts, blogg)
+			idd, _ := primitive.ObjectIDFromHex(blogg)
+			blogPost, err := blog.RetrieveBlogPostByID(idd)
+			if err != nil {
+				break
+			}
+			blogs = append(blogs, blogPost.Title)
+			ctr = ctr + 1
+		}
 
 		c.JSON(http.StatusOK, gin.H{"user": userProfile, "blogs": blogs})
 	}
