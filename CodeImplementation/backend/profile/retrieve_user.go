@@ -38,15 +38,16 @@ func RetrieveUserProfile() gin.HandlerFunc {
 			if ctr > 3 {
 				break
 			}
-			blogposts = append(blogposts, blogg)
 			idd, _ := primitive.ObjectIDFromHex(blogg)
 			blogPost, err := blog.RetrieveBlogPostByID(idd)
-			if err != nil {
-				break
+			if err == nil {
+				blogposts = append(blogposts, blogg)
+				blogs = append(blogs, blogPost.Title)
 			}
-			blogs = append(blogs, blogPost.Title)
 			ctr = ctr + 1
 		}
+
+		userProfile.BlogPosts = blogposts
 
 		c.JSON(http.StatusOK, gin.H{"user": userProfile, "blogs": blogs})
 	}
