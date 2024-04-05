@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/Naman-K-Jaiswal/ConnVerse/blog"
 	"github.com/Naman-K-Jaiswal/ConnVerse/database"
 	"github.com/Naman-K-Jaiswal/ConnVerse/feed"
 	"go.mongodb.org/mongo-driver/bson"
