@@ -2,18 +2,20 @@ package profile
 
 import (
 	"context"
+	"encoding/base64"
 	"errors"
 	"fmt"
-	"github.com/Naman-K-Jaiswal/ConnVerse/blog"
-	"github.com/Naman-K-Jaiswal/ConnVerse/database"
-	"github.com/Naman-K-Jaiswal/ConnVerse/feed"
-	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"time"
+
+	"github.com/Naman-K-Jaiswal/ConnVerse/blog"
+	"github.com/Naman-K-Jaiswal/ConnVerse/database"
+	"github.com/Naman-K-Jaiswal/ConnVerse/feed"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 func AppendUnique(dst []User, src []User) []User {
@@ -39,21 +41,10 @@ func InitializeUser(res bson.M) (error, []byte) {
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
-	url := "https://oa.cc.iitk.ac.in/Oa/Jsp/Photo/" + res["i"].(string) + "_0.jpg"
 	banner_url := "https://dummyimage.com/16:9x1080/"
 
-	response1, err := http.Get(url)
-	if err != nil {
-		return err, nil
-	}
-	defer func(Body io.ReadCloser) {
-		err := Body.Close()
-		if err != nil {
-			fmt.Println("Error closing response body:", err)
-		}
-	}(response1.Body)
-
-	imageBytes, err := ioutil.ReadAll(response1.Body)
+	data := res["img"].(string)
+	imageBytes, err := base64.StdEncoding.DecodeString(data)
 	if err != nil {
 		return err, nil
 	}
