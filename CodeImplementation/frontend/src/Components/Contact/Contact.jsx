@@ -58,6 +58,29 @@ const ContactForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    if (!formData.firstName || !formData.lastName || !formData.email || !formData.message) {
+      toast({
+          title: "Please Fill All The Fields!",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
+      return;
+    }
+
+    // Check if email is in correct format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(formData.email)) {
+      toast({
+          title: "Invalid Email!",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
+      return;
+    }
     emailjs
         .send(
         'service_lqcjgfu', // paste your ServiceID here (you'll get one when your service is created).

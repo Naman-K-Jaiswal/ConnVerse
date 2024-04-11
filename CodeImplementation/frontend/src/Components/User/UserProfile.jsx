@@ -252,12 +252,12 @@ const UserProfile = () => {
 
   // credentials functionalities
   // here we will have to add the functionality to add, delete, edit and move up and down the credentials
-  // we will have to add some extra features because we have to add the organization and the time period also
+  // we will have to add some extra features because we have to add the organisation and the time period also
   const [credentials, setCredentials] = useState([]);
   const [showCredentialPopup, setShowCredentialPopup] = useState(false);
   const [newCredential, setNewCredential] = useState({
     post: "",
-    organization: "",
+    organisation: "",
     from: "",
     to: "",
   });
@@ -275,12 +275,33 @@ const UserProfile = () => {
   };
   const handleAddCredentialSubmit = (e) => {
     e.preventDefault();
+    const dateRegex = /^[A-Z][a-z]{2}'\d{2}$/;
+    if (!dateRegex.test(newCredential.from)) {
+      toast({
+          title: "Please Fill The Date In Mmm'YY Format!",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
+      return;
+    }
+    if (!dateRegex.test(newCredential.to)) {
+      toast({
+          title: "Please Fill The Date In Mmm'YY Format!",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
+      return;
+    }
     // Add the new credential to the list of credentials
     const updatedCredentials = [
       ...credentials,
       {
         post: newCredential.post,
-        organization: newCredential.organization,
+        organisation: newCredential.organisation,
         from: newCredential.from,
         to: newCredential.to === "" ? "Present" : newCredential.to,
       },
@@ -293,7 +314,7 @@ const UserProfile = () => {
 
     setNewCredential({
       post: "",
-      organization: "",
+      organisation: "",
       from: "",
       to: "",
     });
@@ -332,7 +353,7 @@ const UserProfile = () => {
 
     const newCredential = {
       post: siblings[0].textContent,
-      organization: siblings[1].textContent,
+      organisation: siblings[1].textContent,
       from: fromtos[0].textContent,
       to: fromtos[2].textContent,
     };
@@ -365,6 +386,27 @@ const UserProfile = () => {
   };
   const handleAddProjectSubmit = (e) => {
     e.preventDefault();
+    const dateRegex = /^[A-Z][a-z]{2}'\d{2}$/;
+    if (!dateRegex.test(newProject.from)) {
+      toast({
+          title: "Please Fill The Date In Mmm'YY Format!",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
+      return;
+    }
+    if (!dateRegex.test(newProject.to)) {
+      toast({
+          title: "Please Fill The Date In Mmm'YY Format!",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
+      return;
+    }
     const updatedProjects = [...projects, newProject];
     console.log(updatedProjects);
     setProjects(updatedProjects);
@@ -464,6 +506,30 @@ const UserProfile = () => {
   };
   const handleAddCourseSubmit = (e) => {
     e.preventDefault();
+
+    const yearRegex = /^\d{4}\s*-\s*\d{4}$/;
+    // const semesterRegex = /^[1-9]$/;
+    // if (!semesterRegex.test(newCourse.semester)) {
+    //   toast({
+    //       title: "Please Fill Semester Correctly [ N ]!",
+    //       status: "error",
+    //       duration: 5000,
+    //       isClosable: true,
+    //       position: "bottom",
+    //   });
+    //   return;
+    // }
+    if (!yearRegex.test(newCourse.year)) {
+      toast({
+          title: "Please Fill In The Year Properly [ YYYY - YYYY ] !",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+      });
+      return;
+    }
+
     courses.push(newCourse);
     setCourses([...courses]);
     setShowCoursePopup(false);
@@ -1122,7 +1188,7 @@ const UserProfile = () => {
                           fontSize: "0.8em",
                         }}
                       >
-                        {credential.organization}
+                        {credential.organisation}
                       </div>
                       <div
                         ref={editRefCredentialFromTo}
@@ -1471,25 +1537,64 @@ const UserProfile = () => {
             <input
               type="text"
               name="post"
-              placeholder="Enter the Position"
+              placeholder="Position"
               autoComplete="off"
               value={newCredential.post}
               onChange={handleInputChangeCredential}
               required
             />
-            <input
-              type="text"
-              name="organization"
-              placeholder="Organization"
-              autoComplete="off"
-              value={newCredential.organization}
+            <select
+              name="organisation"
+              value={newCredential.organisation}
               onChange={handleInputChangeCredential}
               required
-            />
+            >
+              <option value="">Select</option>
+              <option value="Programming Club"> Programming club</option>
+              <option value="Electronics Club"> Electronics Club</option>
+              <option value="Finance & Analytics Club"> Finance & Analytics Club</option>
+              <option value="IITK Consulting Group">
+                {" "}
+                IITK Consulting Group
+              </option>
+              <option value="IITK Motorsports"> IITK Motorsports</option>
+              <option value="Robotics Club"> Robotics Club</option>
+              <option value="AUV"> AUV</option>
+              <option value="Aero Club"> Aeromodelling Club</option>
+              <option value="Astro Club"> Astro Club</option>
+              <option value="Dance Club"> Dance Club</option>
+              <option value="Music Club"> Music Club</option>
+              <option value="Fine Arts Club"> Fine Arts Club</option>
+              <option value="Comedy"> Humour House </option>
+              <option value="Dramatics Club"> Dramatics Club</option>
+              <option value="Literary Club">
+                {" "}
+                English Literary Society
+              </option>
+              <option value="Hindi Sahitya Sabha">
+                {" "}
+                Hindi Sahitya Sabha
+              </option>
+              <option value="Quiz Club"> Quiz Club</option>
+              <option value="Debating Club"> Debating Society</option>
+              <option value="Photography Club"> Photography Club</option>
+              <option value="Chess Club"> Chess Club</option>
+              <option value="Badminton Club"> Badminton Team</option>
+              <option value="Table Tennis team"> Table Tennis Team</option>
+              <option value="Basketball Team"> Basketball Team</option>
+              <option value="RaSet"> RaSet</option>
+              <option value="Gymkhana"> President Gymkhana's Office</option>
+              <option value="Counselling Service">
+                {" "}
+                Counselling Service
+              </option>
+              <option value="NCC"> NCC</option>
+              <option value="NSS"> NSS</option>
+            </select>
             <input
               type="text"
               name="from"
-              placeholder="Starting date in Month'YY format"
+              placeholder="Start Date [ Mmm'YY ]"
               autoComplete="off"
               value={newCredential.from}
               onChange={handleInputChangeCredential}
@@ -1498,7 +1603,7 @@ const UserProfile = () => {
             <input
               type="text"
               name="to"
-              placeholder="Till"
+              placeholder="End Date [ Mmm'YY ]"
               autoComplete="off"
               value={newCredential.to}
               onChange={handleInputChangeCredential}
@@ -1523,7 +1628,7 @@ const UserProfile = () => {
             <input
               type="text"
               name="name"
-              placeholder="Enter the Project Name"
+              placeholder="Project Name"
               autoComplete="off"
               value={newProject.name}
               onChange={handleInputChangeProject}
@@ -1532,7 +1637,7 @@ const UserProfile = () => {
             <input
               type="text"
               name="instructorname"
-              placeholder="Instructor Name"
+              placeholder="Instructor"
               autoComplete="off"
               value={newProject.instructorname}
               onChange={handleInputChangeProject}
@@ -1550,7 +1655,7 @@ const UserProfile = () => {
             <input
               type="text"
               name="from"
-              placeholder="Starting date in Month'YY format"
+              placeholder="Start Date: [ Mmm'YY ]"
               autoComplete="off"
               value={newProject.from}
               onChange={handleInputChangeProject}
@@ -1559,7 +1664,7 @@ const UserProfile = () => {
             <input
               type="text"
               name="to"
-              placeholder="Till"
+              placeholder="End Date: [ Mmm'YY ]"
               autoComplete="off"
               value={newProject.to}
               onChange={handleInputChangeProject}
@@ -1584,7 +1689,7 @@ const UserProfile = () => {
             <input
               type="text"
               name="coursename"
-              placeholder="Enter the Course Name"
+              placeholder="Course Name"
               autoComplete="off"
               value={newCourse.coursename}
               onChange={handleInputChangeCourse}
@@ -1593,7 +1698,7 @@ const UserProfile = () => {
             <input
               type="text"
               name="instructorname"
-              placeholder="Instructor Name"
+              placeholder="Instructor"
               autoComplete="off"
               value={newCourse.instructorname}
               onChange={handleInputChangeCourse}
@@ -1611,21 +1716,23 @@ const UserProfile = () => {
             <input
               type="text"
               name="year"
-              placeholder="Year"
+              placeholder="Year [ YYYY - YYYY ]"
               autoComplete="off"
               value={newCourse.year}
               onChange={handleInputChangeCourse}
               required
             />
-            <input
-              type="text"
+            <select
               name="semester"
-              placeholder="Semester"
-              autoComplete="off"
               value={newCourse.semester}
               onChange={handleInputChangeCourse}
               required
-            />
+            >
+              <option value="">Select Semester</option>
+              <option value="Odd">Odd</option>
+              <option value="Even">Even</option>
+              <option value="Summer">Summer</option>
+            </select>
             <button type="submit" id="addNewCourseBtn">
               Add Course
             </button>

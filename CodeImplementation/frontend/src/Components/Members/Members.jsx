@@ -98,6 +98,7 @@ const Members = () => {
 
   useEffect(() => {
     const func = async () => {
+      console.log(filters);
       setLoading(true);
       try{
         const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/profile/search`,{
@@ -220,6 +221,7 @@ const Members = () => {
                 <div className={styles.programme}>
                   <label htmlFor="programme">Programme :</label>
                   <select name="programme" id={styles.programme}>
+                    <option value="">Select</option>
                     <option value="BS">BS</option>
                     <option value="BTech">BTech</option>
                     <option value="MS">MS</option>
@@ -231,6 +233,7 @@ const Members = () => {
                 <div className={styles.branch}>
                   <label htmlFor="branch">Branch :</label>
                   <select name="branch" id={styles.branch}>
+                    <option value="">Select</option>
                     <option value="Computer Science and Engineering">CSE</option>
                     <option value="Electrical Engineering">EE</option>
                     <option value="Mechanical Engineering">ME</option>
@@ -244,7 +247,7 @@ const Members = () => {
                     <option value="Economics">ECO</option>
                     <option value="Chemical Engineering">CHE</option>
                     <option value="Earth Science">ES</option>
-                    <option value="Biological Sciences and Engineering">
+                    <option value="Biological Sciences and Bioengineering">
                       BSBE
                     </option>
                   </select>
@@ -268,8 +271,10 @@ const Members = () => {
                 <label htmlFor="Organisation">Organisation</label>
                 <div className={styles.branch}>
                   <select name="Organisation" id={styles.branch}>
+                    <option value="">Select</option>
                     <option value="Programming Club"> Programming club</option>
                     <option value="Electronics Club"> Electronics Club</option>
+                    <option value="Finance & Analytics Club"> Finance & Analytics Club</option>
                     <option value="IITK Consulting Group">
                       {" "}
                       IITK Consulting Group

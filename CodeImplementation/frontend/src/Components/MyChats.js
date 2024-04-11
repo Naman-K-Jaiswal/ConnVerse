@@ -10,9 +10,11 @@ import { Button } from "@chakra-ui/react";
 import { ChatState } from "../Context/ChatProvider";
 import SideDrawer from "./miscellaneous/SideDrawer";
 import { DeleteIcon } from "@chakra-ui/icons";
+// import Loader from "./Loader/Loader";
 
 const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
+  // const [loading, setLoading] = useState(false);
 
   const { selectedChat, setSelectedChat, user, chats, setChats } = ChatState();
 
@@ -60,6 +62,11 @@ const MyChats = ({ fetchAgain }) => {
         isClosable: true,
         position: "bottom",
       });
+      // setLoading(true); // Show the loader
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
+      // setLoading(false); // Hide the loader
     } catch (error) {
       toast({
         title: "Error Occurred",
