@@ -21,6 +21,7 @@
     height: 5vh; 
     border-radius: 3vmax;
     background-color: #ffffff;
+    outline: 2px solid black; /* Adding outline */
 }
 
 .search{
@@ -30,6 +31,10 @@
     background-color: white;
     font-size: 1.2em;
     border-radius: 5px;
+}
+
+.search:focus{
+    outline: none;
 }
 
 .searchbarButton{
@@ -55,8 +60,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 1vmax;
-    margin-right: 30vw;
+
     width: 95%;
     /* height: 400vh; Remove or comment out this line */
     gap: 1vmax;
@@ -64,19 +68,19 @@
 
 
 .memberX{
+    outline: 2px solid rgb(187, 184, 184); /* Adding outline */
     display: flex;
     flex-direction: row;
     justify-content: center;
     align-items: center;
     width: 100%;
     height: 25vh;
-    border-radius: 15px;
-    padding: 0%;
+    border-radius: 4px;
     background-color: white;
-    margin-left: 0vw;
-    margin-top: 1vh;
-    margin-right: 0vw;
-    gap: 1vmax;
+    /* margin-left: 0vw; */
+    /* margin-top: 1vh; */
+    /* margin-right: 0.5vw; */
+    /* margin-bottom: 0.1%; */
 }
 .memberX:hover{
     transform: scale(1.01);
@@ -85,40 +89,43 @@
     cursor: pointer;
 }
 
-.memberLeftHalfDiv{
+.memberLeftHalfDiv {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 2%;
-    margin-left: 2%;
+    /* margin-top: 2%; */
+    /* margin-left: 2%; */
     width: 20%;
     height: 100%;
     gap: 1vmax;
 }
 
-.memberHeading{
+.memberHeading {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 50%;
     height: 70%;
-    margin-top:5%;
     gap: 1vmax;
 }
 
-.memberProfileImageDiv{
-    height: 80%;
-    width: 100%;
+.memberProfileImageDiv {
+    height: 18vh;
+    width: 18vh;
     display: flex;
     justify-content: center;
     align-items: center;
+    border-radius: 50%; /* Ensures the profile image div is a circle */
+    overflow: hidden; /* Ensures the image stays within the rounded border */
 }
 
-.memberProfileImageDiv img{
-    height: 100%;
-    width: auto;
-    border-radius: 50%;
+.memberProfileImageDiv img {
+    height: 100%; /* Ensures the image fills the container */
+    width: auto; /* Allows the image to maintain its aspect ratio */
+    border-radius: 50%; /* Ensures the image itself is also a circle */
+    object-fit: cover; /* Ensures the image covers the entire container */
 }
+
 
 .degreeDetails{
     display: flex;
@@ -130,9 +137,13 @@
     gap: .5vmax;
 }
 
-.memberDegree{
-    font-size: 1.65em;
+.memberDegree {
+    font-size: 2.5vh;
+    color: black; /* Blue color */
+    padding: 1px 1px; /* Add some padding for better readability */
+    border-radius: 5px; /* Rounded corners */
 }
+
 
 .memberheadingLeft{
     display: flex;
@@ -159,41 +170,69 @@
 }
 
 .memberUsername{
-    font-size: 1.3em;
+    text-decoration: underline;
+    font-size: 3.3vh;
+    font-weight:500;
 }
 
 
 .memberTags{
+    font-style: italic;
+    font-family: 'Nunito', sans-serif; /* Example using Nunito */
     display: flex;
     flex-direction: row;
     gap: 1vmax;
     margin-top: 1%;
-    font-size: 1em;
+    font-size: 1vmax;
+    font-weight:600;
     align-items: right;
 }
 
 .memberTagX{
-    background-color: #e2921b;
+    background-color: #f8f9fa;
     border-radius: 10px;
-    padding: .5vmax;
+    padding: .3vmax;
     display: inline;
 }
 
-.memberAbout{
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=PT+Sans&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Avenir+Next&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat+Alternates&display=swap');
+
+/* Apply font styles to elements *
+
+/* For specific elements, replace 'body' with the appropriate selector */
+
+
+.memberAbout {
     display: flex;
-    justify-content: left;
-    align-items: justified;
+    justify-content: flex-start;
+    align-items: flex-start;
     width: 100%;
-    height: 80%;
-    margin-top: 2%;
-    border-radius: 1vmax;
+    margin-top: 1vh;
+    border-radius: 1vh;
+    font-family: 'Quicksand', sans-serif; /* Default font */}
+
+.memberAbout p {
+    font-size: 2.5vh;
+    color: #333;
+    line-height: 1.4;
 }
+
 
 .memberRightHalfDiv{
     display: flex;
     justify-content: right;
     flex-direction: column;
-    margin-top: 2%;
+    margin-right: 2%;
     align-items: right;
     width: 80%;
     height: 100%;

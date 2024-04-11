@@ -249,46 +249,51 @@ const CenterBox = ({ setSignIn }) => {
               )
             }
             {!showFirstForm && (
-              <form className='signUpForm' onSubmit={handleSignUp}>
+              <form className='signUpForm' onSubmit={handleSignUp} style={{ padding: '1vh', fontSize: '2vh', '@media (max-width: 768px)': { padding: '5px', fontSize: '12px' } }}>
                 {/* <pre>Register</pre>
                 <div className='line'></div> */}
-                <div className='signUpEmail'>
+                <div className='signUpEmail' style={{ padding: '5px' }}>
                     <ValidationIcon/>
                     <input 
-                    type='text'
-                    placeholder='Validation Code'
-                    required
-                    value={validationCode}
-                    onChange={(e)=>setValidationCode(e.target.value)}
+                        type='text'
+                        placeholder='Validation Code'
+                        required
+                        value={validationCode}
+                        onChange={(e)=>setValidationCode(e.target.value)}
+                        style={{ padding: '1vh', fontSize: '2vh', paddingLeft:'3vw' }}
                     />
                 </div>
-                <div className='signUpEmail'>
+                <div className='signUpEmail' style={{ padding: '5px' }}>
                     <LockOpenIcon/>
                     <input 
-                    type='password'
-                    placeholder='Password'
-                    required
-                    value={signUpPassword}
-                    onChange={(e)=>setSignUpPassword(e.target.value)}
+                        type='password'
+                        placeholder='Password'
+                        required
+                        value={signUpPassword}
+                        onChange={(e)=>setSignUpPassword(e.target.value)}
+                        style={{ padding: '1vh', fontSize: '2vh', paddingLeft:'3vw' }}
                     />
                 </div>
-                <div className='signUpEmail'>
+                <div className='signUpEmail' style={{ padding: '5px' }}>
                     <LockIcon/>
                     <input 
-                    type='password'
-                    placeholder='Confirm Password'
-                    required
-                    value={signUpConfirmPassword}
-                    onChange={(e)=>setSignUpConfirmPassword(e.target.value)}
+                        type='password'
+                        placeholder='Confirm Password'
+                        required
+                        value={signUpConfirmPassword}
+                        style={{ padding: '1vh', fontSize: '2vh', paddingLeft:'3vw' }}
+                        onChange={(e)=>setSignUpConfirmPassword(e.target.value)}
                     />
                 </div>
-                <Link to='/alumn'>Are you an Alumn ?</Link>
+                <Link to='/alumn' style={{ padding: '5px', fontSize: 'inherit' }}>Are you an Alumn ?</Link>
                 <input
                     type='submit'
                     value= 'SIGN UP'
                     className='signUpBtn'
-                    />
-              </form>
+                    style={{ padding: '1vh', fontSize: '2vh' }}
+                />
+            </form>
+
             )}
           </div>
         </div>

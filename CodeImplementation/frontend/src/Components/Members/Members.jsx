@@ -140,7 +140,7 @@ const Members = () => {
       {
       loading ? <Loader/> : (
         <>
-          <div style={{ backgroundColor: "#f4f4f4" }}>
+          <div style={{ backgroundColor: "#f4f4f4", minHeight: "100vh" }}>
         <div className={styles.mainBody}>
           <div className={styles.searchBoxDiv}>
             <input
@@ -166,18 +166,19 @@ const Members = () => {
           <div id={styles.memberLists}>
             {memberData.map((member) => (
               <div key={member.ID} className={styles.memberX} onClick={() => navigate(`/userprofile/${member.userid}`)}>
-                <div className={styles.memberLeftHalfDiv}>
-                  <div className={styles.memberHeading}>
-                    <div className={styles.memberProfileImageDiv}>
-                      <img src={`data:image/jpeg;base64,${member.profilephoto}`} alt="Profile Photo" />
+                <div className={styles.memberLeftHalfDiv} style={{ display: 'flex', justifyContent: 'center' }}>
+                  <div className={styles.memberHeading} style={{ display: 'flex', justifyContent: 'center' }}>
+                    <div className={styles.memberProfileImageDiv} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                      <img src={`data:image/jpeg;base64,${member.profilephoto}`} alt="Profile Photo" style={{ maxWidth: '100%', maxHeight: '100%' }} />
                     </div>
-                    <div className={styles.memberUsername}>{member.name}</div>
                   </div>
                 </div>
 
                 <div className={styles.memberRightHalfDiv}>
                   <div className={styles.memberhead}>
                     <div className={styles.memberheadingLeft}>
+                    <div className={styles.memberUsername}>{member.name}</div>
+
                       <div className={styles.memberDegree}>{member.degree}</div>
                     </div>
                     <div className={styles.memberheadingRight}>
@@ -191,8 +192,8 @@ const Members = () => {
                     </div>
                   </div>
                   <div className={styles.memberAbout}>
-                    <p>{member.about}</p>
-                  </div>
+                  <p>{member.about.length > 100 ? member.about.substring(0, 100) + "..." : member.about}</p>
+                </div>
                 </div>
               </div>
             ))}

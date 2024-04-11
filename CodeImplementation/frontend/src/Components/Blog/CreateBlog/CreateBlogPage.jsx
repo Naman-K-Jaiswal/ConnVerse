@@ -275,18 +275,7 @@ const CreateBlogPage = () => {
                             </div>
                           </div>
                           <div className={styles.blogItemTags}>
-                            {blog.tags.map((tag, index) => (
-                              <div
-                                key={index}
-                                className={styles.blogItemTagX}
-                                style={{
-                                  fontFamily: "Helvetica, sans-serif",
-                                  fontWeight: "bold",
-                                }}
-                              >
-                                {tag}
-                              </div>
-                            ))}
+                            
                           </div>
                         </div>
                       </div>

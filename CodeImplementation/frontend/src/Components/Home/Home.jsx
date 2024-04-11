@@ -243,19 +243,20 @@ const Home = () => {
                           className="blogTags"
                           style={{ fontFamily: "Montserrat", fontSize: "16px" }}
                         >
-                          {blog.tags!=null && blog.tags.slice(0,4).map((tag, index) => (
+                        {blog.tags !== null && [...new Set(blog.tags)].slice(0, 4).map((tag, index) => (
                             <div
-                              key={index}
-                              className="blogTagX"
-                              style={{
-                                fontFamily: "Montserrat",
-                                fontWeight: "bold",
-                                fontSize: "14px",
-                              }}
+                                key={index}
+                                className="blogTagX"
+                                style={{
+                                    fontFamily: "Montserrat",
+                                    fontWeight: "bold",
+                                    fontSize: "14px",
+                                }}
                             >
-                              {tag}
+                                {tag}
                             </div>
-                          ))}
+                        ))}
+
                         </div>
                       </div>
                     </div>
