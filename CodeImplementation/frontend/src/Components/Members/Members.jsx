@@ -4,7 +4,7 @@ import profileImg from "./pp.jpeg";
 import searchb from "./image.png";
 import filter from "./filter.png";
 import { useNavigate } from "react-router-dom";
-import Loader from '../Loader/Loader';
+import Loader from "../Loader/Loader";
 
 //Branches = { "CSE", "EE", "ME", "CE", "MSE", "AE", "MTH", "PHY", "ECO", "CHE", "MBA","ES","BSBE","ES"}
 
@@ -39,7 +39,7 @@ const Members = () => {
   };
 
   const [filters, setFilters] = useState({
-    name : "",
+    name: "",
     userid: "",
     degree: "",
     skills: [],
@@ -49,16 +49,48 @@ const Members = () => {
   const handleFilterSubmit = (event) => {
     event.preventDefault();
     const formData = new FormData(event.target);
-    const newFilters = {
-      name: filters.name,
-      userid: filters.userid,
-      degree: formData.get("programme") + " " + formData.get("branch"),
-      skills: [formData.get("skill1"), formData.get("skill2"), formData.get("skill3"),formData.get("skill4")],
-      organisation: formData.get("Organisation"),
-      courses: [formData.get("course1"), formData.get("course2"),formData.get("course3"), formData.get("course4")],
-    };
-    
-    setFilters(newFilters);
+    if (formData.get("programme") === "" && formData.get("branch") === "") {
+      const newFilters = {
+        name: filters.name,
+        userid: filters.userid,
+        degree: "",
+        skills: [
+          formData.get("skill1"),
+          formData.get("skill2"),
+          formData.get("skill3"),
+          formData.get("skill4"),
+        ],
+        organisation: formData.get("Organisation"),
+        courses: [
+          formData.get("course1"),
+          formData.get("course2"),
+          formData.get("course3"),
+          formData.get("course4"),
+        ],
+      };
+      setFilters(newFilters);
+    } else {
+      const newFilters = {
+        name: filters.name,
+        userid: filters.userid,
+        degree: formData.get("programme") + " " + formData.get("branch"),
+        skills: [
+          formData.get("skill1"),
+          formData.get("skill2"),
+          formData.get("skill3"),
+          formData.get("skill4"),
+        ],
+        organisation: formData.get("Organisation"),
+        courses: [
+          formData.get("course1"),
+          formData.get("course2"),
+          formData.get("course3"),
+          formData.get("course4"),
+        ],
+      };
+      setFilters(newFilters);
+    }
+
     setShowFilterPopup(false);
   };
   const handleSearchSubmit = (event) => {
@@ -68,7 +100,7 @@ const Members = () => {
       return /^\d+$/.test(str);
     }
 
-    if(containsOnlyNumbers(search)){
+    if (containsOnlyNumbers(search)) {
       const newFilters = {
         userid: search,
         name: "",
@@ -76,7 +108,7 @@ const Members = () => {
         skills: filters.skills,
         organisation: filters.organisation,
         courses: filters.courses,
-      }
+      };
       setFilters(newFilters);
     } else {
       const newFilters = {
@@ -86,7 +118,7 @@ const Members = () => {
         skills: filters.skills,
         organisation: filters.organisation,
         courses: filters.courses,
-      }
+      };
       setFilters(newFilters);
     }
   };
@@ -94,29 +126,29 @@ const Members = () => {
   const handleSearchChange = (event) => {
     const val = event.target.value;
     setSearch(val);
-  }
+  };
 
   useEffect(() => {
     const func = async () => {
       // console.log(filters);
       setLoading(true);
-      try{
+      try {
         var fSkills = filters.skills.filter((skill) => skill !== "");
         var fCourses = filters.courses.filter((course) => course !== "");
 
-        if(fSkills.length === 0){
+        if (fSkills.length === 0) {
           fSkills = [];
         }
-        if(fCourses.length === 0){
+        if (fCourses.length === 0) {
           fCourses = [];
         }
 
         console.log(fSkills);
         console.log(fCourses);
 
-        const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/profile/search`,{
-          method: 'POST',
-          credentials: 'include',
+        const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/profile/search`, {
+          method: "POST",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -127,223 +159,285 @@ const Members = () => {
             skills: fSkills,
             organisation: filters.organisation,
             courses: fCourses,
-          })
-        })
+          }),
+        });
 
-        if(res.ok){
+        if (res.ok) {
           const data = await res.json();
           console.log(data);
 
-          if(data.users != null){
+          if (data.users != null) {
             setMemberData(data.users);
           } else {
             setMemberData([]);
           }
         }
-      } catch(error) {
-
-      }
+      } catch (error) {}
       setLoading(false);
-    }
+    };
     func();
   }, [filters]);
 
   return (
     <>
-      {
-      loading ? <Loader/> : (
+      {loading ? (
+        <Loader />
+      ) : (
         <>
           <div style={{ backgroundColor: "#f4f4f4", minHeight: "100vh" }}>
-        <div className={styles.mainBody}>
-          <div className={styles.searchBoxDiv}>
-            <input
-              type="text"
-              className={styles.search}
-              placeholder="Search for members"
-              onChange={handleSearchChange}
-            />
-            <button className={styles.searchbarButton} onClick={handleSearchSubmit}>
-              <div className={styles.searchButtonimage}>
-                <img src={searchb} alt="search" />
-              </div>
-            </button>
-            <button
-              className={styles.searchbarButton}
-              onClick={toggleFilterPopup}
-            >
-              <div className={styles.filterButtonimage}>
-                <img src={filter} alt="search" />
-              </div>
-            </button>
-          </div>
-          <div id={styles.memberLists}>
-            {memberData.map((member) => (
-              <div key={member.ID} className={styles.memberX} onClick={() => navigate(`/userprofile/${member.userid}`)}>
-                <div className={styles.memberLeftHalfDiv} style={{ display: 'flex', justifyContent: 'center' }}>
-                  <div className={styles.memberHeading} style={{ display: 'flex', justifyContent: 'center' }}>
-                    <div className={styles.memberProfileImageDiv} style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                      <img src={`data:image/jpeg;base64,${member.profilephoto}`} alt="Profile Photo" style={{ maxWidth: '100%', maxHeight: '100%' }} />
-                    </div>
+            <div className={styles.mainBody}>
+              <div className={styles.searchBoxDiv}>
+                <input
+                  type="text"
+                  className={styles.search}
+                  placeholder="Search for members"
+                  onChange={handleSearchChange}
+                />
+                <button
+                  className={styles.searchbarButton}
+                  onClick={handleSearchSubmit}
+                >
+                  <div className={styles.searchButtonimage}>
+                    <img src={searchb} alt="search" />
                   </div>
-                </div>
-
-                <div className={styles.memberRightHalfDiv}>
-                  <div className={styles.memberhead}>
-                    <div className={styles.memberheadingLeft}>
-                    <div className={styles.memberUsername}>{member.name}</div>
-
-                      <div className={styles.memberDegree}>{member.degree}</div>
+                </button>
+                <button
+                  className={styles.searchbarButton}
+                  onClick={toggleFilterPopup}
+                >
+                  <div className={styles.filterButtonimage}>
+                    <img src={filter} alt="search" />
+                  </div>
+                </button>
+              </div>
+              <div id={styles.memberLists}>
+                {memberData.map((member) => (
+                  <div
+                    key={member.ID}
+                    className={styles.memberX}
+                    onClick={() => navigate(`/userprofile/${member.userid}`)}
+                  >
+                    <div
+                      className={styles.memberLeftHalfDiv}
+                      style={{ display: "flex", justifyContent: "center" }}
+                    >
+                      <div
+                        className={styles.memberHeading}
+                        style={{ display: "flex", justifyContent: "center" }}
+                      >
+                        <div
+                          className={styles.memberProfileImageDiv}
+                          style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            alignItems: "center",
+                          }}
+                        >
+                          <img
+                            src={`data:image/jpeg;base64,${member.profilephoto}`}
+                            alt="Profile Photo"
+                            style={{ maxWidth: "100%", maxHeight: "100%" }}
+                          />
+                        </div>
+                      </div>
                     </div>
-                    <div className={styles.memberheadingRight}>
-                      <div className={styles.memberTags}>
-                        {member.skills.slice(0,5).map((tag, index) => (
-                          <div key={index} className={styles.memberTagX}>
-                            {tag}
+
+                    <div className={styles.memberRightHalfDiv}>
+                      <div className={styles.memberhead}>
+                        <div className={styles.memberheadingLeft}>
+                          <div className={styles.memberUsername}>
+                            {member.name}
                           </div>
-                        ))}
+
+                          <div className={styles.memberDegree}>
+                            {member.degree}
+                          </div>
+                        </div>
+                        <div className={styles.memberheadingRight}>
+                          <div className={styles.memberTags}>
+                            {member.skills.slice(0, 5).map((tag, index) => (
+                              <div key={index} className={styles.memberTagX}>
+                                {tag}
+                              </div>
+                            ))}
+                          </div>
+                        </div>
+                      </div>
+                      <div className={styles.memberAbout}>
+                        <p>
+                          {member.about.length > 100
+                            ? member.about.substring(0, 100) + "..."
+                            : member.about}
+                        </p>
                       </div>
                     </div>
                   </div>
-                  <div className={styles.memberAbout}>
-                  <p>{member.about.length > 100 ? member.about.substring(0, 100) + "..." : member.about}</p>
-                </div>
-                </div>
+                ))}
               </div>
-            ))}
-          </div>
-        </div>
-        {showFilterPopup && (
-          // Inside the filterPopup div in the JSX
-          <div className={styles.filterPopup}>
-            <h2>Filter Results</h2>
-            <form className={styles.filterForm} onSubmit={handleFilterSubmit}>
-              <div>
-                <label htmlFor="skills">Skills:</label>
-                <div className={styles.skillInputs}>
-                  {[...Array(4)].map((_, index) => (
+            </div>
+            {showFilterPopup && (
+              // Inside the filterPopup div in the JSX
+              <div className={styles.filterPopup}>
+                <h2>Filter Results</h2>
+                <form
+                  className={styles.filterForm}
+                  onSubmit={handleFilterSubmit}
+                >
+                  <div>
+                    <label htmlFor="skills">Skills:</label>
+                    <div className={styles.skillInputs}>
+                      {[...Array(4)].map((_, index) => (
+                        <input
+                          key={index}
+                          type="text"
+                          className={styles.skillInput}
+                          name={`skill${index + 1}`}
+                          placeholder={`Skill ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div className={styles.filterRow}>
+                    <div className={styles.programme}>
+                      <label htmlFor="programme">Programme :</label>
+                      <select name="programme" id={styles.programme}>
+                        <option value="">Select</option>
+                        <option value="BS">BS</option>
+                        <option value="BTech">BTech</option>
+                        <option value="MS">MS</option>
+                        <option value="MTech">MTech</option>
+                        <option value="PhD">PhD</option>
+                        {/* Add more options as needed */}
+                      </select>
+                    </div>
+                    <div className={styles.branch}>
+                      <label htmlFor="branch">Branch :</label>
+                      <select name="branch" id={styles.branch}>
+                        <option value="">Select</option>
+                        <option value="Computer Science and Engineering">
+                          CSE
+                        </option>
+                        <option value="Electrical Engineering">EE</option>
+                        <option value="Mechanical Engineering">ME</option>
+                        <option value="Civil Engineering">CE</option>
+                        <option value="Materials Science and Engineering">
+                          MSE
+                        </option>
+                        <option value="Aerospace Engineering">AE</option>
+                        <option value="Mathematics and Scientific Computing">
+                          MTH
+                        </option>
+                        <option value="Physics">PHY</option>
+                        <option value="Economics">ECO</option>
+                        <option value="Chemical Engineering">CHE</option>
+                        <option value="Earth Science">ES</option>
+                        <option value="Biological Sciences and Bioengineering">
+                          BSBE
+                        </option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="courses">Courses Taken :</label>
+                    <div className={styles.skillInputs}>
+                      {[...Array(4)].map((_, index) => (
+                        <input
+                          key={index}
+                          type="text"
+                          className={styles.skillInput}
+                          name={`course${index + 1}`}
+                          placeholder={`Course ${index + 1}`}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                  <div>
+                    <label htmlFor="Organisation">Organisation</label>
+                    <div className={styles.branch}>
+                      <select name="Organisation" id={styles.branch}>
+                        <option value="">Select</option>
+                        <option value="Programming Club">
+                          {" "}
+                          Programming club
+                        </option>
+                        <option value="Electronics Club">
+                          {" "}
+                          Electronics Club
+                        </option>
+                        <option value="Finance & Analytics Club">
+                          {" "}
+                          Finance & Analytics Club
+                        </option>
+                        <option value="IITK Consulting Group">
+                          {" "}
+                          IITK Consulting Group
+                        </option>
+                        <option value="IITK Motorsports">
+                          {" "}
+                          IITK Motorsports
+                        </option>
+                        <option value="Robotics Club"> Robotics Club</option>
+                        <option value="AUV"> AUV</option>
+                        <option value="Aero Club"> Aeromodelling Club</option>
+                        <option value="Astro Club"> Astro Club</option>
+                        <option value="Dance Club"> Dance Club</option>
+                        <option value="Music Club"> Music Club</option>
+                        <option value="Fine Arts Club"> Fine Arts Club</option>
+                        <option value="Comedy"> Humour House </option>
+                        <option value="Dramatics Club"> Dramatics Club</option>
+                        <option value="Literary Club">
+                          {" "}
+                          English Literary Society
+                        </option>
+                        <option value="Hindi Sahitya Sabha">
+                          {" "}
+                          Hindi Sahitya Sabha
+                        </option>
+                        <option value="Quiz Club"> Quiz Club</option>
+                        <option value="Debating Club"> Debating Society</option>
+                        <option value="Photography Club">
+                          {" "}
+                          Photography Club
+                        </option>
+                        <option value="Chess Club"> Chess Club</option>
+                        <option value="Badminton Club"> Badminton Team</option>
+                        <option value="Table Tennis team">
+                          {" "}
+                          Table Tennis Team
+                        </option>
+                        <option value="Basketball Team">
+                          {" "}
+                          Basketball Team
+                        </option>
+                        <option value="RaSet"> RaSet</option>
+                        <option value="Gymkhana">
+                          {" "}
+                          President Gymkhana's Office
+                        </option>
+                        <option value="Counselling Service">
+                          {" "}
+                          Counselling Service
+                        </option>
+                        <option value="NCC"> NCC</option>
+                        <option value="NSS"> NSS</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div>
                     <input
-                      key={index}
-                      type="text"
-                      className={styles.skillInput}
-                      name={`skill${index + 1}`}
-                      placeholder={`Skill ${index + 1}`}
+                      type="submit"
+                      value="ApplyFilters"
+                      className={styles.ApplyButton}
                     />
-                  ))}
-                </div>
-              </div>
-              <div className={styles.filterRow}>
-                <div className={styles.programme}>
-                  <label htmlFor="programme">Programme :</label>
-                  <select name="programme" id={styles.programme}>
-                    <option value="">Select</option>
-                    <option value="BS">BS</option>
-                    <option value="BTech">BTech</option>
-                    <option value="MS">MS</option>
-                    <option value="MTech">MTech</option>
-                    <option value="PhD">PhD</option>
-                    {/* Add more options as needed */}
-                  </select>
-                </div>
-                <div className={styles.branch}>
-                  <label htmlFor="branch">Branch :</label>
-                  <select name="branch" id={styles.branch}>
-                    <option value="">Select</option>
-                    <option value="Computer Science and Engineering">CSE</option>
-                    <option value="Electrical Engineering">EE</option>
-                    <option value="Mechanical Engineering">ME</option>
-                    <option value="Civil Engineering">CE</option>
-                    <option value="Materials Science and Engineering">MSE</option>
-                    <option value="Aerospace Engineering">AE</option>
-                    <option value="Mathematics and Scientific Computing">
-                      MTH
-                    </option>
-                    <option value="Physics">PHY</option>
-                    <option value="Economics">ECO</option>
-                    <option value="Chemical Engineering">CHE</option>
-                    <option value="Earth Science">ES</option>
-                    <option value="Biological Sciences and Bioengineering">
-                      BSBE
-                    </option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <label htmlFor="courses">Courses Taken :</label>
-                <div className={styles.skillInputs}>
-                  {[...Array(4)].map((_, index) => (
-                    <input
-                      key={index}
-                      type="text"
-                      className={styles.skillInput}
-                      name={`course${index + 1}`}
-                      placeholder={`Course ${index + 1}`}
-                    />
-                  ))}
-                </div>
-              </div>
-              <div>
-                <label htmlFor="Organisation">Organisation</label>
-                <div className={styles.branch}>
-                  <select name="Organisation" id={styles.branch}>
-                    <option value="">Select</option>
-                    <option value="Programming Club"> Programming club</option>
-                    <option value="Electronics Club"> Electronics Club</option>
-                    <option value="Finance & Analytics Club"> Finance & Analytics Club</option>
-                    <option value="IITK Consulting Group">
-                      {" "}
-                      IITK Consulting Group
-                    </option>
-                    <option value="IITK Motorsports"> IITK Motorsports</option>
-                    <option value="Robotics Club"> Robotics Club</option>
-                    <option value="AUV"> AUV</option>
-                    <option value="Aero Club"> Aeromodelling Club</option>
-                    <option value="Astro Club"> Astro Club</option>
-                    <option value="Dance Club"> Dance Club</option>
-                    <option value="Music Club"> Music Club</option>
-                    <option value="Fine Arts Club"> Fine Arts Club</option>
-                    <option value="Comedy"> Humour House </option>
-                    <option value="Dramatics Club"> Dramatics Club</option>
-                    <option value="Literary Club">
-                      {" "}
-                      English Literary Society
-                    </option>
-                    <option value="Hindi Sahitya Sabha">
-                      {" "}
-                      Hindi Sahitya Sabha
-                    </option>
-                    <option value="Quiz Club"> Quiz Club</option>
-                    <option value="Debating Club"> Debating Society</option>
-                    <option value="Photography Club"> Photography Club</option>
-                    <option value="Chess Club"> Chess Club</option>
-                    <option value="Badminton Club"> Badminton Team</option>
-                    <option value="Table Tennis team"> Table Tennis Team</option>
-                    <option value="Basketball Team"> Basketball Team</option>
-                    <option value="RaSet"> RaSet</option>
-                    <option value="Gymkhana"> President Gymkhana's Office</option>
-                    <option value="Counselling Service">
-                      {" "}
-                      Counselling Service
-                    </option>
-                    <option value="NCC"> NCC</option>
-                    <option value="NSS"> NSS</option>
-                  </select>
-                </div>
-              </div>
-              <div>
-                <input
-                  type="submit"
-                  value="ApplyFilters"
-                  className={styles.ApplyButton}
-                />
-              </div>
-            </form>
+                  </div>
+                </form>
 
-            {/* Add more filters here if needed */}
+                {/* Add more filters here if needed */}
+              </div>
+            )}
           </div>
-        )}
-      </div>
-          </>
-        )}
+        </>
+      )}
     </>
   );
 };
