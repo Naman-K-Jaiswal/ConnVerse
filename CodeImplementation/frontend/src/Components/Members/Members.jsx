@@ -98,9 +98,22 @@ const Members = () => {
 
   useEffect(() => {
     const func = async () => {
-      console.log(filters);
+      // console.log(filters);
       setLoading(true);
       try{
+        var fSkills = filters.skills.filter((skill) => skill !== "");
+        var fCourses = filters.courses.filter((course) => course !== "");
+
+        if(fSkills.length === 0){
+          fSkills = [];
+        }
+        if(fCourses.length === 0){
+          fCourses = [];
+        }
+
+        console.log(fSkills);
+        console.log(fCourses);
+
         const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/profile/search`,{
           method: 'POST',
           credentials: 'include',
@@ -111,9 +124,9 @@ const Members = () => {
             userid: filters.userid,
             name: filters.name,
             degree: filters.degree,
-            skills: filters.skills,
+            skills: fSkills,
             organisation: filters.organisation,
-            courses: filters.courses,
+            courses: fCourses,
           })
         })
 
