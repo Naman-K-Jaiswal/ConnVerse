@@ -234,7 +234,7 @@ const CenterBox = ({ setSignIn }) => {
                     onChange={(e)=>setSignUpEmail(e.target.value)}
                     />
                 </div>
-                <Link to='/alumn'>Are you an Alumn ?</Link>
+                <Link to='/alumn'>Are you an Alumn?</Link>
                 <input
                     type='submit'
                     value= 'Send OTP'
