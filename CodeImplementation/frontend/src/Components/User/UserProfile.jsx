@@ -24,11 +24,12 @@ const UserProfile = () => {
   const user = JSON.parse(localStorage.getItem("user"));
 
   const [editable, setEditable] = useState(user.userId === id);
-  const [ok, setOk] = useState(0);
+  const [edited, setEdited] = useState(false);
 
   const editNicknameRef = useRef(null);
   const [isNicknameEditable, setIsNicknameEditable] = useState(false);
   const handleChangeNickname = (event) => {
+    setEdited(true);
     const par = event.target.parentNode.parentNode;
     const sib = par.querySelectorAll("p");
     const siblings = Array.from(sib);
@@ -69,6 +70,7 @@ const UserProfile = () => {
 
   const handleBackgroundImageChange = (event) => {
     event.preventDefault();
+    setEdited(true);
 
     if (event.target.files.length > 0) {
       Promise.all([convertToBase64(event.target.files[0])]).then(([img]) => {
@@ -79,6 +81,7 @@ const UserProfile = () => {
 
   const handleProfileImageChange = (event) => {
     event.preventDefault();
+    setEdited(true);
 
     if (event.target.files.length > 0) {
       Promise.all([convertToBase64(event.target.files[0])]).then(([img]) => {
@@ -109,6 +112,7 @@ const UserProfile = () => {
   };
 
   const handleSaveClickProfileDescription = () => {
+    setEdited(true);
     setDescriptionProfileDescription(editedDescriptionProfileDescription);
     setIsEditingProfileDescription(false);
   };
@@ -146,18 +150,21 @@ const UserProfile = () => {
   };
 
   const handleSaveSkills = (event, index) => {
+    setEdited(true);
     const newSkills = [...skills];
     newSkills[index] = event.target.textContent;
     setSkills(newSkills);
   };
 
   const handleDeleteSkills = (index) => {
+    setEdited(true);
     const newSkills = [...skills];
     newSkills.splice(index, 1);
     setSkills(newSkills);
   };
 
   const handleMoveUpSkills = (index) => {
+    setEdited(true);
     if (index === 0) return; // Already at the top
     const newSkills = [...skills];
     [newSkills[index], newSkills[index - 1]] = [
@@ -168,6 +175,7 @@ const UserProfile = () => {
   };
 
   const handleMoveDownSkills = (index) => {
+    setEdited(true);
     if (index === skills.length - 1) return; // Already at the bottom
     const newSkills = [...skills];
     [newSkills[index], newSkills[index + 1]] = [
@@ -215,18 +223,21 @@ const UserProfile = () => {
   };
 
   const handleSaveAchievements = (event, index) => {
+    setEdited(true);
     const newAchievements = [...achievements];
     newAchievements[index] = event.target.textContent;
     setAchievements(newAchievements);
   };
 
   const handleDeleteAchievements = (index) => {
+    setEdited(true);
     const newAchievements = [...achievements];
     newAchievements.splice(index, 1);
     setAchievements(newAchievements);
   };
 
   const handleMoveUpAchievements = (index) => {
+    setEdited(true);
     if (index === 0) return; // Already at the top
     const newAchievements = [...achievements];
     [newAchievements[index], newAchievements[index - 1]] = [
@@ -237,6 +248,7 @@ const UserProfile = () => {
   };
 
   const handleMoveDownAchievements = (index) => {
+    setEdited(true);
     if (index === achievements.length - 1) return; // Already at the bottom
     const newAchievements = [...achievements];
     [newAchievements[index], newAchievements[index + 1]] = [
@@ -297,6 +309,7 @@ const UserProfile = () => {
       return;
     }
     // Add the new credential to the list of credentials
+    setEdited(true);
     const updatedCredentials = [
       ...credentials,
       {
@@ -339,12 +352,14 @@ const UserProfile = () => {
     });
   };
   const handleDeleteCredential = (index) => {
+    setEdited(true);
     const newCredentials = [...credentials];
     newCredentials.splice(index, 1);
     setCredentials(newCredentials);
   };
 
   const handleSaveCredential = (event, index) => {
+    setEdited(true);
     const par = event.target.parentNode.parentNode.parentNode;
     const sib = par.querySelectorAll("div");
     const siblings = Array.from(sib);
@@ -407,6 +422,7 @@ const UserProfile = () => {
       });
       return;
     }
+    setEdited(true);
     const updatedProjects = [...projects, newProject];
     console.log(updatedProjects);
     setProjects(updatedProjects);
@@ -438,11 +454,13 @@ const UserProfile = () => {
     });
   };
   const handleDeleteProject = (index) => {
+    setEdited(true);
     let newArray = projects.slice();
     newArray.splice(index, 1);
     setProjects(newArray);
   };
   const handleMoveUpProject = (index) => {
+    setEdited(true);
     if (index === 0) return; // Already at the top
     const newProjects = [...projects];
     const temp = newProjects[index];
@@ -452,6 +470,7 @@ const UserProfile = () => {
   };
 
   const handleMoveDownProject = (index) => {
+    setEdited(true);
     if (index === projects.length - 1) return; // Already at the bottom
     const newProjects = [...projects];
     [newProjects[index], newProjects[index + 1]] = [
@@ -462,6 +481,7 @@ const UserProfile = () => {
   };
 
   const handleSaveProjets = (event, index) => {
+    setEdited(true);
     const par = event.target.parentNode.parentNode.parentNode;
     const sib = par.querySelectorAll("div");
     const siblings = Array.from(sib);
@@ -530,6 +550,8 @@ const UserProfile = () => {
       return;
     }
 
+    setEdited(true);
+
     courses.push(newCourse);
     setCourses([...courses]);
     setShowCoursePopup(false);
@@ -559,11 +581,13 @@ const UserProfile = () => {
     });
   };
   const handleDeleteCourse = (index) => {
+    setEdited(true);
     let newArray = courses.slice();
     newArray.splice(index, 1);
     setCourses(newArray);
   };
   const handleMoveUpCourse = (index) => {
+    setEdited(true);
     if (index === 0) return; // Already at the top
     const newCourses = [...courses];
     [newCourses[index], newCourses[index - 1]] = [
@@ -573,6 +597,7 @@ const UserProfile = () => {
     setCourses(newCourses);
   };
   const handleMoveDownCourse = (index) => {
+    setEdited(true);
     if (index === courses.length - 1) return; // Already at the bottom
     const newCourses = [...courses];
     [newCourses[index], newCourses[index + 1]] = [
@@ -593,6 +618,8 @@ const UserProfile = () => {
       year: siblings[3].textContent,
       semester: siblings[4].textContent,
     };
+
+    setEdited(true);
 
     const updatedCourses = [...courses];
     updatedCourses[index] = newCourse;
@@ -670,6 +697,8 @@ const UserProfile = () => {
             } else {
               setBlogposts([]);
             }
+
+            setEditable(user.userId === id);
           } else {
             toast({
               title: "Error fetching details!",
@@ -680,7 +709,6 @@ const UserProfile = () => {
               position: "bottom",
             });
           }
-          setOk(1);
         } else {
           toast({
               title: "Error fetching details!",
@@ -709,7 +737,6 @@ const UserProfile = () => {
 
   useEffect(() => {
     setLoading(true);
-    if (ok > 0) {
         const func = async () => {
           try {
             const res = await fetch(`https://connverse-hcgzo.ondigitalocean.app/profile/update`, {
@@ -733,22 +760,9 @@ const UserProfile = () => {
             });
 
             if (res.ok) {
-              if(ok === 1){
-                setOk(2);
-              } else {
               toast({
                 title: "Details updated successfully!",
                 status: "success",
-                duration: 5000,
-                isClosable: true,
-                position: "bottom",
-              });
-            }
-            } else {
-              toast({
-                title: "Error updating details!",
-                description: "Please reload the page",
-                status: "error",
                 duration: 5000,
                 isClosable: true,
                 position: "bottom",
@@ -765,11 +779,15 @@ const UserProfile = () => {
               });
           }
         };
-        func();
+
+        if(editable && edited){
+          func();
+          setEditable(false);
+          setEditable(user.userId === id);
+        }
         setLoading(false);
-    }
   }, [
-    ok,
+    edited,
     profileImage,
     nickname,
     backgroundImage,

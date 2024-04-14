@@ -51,7 +51,7 @@ const Members = () => {
     const formData = new FormData(event.target);
     if (formData.get("programme") === "" && formData.get("branch") === "") {
       const newFilters = {
-        name: filters.name,
+        name: "",
         userid: filters.userid,
         degree: "",
         skills: [
@@ -71,7 +71,7 @@ const Members = () => {
       setFilters(newFilters);
     } else {
       const newFilters = {
-        name: filters.name,
+        name: "",
         userid: filters.userid,
         degree: formData.get("programme") + " " + formData.get("branch"),
         skills: [
